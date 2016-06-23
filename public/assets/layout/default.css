@@ -1,0 +1,19 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    font-size:0.8em;
+    font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;
+}
+
+#main-block {
+    width: 80%;
+    min-width: 600px;
+    max-width: 1000px;
+    background-color: lime;
+    margin: 0 auto;
+}
