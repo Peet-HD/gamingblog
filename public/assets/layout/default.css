@@ -15,5 +15,176 @@ body {
     min-width: 600px;
     max-width: 1000px;
     background-color: lime;
-    margin: 0 auto;
+    position:absolute;
+    margin:0 10%;
+    min-height:530px;
+    display:flex;
+    flex-direction:column;
+    margin-top:46px;
+    z-index:0;
+}
+
+
+body{
+    background-color:white;
+    z-index:0;
+}
+#banner{
+    background-color:blue;
+    width:80%;
+    margin:0 10% 0 10%;
+    height:150px;
+    z-index:5;
+}
+nav{
+    position:absolute;
+}
+#hauptnav{
+    margin-left:10%;
+    width:80%;
+    height:;
+    list-style-type:none;
+    background-color:#111;
+    z-index:5;
+    position:absolute;
+}
+#hauptnav ul{
+    list-style-type:none;
+    display:inline;
+    margin:0;
+    padding:0;
+    overflow:hidden;
+    background-color:#111;
+}
+#hauptnav ul li{
+    display:inline;
+    padding:0;
+    float:left;
+}
+#hauptnav ul li a{
+    display:block;
+    color:white;
+    text-align:center;
+    padding:14px 16px;
+    text-decoration:none;
+    background-color:#111;
+}
+form{
+    display:block;
+    color:black;
+    text-align:center;
+    padding:14px 16px;
+    text-decoration:none;
+    background-color:#111;
+    width:200px;
+    height:100%;
+}
+#hauptnav ul #about-site{
+    float:right;
+}
+#hauptnav ul #about-site a{
+    background-color:#4caf50;
+}
+#hauptnav ul #about-site a:hover{
+    background-color:#333;
+}
+#hauptnav ul li a:hover{
+    background-color:#333;
+}
+	
+#container{
+
+}
+
+#sidebar{
+    background-color:#111;
+    width:150px;
+    height:526px;
+    position:fixed;
+    right:8%;
+    top:0px;
+    padding-top:200px;
+    z-index:0;
+}
+#chat{
+    width:150px;
+    height:200px;
+    background-color:grey;
+    margin:0;
+    padding:0;
+    position:relative;
+    color:white;
+}
+#sidebar ul{
+    list-style-type:none;
+    overflow:hidden;
+    background-color:#111;
+}
+#sidebar ul li{
+		
+}
+#sidebar ul li a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    padding:14px 16px;
+    background-color:#111;
+    text-align:center;
+}
+#sidebar ul li a:hover{
+    background-color:#4caf50;
+}
+
+
+.blogeintraege{
+    background-color:yellow;
+    margin-left:10%;
+    margin-top:10px;
+    width:80%;
+    min-width:600px;
+    max-width:1500px;
+    min-height:250px;
+    float:left;
+    text-align:center;
+    position:relative;
+}
+.ueberschrift{
+    font-size:50px;
+    font-weight:bold;
+}
+.content{
+    padding:14px 16px;
+}
+.lastline{
+    position:absolute;
+    bottom:0px;
+    left:0px;
+    background-color:#111;
+    width:100%;
+    height:20px;
+    text-align:right;
+
+}
+.lastline ul{}
+.lastline ul li{
+    list-style-type:none;
+    overflow:hidden;
+    display:inline;
+    padding:14px 16px;
+    text-size:30px;
+}
+.lastline ul li a{
+    text-decoration:none;
+    color:white;
+    text-weight:bold;
+    display:;
+}
+.lastline a:hover{
+    background-color:#4caf50;
+}
+	
+.rechtsausschluss{
+    margin-top:20px;
+    margin-right:150px;
+    margin-left:20px;
 }
