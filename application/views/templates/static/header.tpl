@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/assets/layout/{$module}/default.css" />
 {/if}
 <!--link rel="stylesheet" type="text/css" href="/assets/layout/cupertino/jquery-ui-1.8.18.custom.css" /-->
-{if isset($loadJquery)}
+{if isset($jquery)}
     <script type="text/javascript" src="/assets/js/jquery/jquery-3.0.0.min.js"></script>
 {/if}
+    <script type="text/javascript" src="/assets/js/chat.js"></script>

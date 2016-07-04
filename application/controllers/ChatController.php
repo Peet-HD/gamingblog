@@ -13,9 +13,14 @@ class ChatController extends GamingBlog_Controller_Action
         $this->redirect('/' . $frontCont->getDefaultControllerName() . '/' . $frontCont->getDefaultAction());
     }
     
-    public function fetchLastEntriesAction()
+    public function fetchlastentriesAction()
     {
-        // TODO fetch entries from the database
+        $db = Zend_Registry::get('db');
+        
+        $dbFetcher = new Application_Model_ChatDbFetcher($db);
+        $result = $dbFetcher->getResult();
+        
+        echo json_encode($result);
     }
 }
 
