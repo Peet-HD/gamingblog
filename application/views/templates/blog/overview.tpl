@@ -16,7 +16,7 @@
         </div>
             <nav id="sidebar">
                 <div id="chat">
-                    
+                    {include file='static/chat.tpl'}
                 </div>
             </nav>
     </body>

@@ -1,3 +1,4 @@
-<div class="sidebar">
-    hallooooo was zum henker
+<div id="chatHistoryBlock">
+    
 </div>
+<input id="chatInputLine" type="text"/>

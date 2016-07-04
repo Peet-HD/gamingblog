@@ -15,12 +15,41 @@ class ChatController extends GamingBlog_Controller_Action
     
     public function fetchlastentriesAction()
     {
+        $lastUpdateTimestamp = intval($this->_getParam('lastUpdate', 0));
+        
         $db = Zend_Registry::get('db');
         
-        $dbFetcher = new Application_Model_ChatDbFetcher($db);
-        $result = $dbFetcher->getResult();
+        $dbChatFetcher = new Application_Model_ChatDbFetcher($db);
+        
+        $lowestValidTimestamp = time()-10;
+        
+        if ($lastUpdateTimestamp > $lowestValidTimestamp)
+        {
+            $dbChatFetcher->setMinimumTimestamp($lastUpdateTimestamp);
+        } else {
+            $dbChatFetcher->setMinimumTimestamp($lowestValidTimestamp);
+        }
+        
+        $result = $dbChatFetcher->getResult();
         
         echo json_encode($result);
+    }
+    
+    public function sendentryAction()
+    {
+        $text = $this->_getParam('text');
+        
+        if (strlen($text) > 0)
+        {
+            $db = Zend_Registry::get('db');
+
+            $db->insert('chat_data', array(
+                'userId' => 0,
+                'text' => $text
+            ));
+
+            echo $db->lastInsertId('order', 'order_id');
+        }
     }
 }
 
