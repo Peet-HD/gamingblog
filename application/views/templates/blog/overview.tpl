@@ -13,9 +13,11 @@
                 Content: {$entry.content}<br>
             {/foreach}  
 
-            <p>
-              <a href="{$this->url(['controller' => 'index', 'action' => 'next'])}">home</a>
-            </p>
         </div>
+            <nav id="sidebar">
+                <div id="chat">
+                    
+                </div>
+            </nav>
     </body>
 </html>

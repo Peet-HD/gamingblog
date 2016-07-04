@@ -1,6 +1,6 @@
 <?php
 
-class ErrorController extends Zend_Controller_Action
+class ErrorController extends GamingBlog_Controller_Action
 {
 
     /*public function errorAction()
@@ -42,6 +42,11 @@ class ErrorController extends Zend_Controller_Action
         
         $this->view->request   = $errors->request;
     }*/
+    
+    public function fourzerofourAction()
+    {
+        $this->_view->render('404.tpl');   
+    }
     
     public function errorAction()
     {
