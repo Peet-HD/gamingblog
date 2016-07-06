@@ -14,10 +14,14 @@
             {/foreach}  
 
         </div>
+            {include file='static/login_form.tpl'}
             <nav id="sidebar">
+
                 <div id="chat">
                     {include file='static/chat.tpl'}
                 </div>
+                    {include file='static/category_roll.tpl'}
+
             </nav>
     </body>
 </html>
