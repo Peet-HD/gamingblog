@@ -19,25 +19,37 @@ function sendChatLine()
     
     var text = $('#chatInputLine').val();
     
-    $.ajax({
-        url: "/chat/sendentry",
-        context: document.body,
-        data: {
-            'text': text
-        }
-    }).done(function(id) {
-        
-        if (id !== -1)
-        {
-            appendChatTextLine(id, text);   
-        }
+    // Trim whitespace to check if the string is usable
+    //text = text.replace(/(^\s+|\s+$)/g, "");
     
+    if (text.length > 0)
+    {
+        $.ajax({
+            url: "/chat/sendentry",
+            context: document.body,
+            data: {
+                'text': text
+            }
+        }).done(function(id) {
+
+            if (id != -1)
+            {
+                appendChatTextLine(id, text);   
+            }
+
+            $('#chatInputLine').val("");
+
+            $('#chatInputLine').prop('disabled', false);
+
+            $('#chatInputLine').focus();
+        });
+    } else {
         $('#chatInputLine').val("");
-        
+
         $('#chatInputLine').prop('disabled', false);
-        
+
         $('#chatInputLine').focus();
-    });
+    }
 }
 
 function appendChatTextLine(id, textVal)

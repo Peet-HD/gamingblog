@@ -24,7 +24,7 @@
     overflow-x:hidden;
     margin-top:3px;
     padding:3px 5px;
-    background-color: green;
+    background-color: #004400;
 }
 .singleChatLine:nth-child(even) {
     background-color: green;

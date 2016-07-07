@@ -33,7 +33,8 @@ class ChatController extends GamingBlog_Controller_Action
     
     public function sendentryAction()
     {
-        $text = $this->_getParam('text');
+        // Trim whitespace from the text-param, if available, to check if the string is usable
+        $text = trim($this->_getParam('text', ''));
         
         if (strlen($text) > 0)
         {
@@ -54,10 +55,13 @@ class ChatController extends GamingBlog_Controller_Action
             if ($retVal >= 0)
             {
                 echo $retVal;
-            } else {
-                echo -1;
+                exit;
             }
         }
+        
+        // On error return -1
+        echo -1;
+        exit;
     }
 }
 
