@@ -27,10 +27,9 @@ function sendChatLine()
         }
     }).done(function(id) {
         
-        if (chatLineData[id] === undefined)
+        if (id !== -1)
         {
-            chatLineData[id] = text;
-            appendChatTextLine(text);
+            appendChatTextLine(id, text);   
         }
     
         $('#chatInputLine').val("");
@@ -41,14 +40,23 @@ function sendChatLine()
     });
 }
 
-function appendChatTextLine(textVal)
+function appendChatTextLine(id, textVal)
 {
-    $('#chatHistoryBlock').append("<div class='singleChatLine'>" + textVal + "</div>");
-    
-    // Auto-Scroll to Bottom
-    $('#chatHistoryBlock').animate({
-        scrollTop: $('#chatHistoryBlock').prop('scrollHeight')
-    }, 200);
+    console.log("check: " + id);
+    if (chatLineData[id] === undefined)
+    {
+        chatLineData[id] = textVal;
+        
+        $('#chatHistoryBlock').append("<div class='singleChatLine'>" + textVal + "</div>");
+
+        // Auto-Scroll to Bottom
+        $('#chatHistoryBlock').animate({
+            scrollTop: $('#chatHistoryBlock').prop('scrollHeight')
+        }, 200);
+        
+        console.log('add: ' + id);
+    }
+    console.log("checkdone");
 }
 
 function loadDbEntries(lastUpdateTimestamp)
@@ -73,17 +81,11 @@ function loadDbEntries(lastUpdateTimestamp)
         // Add chat-lines to the visible content
         $.each(arr, function(index, val)
         {
-            if (chatLineData[val.id] === undefined) {
-                chatLineData[val.id] = val.text;
-                
-                appendChatTextLine(chatLineData[val.id]);
-                console.log('add: ' + val.id);
-            } 
-   
+            appendChatTextLine(val.id, val.text);
         });
         setTimeout(function()
             {
                 loadDbEntries(lastUpdateTime);
-            }, '2000');
+            }, '5000');
     });
 }

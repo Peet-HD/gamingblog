@@ -43,9 +43,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     
     public function _initDb()
     {
-        $db = Zend_Db::factory('Pdo_Mysql', $this->_config->get('db')->get('params'));
+        $gamingBlogDb = new GamingBlog_Database($this->_config->get('db'));
         
-        Zend_Registry::set('db', $db);
+        Zend_Registry::set('db', $gamingBlogDb);
     }
 
 }

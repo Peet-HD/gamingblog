@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * The view-class encapsulating the smarty-class for viewing templates
+ * 
+ * @author TH<>
+ * @todo check & clear
+ */
 class GamingBlog_View_Smarty
 {
     /**

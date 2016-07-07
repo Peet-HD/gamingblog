@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * An abstract Database-Row-Fetcher class, which demands proper sql-preparation-functions of children,
+ * to offer the fetch of the data
+ * 
+ * @author TH<>
+ */
 abstract class GamingBlog_DbFetcher
 {
     /**

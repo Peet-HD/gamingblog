@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * A basic controller-class to provide the necessary objects (database, view, etc.) and
+ * offer a default-action-routine for the index-call (without any action)
+ * 
+ * @author TH<>
+ */
 abstract class GamingBlog_Controller_Action extends Zend_Controller_Action
 {
     /**
@@ -8,7 +14,7 @@ abstract class GamingBlog_Controller_Action extends Zend_Controller_Action
     protected $_view;
     
     /**
-     * @var Zend_Db_Adapter_Pdo_Mysql
+     * @var Gamingblog_Database
      */
     protected $_db;
     
