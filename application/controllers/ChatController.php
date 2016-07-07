@@ -17,6 +17,7 @@ class ChatController extends GamingBlog_Controller_Action
     {
         $lastNum = intval($this->_getParam('lastNum', 0));
         
+        $this->_dbChatFetcher = new GamingBlog_Database_Chat_Line_Fetcher($this->_db->read());
         
         if ($lastNum >= 0)
         {
