@@ -37,7 +37,7 @@ class ChatController extends GamingBlog_Controller_Action
         
         if (strlen($text) > 0)
         {
-            $chatUpdater = new GamingBlog_Database_Chat_Updater(array('db' => $this->_db->write()));
+            $chatUpdater = new GamingBlog_Database_Chat_Table(array('db' => $this->_db->write()));
             
             $newRow = $chatUpdater->createRow(
                 array(
