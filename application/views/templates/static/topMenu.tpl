@@ -1,5 +1,5 @@
-		<header id="banner">
-			Hallo ich bin ein Gamingblog! :)
+		<header class="banner">
+                    <img class="banner" src="https://pixabay.com/static/uploads/photo/2015/09/17/10/31/banner-943868_960_720.jpg">
 		</header>
 		<nav id="hauptnav">
 			<ul>

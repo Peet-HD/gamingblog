@@ -1,11 +1,11 @@
 <div class="loginform">
     <form>
-        <input type="text"></input>
-        <input type="password"></input>
+        <input type="email" placeholder="Username" required="true"></input>
+        <input type="password" placeholder="Password" required="true"></input>
         <button type="submit">Login</button>
-
+        <br>
+      
     </form>
-    <br>
-        <a href="">Registrieren</a>
-        <a href="">Passwort vergessen</a>
+  <a href="">Registrieren</a>
+  <a href="">Passwort vergessen?</a>
 </div>
