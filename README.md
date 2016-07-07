@@ -11,6 +11,9 @@ TODO's for the initial setup
 - Prepare Smarty
 - Prepare ZF
 
+- Create Database and Tables (no sql in the source-code !)
+- Add necessary DB-Users (check config)
+
 Used Technologys
 ----------------
 
