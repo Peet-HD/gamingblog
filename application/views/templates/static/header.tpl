@@ -12,3 +12,13 @@
     <script type="text/javascript" src="/assets/js/jquery/jquery-3.0.0.min.js"></script>
 {/if}
     <script type="text/javascript" src="/assets/js/chat.js"></script>
+    
+{if isset($jsSource)}
+    <script type="text/javascript" src="/assets/js/{$jsSource}.js"></script>
+{/if}
+
+{if $user->authenticate()}
+    <script type="text/javascript">
+        var userName = "{$user->getUserName()}";
+    </script>
+{/if}

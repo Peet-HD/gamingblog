@@ -21,7 +21,7 @@ class GamingBlog_Database_Chat_Line_Fetcher extends GamingBlog_DbFetcher
         return array(
             'id' => 'gb_c.entryId',
             'timestamp' => 'gb_c.timestamp',
-            'text' => 'gb_c.text'
+            'text' => 'CONCAT(gb_u.userName, ": ", gb_c.text)'
         );
     }
     
@@ -33,7 +33,8 @@ class GamingBlog_Database_Chat_Line_Fetcher extends GamingBlog_DbFetcher
         $currentTimeStamp = $date->getTimestamp();
         
         $subSelect->from(array('gb_c'=>'chat_data'), $this->_getDataFields())
-                  ->order('entryId DESC');
+                  ->order('entryId DESC')
+                  ->joinInner(array('gb_u' => 'user_data'), 'gb_u.userId = gb_c.userId', array());
         
         /**
          *  Restrict the minimum timestamp of fetched messages to (now - 5 seconds),

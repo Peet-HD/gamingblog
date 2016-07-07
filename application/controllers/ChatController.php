@@ -33,35 +33,34 @@ class ChatController extends GamingBlog_Controller_Action
     
     public function sendentryAction()
     {
-        // Trim whitespace from the text-param, if available, to check if the string is usable
-        $text = trim($this->_getParam('text', ''));
-        
-        if (strlen($text) > 0)
+        // Only authenticated user's can write chat-messages
+        if ($this->_user->authenticate())
         {
-            $chatUpdater = new GamingBlog_Database_Chat_Table(array('db' => $this->_db->write()));
-            
-            $newRow = $chatUpdater->createRow(
-                array(
-                    'userId' => 0,
-                    'text' => $text
-                )
-            );
-            
-            /**
-             * Save the prepared chat-row and save the created index-num
-             */
-            $retVal = $newRow->save();
+            // Trim whitespace from the text-param, if available, to check if the string is usable
+            $text = trim($this->_getParam('text', ''));
 
-            if ($retVal >= 0)
+            if (strlen($text) > 0)
             {
-                echo $retVal;
-                exit;
+                $chatDbWriter = new GamingBlog_Database_Chat_Line_Writer($this->_db->write());
+                $chatDbWriter->setUserId($this->_user->getId());
+                $chatDbWriter->setText($text);
+
+                /**
+                 * Save the prepared chat-row and save the created index-num
+                 */
+                $retVal = $chatDbWriter->writeData();
+
+                if ($retVal >= 0)
+                {
+                    echo $retVal;
+                    exit;
+                }
             }
+
+            // On error return -1
+            echo -1;
+            exit;
         }
-        
-        // On error return -1
-        echo -1;
-        exit;
     }
 }
 

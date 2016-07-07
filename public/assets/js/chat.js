@@ -34,7 +34,7 @@ function sendChatLine()
 
             if (id != -1)
             {
-                appendChatTextLine(id, text);   
+                appendChatTextLine(id, text, true);   
             }
 
             $('#chatInputLine').val("");
@@ -52,14 +52,17 @@ function sendChatLine()
     }
 }
 
-function appendChatTextLine(id, textVal)
+function appendChatTextLine(id, textVal, addUserName)
 {
     console.log("check: " + id);
     if (chatLineData[id] === undefined)
     {
         chatLineData[id] = textVal;
         
-        $('#chatHistoryBlock').append("<div class='singleChatLine'>" + textVal + "</div>");
+        if (addUserName)
+            $('#chatHistoryBlock').append("<div class='singleChatLine'>" + userName + ": " + textVal + "</div>");
+        else
+            $('#chatHistoryBlock').append("<div class='singleChatLine'>" + textVal + "</div>");
 
         // Auto-Scroll to Bottom
         $('#chatHistoryBlock').animate({
@@ -93,11 +96,11 @@ function loadDbEntries(lastUpdateTimestamp)
         // Add chat-lines to the visible content
         $.each(arr, function(index, val)
         {
-            appendChatTextLine(val.id, val.text);
+            appendChatTextLine(val.id, val.text, false);
         });
         setTimeout(function()
             {
                 loadDbEntries(lastUpdateTime);
-            }, '5000');
+            }, '1000');
     });
 }

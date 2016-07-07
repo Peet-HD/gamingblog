@@ -47,6 +47,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         Zend_Registry::set('db', $gamingBlogDb);
     }
+    
+    
+    public function _initUser()
+    {
+        $user = new GamingBlog_User();
+        
+        Zend_Registry::set('user', $user);
+    }
 
 }
 

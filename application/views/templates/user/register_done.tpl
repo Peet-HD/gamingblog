@@ -7,13 +7,10 @@
     <body>
         {include file='static/topMenu.tpl'}
         <div id="main-block">
-            {$hello}
-            {foreach from=$news_entries item=entry}
-                Title: {$entry.title}<br>
-                Content: {$entry.content}<br>
-            {/foreach}  
-
+            <span>Your account-registration has been registered. You will receive an email, when it has been activated.</span>
+            <br/></br>
+            <a href="{$urlHelper->url(['controller' => 'blog', 'action' => 'overview'])}">Back to the overview</>
         </div>
-        {include file='static/sidebar.tpl'}
+            {include file='static/sidebar.tpl'}
     </body>
 </html>

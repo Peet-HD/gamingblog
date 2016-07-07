@@ -8,6 +8,11 @@
  */
 abstract class GamingBlog_DbFetcher
 {
+    const FETCHMODE_ROW = 1;
+    const FETCHMODE_ALL = 2;
+    
+    protected $_fetchMode = 2;
+    
     /**
      * @var Zend_Db_Adapter_Pdo_Mssql
      */
@@ -18,15 +23,55 @@ abstract class GamingBlog_DbFetcher
      */
     protected $_baseSelect;
     
+    /**
+     * The minimum-fetched-index
+     * 
+     * @var int
+     */
+    private $_minFetch = 0;
+    
+    /**
+     * The maximum-fetched-index
+     * 
+     * @var int
+     */
+    private $_maxFetch = -1;
+    
     public function __construct($pDb) {
         $this->_db = $pDb;
     }
     
+    public function setFetchMode($fetchMode)
+    {
+        if (($fetchMode == GamingBlog_DbFetcher::FETCHMODE_ROW) ||
+            ($fetchMode == GamingBlog_DbFetcher::FETCHMODE_ALL))
+        {
+            $this->_fetchMode = $fetchMode;
+        }
+    }
+    
     public function getResult()
     {
-        $res = $this->_db->fetchAll($this->_getSelectSql());
+        if ($this->_fetchMode == GamingBlog_DbFetcher::FETCHMODE_ROW)
+        {
+            $res = $this->_db->fetchRow($this->_getSelectSql());
+        } else {
+            $res = $this->_db->fetchAll($this->_getSelectSql());
+        }
         
         return $res;
+    }
+    
+    
+    public function limit($min, $max)
+    {
+        if (($min >= 0) && ($max > $min))
+        {
+            $this->_minFetch = $min;
+            $this->_maxFetch = $max;
+        } else {
+            throw new GamingBlog_Fetcher_Exception('Invalid Limit-Values used');
+        }
     }
     
     
