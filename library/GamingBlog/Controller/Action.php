@@ -35,6 +35,8 @@ abstract class GamingBlog_Controller_Action extends Zend_Controller_Action
         // Prepare the db-object
         $this->_db = Zend_Registry::get('db');
         
+        $this->_view->urlHelper = $this->_helper->getHelper('Url');
+        
     }
     
     /**
@@ -45,7 +47,12 @@ abstract class GamingBlog_Controller_Action extends Zend_Controller_Action
     public function indexAction()
     {
         if (!empty($this->_defaultAction) && method_exists($this, $this->_defaultAction . 'Action'))
-            $this->redirect('/' . Zend_Controller_Front::getInstance()->getRequest()->getControllerName() . '/' . $this->_defaultAction);
+            if (!empty($this->_defaultController))
+            {
+                $this->redirect('/' . $this->_defaultController . '/' . $this->_defaultAction);
+            } else {
+                $this->redirect('/' . Zend_Controller_Front::getInstance()->getRequest()->getControllerName() . '/' . $this->_defaultAction);
+            }
         else
             $this->redirect ('/error/404');
     }

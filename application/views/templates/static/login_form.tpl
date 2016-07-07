@@ -1,5 +1,5 @@
 <div class="loginform">
-    <form>
+    <form action="{$urlHelper->url(['controller' => 'user', 'action' => 'login'])}" method="POST">
         <input type="email" placeholder="Username" required="true"></input>
         <input type="password" placeholder="Password" required="true"></input>
         <button type="submit">Login</button>
