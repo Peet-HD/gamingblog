@@ -83,7 +83,7 @@ class GamingBlog_Database_User_Writer extends GamingBlog_Database_Writer
         
         $rowData = array();
         
-        if ($this->_userId >= 0)
+        if (is_numeric($this->_userId) && $this->_userId >= 0)
         {
             $rowData['userId'] = $this->_userId;
         }

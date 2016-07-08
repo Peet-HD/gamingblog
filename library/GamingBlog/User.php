@@ -57,15 +57,14 @@ class GamingBlog_User
             
             // Check if the complete user-data has been fetched from the database, the user is active and the password is correct
             if (!isset($res['name']) || empty($res['name']) ||
-                !isset($res['id']) || empty($res['id']) ||
+                !isset($res['id']) || ($res['id'] < 0) ||
                 !isset($res['password']) || empty($res['password']) ||
                 !isset($res['email']) || empty($res['email']) ||
-                
                 /**
                  * @todo TODO TODO TODO unbedingt das active-flag wieder auf 1 schalten,
                  * damit korrekt geprüft wird, welcher account aktiv geschaltet wurde
                  */
-                !isset($res['active']) || ($res['active'] != 0)||
+                !isset($res['active']) || ($res['active'] != 0) ||
                 !password_verify($userData['password'], $res['password'])) {
                 
                 $errorData['invalidLogin'] = 1;
@@ -188,7 +187,7 @@ class GamingBlog_User
      */
     private static function checkUserExists($dbRead, $userName)
     {
-        $userFetcher = new GamingBlog_Database_User_Fetcher($dbRead, $fetchMode);
+        $userFetcher = new GamingBlog_Database_User_Fetcher($dbRead);
         $userFetcher->setNameFilter($userName);
         
         $res = $userFetcher->getResult();
@@ -229,7 +228,7 @@ class GamingBlog_User
             $id = $this->_userSess->data['id'];
             $name = $this->_userSess->data['name'];
             
-            if (!empty($id) && is_numeric($id) && ($id > 0) &&
+            if (is_numeric($id) && ($id >= 0) &&
                 !empty($name))
             {
                 return true;
