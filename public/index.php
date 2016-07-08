@@ -18,7 +18,7 @@ set_include_path(implode(PATH_SEPARATOR, array(
 require_once 'Zend/Application.php';
 
 /** Debug-Class **/
-require_once('GamingBlog\Debug.php');
+require_once('GamingBlog/Debug.php');
 
 // Create application, bootstrap, and run
 $application = new Zend_Application(

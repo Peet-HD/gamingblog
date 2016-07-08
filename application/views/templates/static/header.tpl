@@ -2,6 +2,7 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="/assets/layout/default.css" />
 <link rel="stylesheet" type="text/css" href="/assets/layout/chat.css" />
+
 {if isset($cssSource)}
     <link rel="stylesheet" type="text/css" href="/assets/layout/{$cssSource}/default.css" />
 {else}

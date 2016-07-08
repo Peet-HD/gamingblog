@@ -302,5 +302,13 @@ class GamingBlog_User
         
         return "";
     }
+    
+    /**
+     *  @todo dringend ändern
+     * @author PB 
+     */
+    public function  isAdmin(){
+        return true;
+    }
 }
 

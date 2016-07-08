@@ -7,11 +7,15 @@ class BlogController extends GamingBlog_Controller_Action
     /* Main-Action with the overview of the news-entries */
     public function overviewAction()
     {
-        $this->_view->news_entries= array(array('title' => "blub", 'content' => 'whuzzza'),array('title'=>"hallo",'content'=>'blabliblub')
-            ,array('title'=>"hallo",'content'=>'blabliblub'),array('title'=>"hallo",'content'=>'blabliblub')
-            ,array('title'=>"hallo",'content'=>'blabliblub'),array('title'=>"hallo",'content'=>'blabliblub')
-            ,array('title'=>"hallo",'content'=>'blabliblub'),array('title'=>"hallo",'content'=>'blabliblub')
-            ,array('title'=>"hallo",'content'=>'blabliblub'),array('title'=>"hallo",'content'=>'blabliblub'));
+        
+        $page=$this->_getParam("page",0);
+        
+        $blog_entry_fetcher = new GamingBlog_Database_Blog_Entry_Fetcher($this->_db->read());
+        
+        $res = $blog_entry_fetcher->getResult();
+
+        
+        $this->_view->news_entries= $res;
         // action body
         
         $this->_view->render("blog/overview.tpl");
