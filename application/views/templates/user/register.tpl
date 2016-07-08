@@ -12,37 +12,42 @@
                     <table style="padding: 10px; background-color: red; color: white; width: 100%;">
                         {if isset($errorData['missingName'])}
                         <tr id="errorMissingName">
-                            <td>The user-name is missing</td>
+                            <td><span>The user-name is missing</span></td>
                         </tr>
                         {/if}
                         {if isset($errorData['missingMail'])}
                         <tr id="errorMissingMail">
-                            <td>The user-mail is missing</td>
+                            <td><span>The user-mail is missing</span></td>
                         </tr>
                         {else if isset($errorData['invalidMail'])}
                         <tr id="errorInvalidMail">
-                            <td>The user-mail is invalid. Please check.</td>
+                            <td><span>The user-mail is invalid. Please check.</span></td>
                         </tr>
                         {/if}
                         {if isset($errorData['missingPassword'])}
                         <tr id="errorMissingPassword">
-                            <td>The user-password is missing</td>
+                            <td><span>The user-password is missing</span></td>
                         </tr>
                         {else if isset($errorData['missingPasswordLength'])}
                         <tr id="errorPasswordLength">
-                            <td>The user-password-length is to short (at least 8 characters)</td>
+                            <td><span>The user-password-length is to short (at least 8 characters)</span></td>
                         </tr>
                         {else if isset($errorData['unsafePassword'])}
                         <tr id="errorUnsafePassword">
-                            <td>The user-password is unsafe (at least one letter, one number and one special char of the following: "!,@,$,%,&,*,-,_")</td>
+                            <td><span>The user-password is unsafe (at least one letter, one number and one special char of the following: "!,@,$,%,&,*,-,_")</span></td>
                         </tr>
                         {/if}
-                        {if isset($errorData['userExists'])}
-                            <tr id="errorUserExists">
-                                <td>Te given username {$inputData['name']} is already registered. Try another.</td>
+                        {if isset($errorData['userNameExists'])}
+                            <tr id="errorUserNameExists">
+                                <td><span>The given username "{$inputData['name']}" is already registered. Try another.</span></td>
                             </tr>
                         {/if}
-                    </table>userExists
+                        {if isset($errorData['userMailExists'])}
+                            <tr id="errorUserMailExists">
+                                <td><span>The given usermail "{$inputData['email']}" is already connected. Try another or contact us.</span></td>
+                            </tr>
+                        {/if}
+                    </table>
                 {/if}
                 <form action="{$urlHelper->url(['controller' => 'user', 'action' => 'register'])}" method="POST">
                     <input {if isset($inputData) && isset($inputData['name'])}value="{$inputData['name']}"{/if} name="userName" type="text" placeholder="User-Name" required="true" {if isset($errorData) && isset($errorData['missingName'])}style="background-color: red;"{/if}></input><br/><br/>

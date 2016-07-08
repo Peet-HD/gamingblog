@@ -7,8 +7,14 @@
  */
 class GamingBlog_Database_User_Fetcher extends GamingBlog_DbFetcher
 {
+    /**
+     * Fetches the full user-data
+     */
     const DATA_COMPLETE = 1;
-    const DATA_ID_ONLY = 2;
+    /**
+     * Fetches only the id, name and mail
+     */
+    const DATA_BASIC = 2;
     
     private $_fetchFullData = false;
     
@@ -17,7 +23,9 @@ class GamingBlog_Database_User_Fetcher extends GamingBlog_DbFetcher
     private $_filterMail = '';
     private $_filterActive = 0;
     
-    public function __construct($pDb, $fetchData = GamingBlog_Database_User_Fetcher::DATA_ID_ONLY) {
+    private $_filterNameOrMail = false;
+    
+    public function __construct($pDb, $fetchData = GamingBlog_Database_User_Fetcher::DATA_BASIC) {
         parent::__construct($pDb);
         
         if ($fetchData == GamingBlog_Database_User_Fetcher::DATA_COMPLETE)
@@ -34,6 +42,11 @@ class GamingBlog_Database_User_Fetcher extends GamingBlog_DbFetcher
     public function setMailFilter($val)
     {
         $this->_filterMail = $val;
+    }
+    
+    public function enableNameOrMailFilter()
+    {
+        $this->_filterNameOrMail = true;
     }
     
     public function setPasswordFilter($val)
@@ -60,40 +73,30 @@ class GamingBlog_Database_User_Fetcher extends GamingBlog_DbFetcher
         } else {
             return array(
                 'id' => 'gb_u.userId',
+                'name' => 'gb_u.userName',
+                'email' => 'gb_u.email'
             );
         }
     }
     
     protected function _getSelectSql()
     {
-        /*$subSelect = $this->_db->select();
-        
-        $date = new DateTime();
-        $currentTimeStamp = $date->getTimestamp();
-        
-        $subSelect->from(array('gb_c'=>'chat_data'), $this->_getDataFields())
-                  ->order('entryId DESC');
-        
-        // *  Restrict the minimum timestamp of fetched messages to (now - 5 seconds),
-        // *  to deny fetching more chat-data than necessary
-        $subSelect->where('gb_c.timestamp > FROM_UNIXTIME(' . ($currentTimeStamp-5) . ')');
-        
-        // If the last fetched index is provided, it will be used for filtering
-        if ($this->_lastNum >= 0)
-        {
-            $subSelect->where('gb_c.entryId >= ?', $this->_lastNum);
-        }*/
-        
         $sql = $this->_db->select();
         
         $sql->from(array('gb_u' => 'user_data'), $this->_getDataFields());
         
-        if (!empty($this->_filterName)) {
+        if ($this->_filterNameOrMail)
+        {
             $sql->where('gb_u.userName = ?', $this->_filterName);
-        }
-        
-        if (!empty($this->_filterMail)) {
-            $sql->where('gb_u.email = ?', $this->_filterMail);
+            $sql->orWhere('gb_u.email = ?', $this->_filterMail);
+        } else {
+            if (!empty($this->_filterName)) {
+                $sql->where('gb_u.userName = ?', $this->_filterName);
+            }
+
+            if (!empty($this->_filterMail)) {
+                $sql->where('gb_u.email = ?', $this->_filterMail);
+            }
         }
         
         if (!empty($this->_filterPassword)) {

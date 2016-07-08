@@ -145,11 +145,20 @@ class GamingBlog_User
         
         if (empty($errorData))
         {
+            $userResult = GamingBlog_User::getRegisteredUser($gamingBlogDb->read(), $userData['name'], $userData['email']);
             // Check if the given user is valid
-            if (GamingBlog_User::checkUserExists($gamingBlogDb->read(), $userData['name']))
+            if (!empty($userResult))
             {
-                // User exists
-                $errorData['userExists'] = 1;
+                // Username exists
+                if ($userResult['name'] == $userData['name'])
+                {
+                    $errorData['userNameExists'] = 1;
+                }
+                // UserMail exists
+                if ($userResult['email'] == $userData['email'])
+                {
+                    $errorData['userMailExists'] = 1;
+                }
             } else {
                 $pwHash = password_hash($userData['password'], PASSWORD_BCRYPT);
 
@@ -185,18 +194,22 @@ class GamingBlog_User
      * @param string $userName
      * @param string $userPwHash
      */
-    private static function checkUserExists($dbRead, $userName)
+    private static function getRegisteredUser($dbRead, $userName, $userMail)
     {
         $userFetcher = new GamingBlog_Database_User_Fetcher($dbRead);
+        $userFetcher->setFetchMode(GamingBlog_DbFetcher::FETCHMODE_ROW);
+        
         $userFetcher->setNameFilter($userName);
+        $userFetcher->setMailFilter($userMail);
+        $userFetcher->enableNameOrMailFilter();
         
         $res = $userFetcher->getResult();
         
         if (!empty($res))
         {
-            return true;
+            return $res;
         } else {
-            return false;
+            return array();
         }
     }
     
