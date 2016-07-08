@@ -7,10 +7,12 @@ class BlogController extends GamingBlog_Controller_Action
     /* Main-Action with the overview of the news-entries */
     public function overviewAction()
     {
-        $this->_view->news_entries = array(array('title' => "blub", 'content' => 'whuzzza'));
-        
+        $this->_view->news_entries= array(array('title' => "blub", 'content' => 'whuzzza'),array('title'=>"hallo",'content'=>'blabliblub')
+            ,array('title'=>"hallo",'content'=>'blabliblub'),array('title'=>"hallo",'content'=>'blabliblub')
+            ,array('title'=>"hallo",'content'=>'blabliblub'),array('title'=>"hallo",'content'=>'blabliblub')
+            ,array('title'=>"hallo",'content'=>'blabliblub'),array('title'=>"hallo",'content'=>'blabliblub')
+            ,array('title'=>"hallo",'content'=>'blabliblub'),array('title'=>"hallo",'content'=>'blabliblub'));
         // action body
-        $this->_view->hello = 'Hello Smarty 3';
         
         $this->_view->render("blog/overview.tpl");
     }

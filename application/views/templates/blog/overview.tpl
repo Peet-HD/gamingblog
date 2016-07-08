@@ -7,12 +7,7 @@
     <body>
         {include file='static/topMenu.tpl'}
         <div id="main-block">
-            {$hello}
-            {foreach from=$news_entries item=entry}
-                Title: {$entry.title}<br>
-                Content: {$entry.content}<br>
-            {/foreach}  
-
+            {include file='static/blog_entries.tpl'}
         </div>
         {include file='static/sidebar.tpl'}
     </body>
