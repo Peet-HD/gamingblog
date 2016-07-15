@@ -137,15 +137,18 @@ nav{
     max-width:1500px;
     min-height:250px;
     float:left;
-    text-align:center;
     position:relative;
 }
 .ueberschrift{
-    font-size:50px;
+    font-size:40px;
     font-weight:bold;
+    padding-left:10px;
+    overflow-wrap:break-word;
+    border-bottom: solid black 1px;
 }
 .content{
     padding:14px 16px;
+    margin-bottom: 30px;
 }
 .lastline{
     position:absolute;
@@ -154,7 +157,11 @@ nav{
     background-color:#111;
     width:100%;
     text-align:right;
-
+    color:white;
+}
+.lastline p{
+    float:left;
+    padding-left: 10px;
 }
 .lastline ul{}
 .lastline ul li{

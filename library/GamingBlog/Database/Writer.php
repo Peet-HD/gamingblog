@@ -7,19 +7,12 @@ abstract class GamingBlog_Database_Writer
      */
     protected $_dbTable;
     
-    protected $_update = false;
-    
     public function __construct($db, $dbName) {
         $this->_dbTable = new Zend_Db_Table(
                                 array(
                                     'db' => $db,
                                     'name' => $dbName
                                 ));
-    }
-    
-    public function setUpdate($boolVal)
-    {
-        $this->_update = ($boolVal === true) ? true : false;
     }
     
     /**

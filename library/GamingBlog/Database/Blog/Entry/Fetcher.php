@@ -24,7 +24,8 @@ class GamingBlog_Database_Blog_Entry_Fetcher extends GamingBlog_DbFetcher
                 'adminId' => 'gb_be.adminId',
                 'timestamp' => 'gb_be.timestamp',
                 'categoryId'=> 'gb_be.categoryId',
-                'userName'=>'gb_a.userName'
+                'userName'=>'gb_a.userName',
+                'categoryName'=>'gb_bc.categoryName'
             );
     }
     
@@ -33,7 +34,9 @@ class GamingBlog_Database_Blog_Entry_Fetcher extends GamingBlog_DbFetcher
         $sql = $this->_db->select();
         
         $sql->from(array('gb_be' => 'blog_entry'), $this->_getDataFields())
-            ->joinInner(array('gb_a'=>'user_admin'),'gb_a.adminId=gb_be.adminId',array());
+            ->order('blogId DESC')
+            ->joinInner(array('gb_a'=>'user_admin'),'gb_a.adminId=gb_be.adminId',array())
+            ->joinInner(array('gb_bc'=>'blog_category'),'gb_bc.categoryId=gb_be.categoryId',array());
         
         return $sql;
     }

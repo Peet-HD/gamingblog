@@ -10,14 +10,14 @@ class GamingBlog_Database_Chat_Line_Writer extends GamingBlog_Database_Writer
      * 
      * @var int
      */
-    private $_userId;
+    private $_userId = 0;
     
     /**
      * The written chat-message
      * 
      * @var string
      */
-    private $_text;
+    private $_text = '';
     
     /**
      * The boolean info, if the message comes from an admin

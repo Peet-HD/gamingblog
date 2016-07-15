@@ -20,6 +20,8 @@ class BlogController extends GamingBlog_Controller_Action
 
         $this->_view->news_entries= $res;
         
+    //    $this->_view->category='hallo';
+        
         $this->_view->render("blog/overview.tpl");
     }
     
@@ -34,6 +36,25 @@ class BlogController extends GamingBlog_Controller_Action
     public function fourzerofourAction()
     {
         $this->_view->render('error/404.tpl');   
+    }
+    
+    public function writenewentryAction(){
+        
+        $text = $this->_getParam('text');
+        $title = $this->_getParam('title');
+        $categoryId = $this->_getParam('categoryId');
+        
+
+        
+        $entryDbWriter = new GamingBlog_Database_Blog_Entry_Writer($this->_db->write());
+        $entryDbWriter->setAdminId($this->_user->getId());
+        $entryDbWriter->setCategory($categoryId);
+        $entryDbWriter->setText($text);
+        $entryDbWriter->setTitle($title);
+        
+        $entryDbWriter->writeData();
+        
+        $this->redirect('blog/overview');
     }
 }
 
