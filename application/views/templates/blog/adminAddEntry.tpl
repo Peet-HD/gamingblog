@@ -1,3 +1,4 @@
 <form method="post">
-  <textarea>Easy! You should check out MoxieManager!</textarea>
+  <textarea name="blub"></textarea>
+  <button type="submit" style="width:50px; height:20px;">Blub</button>
 </form>
