@@ -7,8 +7,12 @@
     <body>
         {include file='static/topMenu.tpl'}
         <div id="main-block">
-            {include file='static/login_form.tpl'}
+            {if isset($adminLogin)}
+                {include file='user/login_form.tpl' adminLogin=1}
+            {else}
+                {include file='user/login_form.tpl'}
+            {/if}
         </div>
-            {include file='static/sidebar.tpl' hideLogin=1}
+        {include file='static/sidebar.tpl' hideLogin=1}
     </body>
 </html>

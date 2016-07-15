@@ -18,8 +18,12 @@
     <script type="text/javascript" src="/assets/js/{$jsSource}.js"></script>
 {/if}
 
-{if $user->authenticate()}
-    <script type="text/javascript">
+<script type="text/javascript">
+    {if $user->authenticate()}
         var userName = "{$user->getUserName()}";
-    </script>
-{/if}
+    {else}  
+        var userName = undefined;
+    {/if}
+        
+    var isAdmin = "{$user->isAdmin()}";
+</script>

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * A Controller, which handles the chat-actions
+ * 
+ * @author TH<>
+ */
 class ChatController extends GamingBlog_Controller_Action
 {
     /**
@@ -15,20 +20,24 @@ class ChatController extends GamingBlog_Controller_Action
     
     public function fetchlastentriesAction()
     {
-        $lastNum = intval($this->_getParam('lastNum', 0));
-        
-        $this->_dbChatFetcher = new GamingBlog_Database_Chat_Line_Fetcher($this->_db->read());
-        
-        if ($lastNum >= 0)
+        // Only authenticated user's can fetch chat-messages
+        if ($this->_user->authenticate())
         {
-            $this->_dbChatFetcher->setLastNum($lastNum);
-        } else {
-            $this->_dbChatFetcher->setLastNum($lastNum);
+            $lastNum = intval($this->_getParam('lastNum', 0));
+
+            $this->_dbChatFetcher = new GamingBlog_Database_Chat_Line_Fetcher($this->_db->read());
+
+            if ($lastNum >= 0)
+            {
+                $this->_dbChatFetcher->setLastNum($lastNum);
+            } else {
+                $this->_dbChatFetcher->setLastNum($lastNum);
+            }
+
+            $result = $this->_dbChatFetcher->getResult();
+        
+             echo json_encode($result);
         }
-        
-        $result = $this->_dbChatFetcher->getResult();
-        
-        echo json_encode($result);
     }
     
     public function sendentryAction()
@@ -41,9 +50,15 @@ class ChatController extends GamingBlog_Controller_Action
 
             if (strlen($text) > 0)
             {
+                
                 $chatDbWriter = new GamingBlog_Database_Chat_Line_Writer($this->_db->write());
                 $chatDbWriter->setUserId($this->_user->getId());
                 $chatDbWriter->setText($text);
+                
+                if ($this->_user->isAdmin())
+                {
+                    $chatDbWriter->setAdminEntry(true);
+                }
 
                 /**
                  * Save the prepared chat-row and save the created index-num

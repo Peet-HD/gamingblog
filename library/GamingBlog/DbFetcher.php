@@ -70,7 +70,7 @@ abstract class GamingBlog_DbFetcher
             $this->_minFetch = $min;
             $this->_maxFetch = $max;
         } else {
-            throw new GamingBlog_Fetcher_Exception('Invalid Limit-Values used');
+            throw new GamingBlog_Database_Fetcher_Exception('Invalid Limit-Values used');
         }
     }
     

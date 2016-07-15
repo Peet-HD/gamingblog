@@ -21,7 +21,9 @@ class GamingBlog_Database_Chat_Line_Fetcher extends GamingBlog_DbFetcher
         return array(
             'id' => 'gb_c.entryId',
             'timestamp' => 'gb_c.timestamp',
-            'text' => 'CONCAT(gb_u.userName, ": ", gb_c.text)'
+            'adminEntry' => 'gb_c.adminEntry',
+            'author' => 'IF(gb_c.adminEntry = "0", gb_u.userName, gb_a.userName)',
+            'text' => 'gb_c.text'
         );
     }
     
@@ -34,7 +36,8 @@ class GamingBlog_Database_Chat_Line_Fetcher extends GamingBlog_DbFetcher
         
         $subSelect->from(array('gb_c'=>'chat_data'), $this->_getDataFields())
                   ->order('entryId DESC')
-                  ->joinInner(array('gb_u' => 'user_data'), 'gb_u.userId = gb_c.userId', array());
+                  ->joinLeft(array('gb_u' => 'user_visitor'), 'gb_u.userId = gb_c.userId', array())
+                  ->joinLeft(array('gb_a' => 'user_admin'), 'gb_a.adminId = gb_c.userId', array());
         
         /**
          *  Restrict the minimum timestamp of fetched messages to (now - 5 seconds),
@@ -45,7 +48,7 @@ class GamingBlog_Database_Chat_Line_Fetcher extends GamingBlog_DbFetcher
         // If the last fetched index is provided, it will be used for filtering
         if ($this->_lastNum >= 0)
         {
-            $subSelect->where('gb_c.entryId >= ?', $this->_lastNum);
+            $subSelect->where('gb_c.entryId > ?', $this->_lastNum);
         }
         
         $sql = $this->_db->select();
@@ -62,6 +65,7 @@ class GamingBlog_Database_Chat_Line_Fetcher extends GamingBlog_DbFetcher
         
         $sql->from(array('gb_c'=>'chat_data'), array('count' => 'Count(*)'));
         
+        Debug::p($sql->__toString());
         return $sql;
     }
 

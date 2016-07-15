@@ -228,7 +228,7 @@ nav{
 }
 @media (max-width:1241px){
     body{
-        overflow:;
+        /*overflow:;*/
     }
     .banner{
         margin-left:0;

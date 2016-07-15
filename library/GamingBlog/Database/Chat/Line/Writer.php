@@ -19,6 +19,13 @@ class GamingBlog_Database_Chat_Line_Writer extends GamingBlog_Database_Writer
      */
     private $_text;
     
+    /**
+     * The boolean info, if the message comes from an admin
+     * 
+     * @var bool
+     */
+    private $_isAdminEntry = 0;
+    
     public function __construct($db) {
         parent::__construct($db, 'chat_data');
     }
@@ -36,10 +43,19 @@ class GamingBlog_Database_Chat_Line_Writer extends GamingBlog_Database_Writer
         
         return $this;
     }
+    
+    public function setAdminEntry($boolVal)
+    {
+        $this->_isAdminEntry = intval($boolVal) % 2;
+        
+        return $this;
+    }
 
     protected function _getRowData() {
         
         $rowData = array();
+        
+        $rowData['adminEntry'] = $this->_isAdminEntry;
         
         if ($this->_userId >= 0)
         {

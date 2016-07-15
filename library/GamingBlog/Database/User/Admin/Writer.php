@@ -1,16 +1,16 @@
 <?php
 
 /* 
- * The Chat-Line-Table-Class to offer a direct access to the table for inserting / updating lines
+ * The Admin-User-Write to offer a direct access to the table for inserting / updating lines
  */
-class GamingBlog_Database_User_Writer extends GamingBlog_Database_Writer
+class GamingBlog_Database_User_Admin_Writer extends GamingBlog_Database_Writer
 {
     /**
-     * The user-id, can be set to update a specific row
+     * The admin-id, can be set to update a specific row
      * 
      * @var int
      */
-    private $_userId;
+    private $_adminId;
     
     /**
      * The user-name
@@ -41,12 +41,12 @@ class GamingBlog_Database_User_Writer extends GamingBlog_Database_Writer
     private $_active;
     
     public function __construct($db) {
-        parent::__construct($db, 'user_data');
+        parent::__construct($db, 'user_admin');
     }
     
-    public function setUserId($userId)
+    public function setAdminId($userId)
     {
-        $this->_userId = intval($userId);
+        $this->_adminId = intval($userId);
         
         return $this;
     }
@@ -83,9 +83,9 @@ class GamingBlog_Database_User_Writer extends GamingBlog_Database_Writer
         
         $rowData = array();
         
-        if (is_numeric($this->_userId) && $this->_userId >= 0)
+        if (is_numeric($this->_adminId) && $this->_adminId >= 0)
         {
-            $rowData['userId'] = $this->_userId;
+            $rowData['userId'] = $this->_adminId;
         }
         
         if (!empty($this->_userName))
@@ -112,6 +112,6 @@ class GamingBlog_Database_User_Writer extends GamingBlog_Database_Writer
     }
 
     protected function _getPkField() {
-        return 'userId';
+        return 'adminId';
     }
 }

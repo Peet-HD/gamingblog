@@ -51,7 +51,7 @@ class UserController extends GamingBlog_Controller_Action
                 'password' => $this->_getParam("password")
             );
 
-            $loginErrorData = $this->_user->tryLogin($this->_db->write(), $userData);
+            $loginErrorData = $this->_user->tryVisitorLogin($this->_db->write(), $userData);
             
             if (!empty($loginErrorData))
             {

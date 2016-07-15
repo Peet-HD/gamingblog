@@ -1,11 +1,11 @@
 <?php
 
 /**
- * A class to fetch user-data from the database
+ * A class to fetch visitor-user-data from the database
  * 
  * @author TH<>
  */
-class GamingBlog_Database_User_Fetcher extends GamingBlog_DbFetcher
+class GamingBlog_Database_User_Visitor_Fetcher extends GamingBlog_DbFetcher
 {
     /**
      * Fetches the full user-data
@@ -25,10 +25,14 @@ class GamingBlog_Database_User_Fetcher extends GamingBlog_DbFetcher
     
     private $_filterNameOrMail = false;
     
-    public function __construct($pDb, $fetchData = GamingBlog_Database_User_Fetcher::DATA_BASIC) {
+    /**
+     * @param Zend_Db_Adapter_Abstract $pDb
+     * @param int $fetchData can have one of the following values: "..::DATA_COMPLETE" or "..::DATA_BASIC"
+     */
+    public function __construct($pDb, $fetchData = GamingBlog_Database_User_Visitor_Fetcher::DATA_BASIC) {
         parent::__construct($pDb);
         
-        if ($fetchData == GamingBlog_Database_User_Fetcher::DATA_COMPLETE)
+        if ($fetchData == GamingBlog_Database_User_Visitor_Fetcher::DATA_COMPLETE)
         {
             $this->_fetchFullData = true;
         }
@@ -83,7 +87,7 @@ class GamingBlog_Database_User_Fetcher extends GamingBlog_DbFetcher
     {
         $sql = $this->_db->select();
         
-        $sql->from(array('gb_u' => 'user_data'), $this->_getDataFields());
+        $sql->from(array('gb_u' => 'user_visitor'), $this->_getDataFields());
         
         if ($this->_filterNameOrMail)
         {
@@ -110,7 +114,7 @@ class GamingBlog_Database_User_Fetcher extends GamingBlog_DbFetcher
     {
         $sql = $this->_db->select();
         
-        $sql->from(array('gb_u'=>'user_data'), array('count' => 'Count(*)'));
+        $sql->from(array('gb_u'=>'user_visitor'), array('count' => 'Count(*)'));
         
         return $sql;
     }

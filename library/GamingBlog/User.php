@@ -9,6 +9,8 @@ class GamingBlog_User
 {
     protected $_userSess;
     
+    private static $_pwSalt = 'gblog_salt';
+    
     /**
      * @todo TODO TODO Check expiration timer, looks like it's not working currently
      */
@@ -20,14 +22,14 @@ class GamingBlog_User
     }
     
     /**
-     * Tries to login with the given userdata
-     * If the user-exists a check if the password needs to be rehashed will be done
+     * Tries to login with the given visitor-data
+     * If the visitor exists a check if the password needs to be rehashed will be done
      * 
      * @param type $dbWrite
      * @param type $userData
      * @return array
      */
-    public function tryLogin($dbWrite, $userData)
+    public function tryVisitorLogin($dbWrite, $userData)
     {
         $errorData = array();
         
@@ -43,17 +45,13 @@ class GamingBlog_User
         
         if (empty($errorData))
         {
-            $userFetcher = new GamingBlog_Database_User_Fetcher($dbWrite, GamingBlog_Database_User_Fetcher::DATA_COMPLETE);
+            $userFetcher = new GamingBlog_Database_User_Visitor_Fetcher($dbWrite, GamingBlog_Database_User_Visitor_Fetcher::DATA_COMPLETE);
             $userFetcher->setFetchMode(GamingBlog_DbFetcher::FETCHMODE_ROW);
-            
-            if (strpos($userData['login'], '@') == false)
-            {
-                $userFetcher->setNameFilter($userData['login']);
-            } else {
-                $userFetcher->setMailFilter($userData['login']);
-            }
+            $userFetcher->setNameFilter($userData['login']);
 
             $res = $userFetcher->getResult();
+            
+            $saltedUserPw = GamingBlog_User::getSaltedPw($userData['password']);
             
             // Check if the complete user-data has been fetched from the database, the user is active and the password is correct
             if (!isset($res['name']) || empty($res['name']) ||
@@ -65,20 +63,20 @@ class GamingBlog_User
                  * damit korrekt geprüft wird, welcher account aktiv geschaltet wurde
                  */
                 !isset($res['active']) || ($res['active'] != 0) ||
-                !password_verify($userData['password'], $res['password'])) {
+                !password_verify($saltedUserPw, $res['password'])) {
                 
                 $errorData['invalidLogin'] = 1;
             } else {
                 // Optional: Rehash the password, if necessary
-                if (!password_needs_rehash($res['password'], PASSWORD_BCRYPT)) {
+                if (password_needs_rehash($res['password'], PASSWORD_BCRYPT)) {
                     // Rehash the password
-                    $newPwHash = password_hash($userData['password'], PASSWORD_BCRYPT);
+                    $newPwHash = password_hash($saltedUserPw, PASSWORD_BCRYPT);
                     
                     // Verify the new password-hash-value
-                    if (password_verify($userData['password'], $newPwHash))
+                    if (password_verify($saltedUserPw, $newPwHash))
                     {
                         // Add the rehashed password to the proper database-row
-                        $userDbWriter = new GamingBlog_Database_User_Writer($dbWrite);
+                        $userDbWriter = new GamingBlog_Database_User_Visitor_Writer($dbWrite);
                         $userDbWriter->setUserId($res['id'])
                                      ->setPassword($newPwHash);
                         
@@ -89,13 +87,100 @@ class GamingBlog_User
                 // Write the user-data to the session (the user is now authenticated)
                 $this->_userSess->data = array(
                     'name' => $res['name'],
-                    'id' => $res['id'],
+                    'id' => $res['id']
                 );
             }
             
         }
         
         return $errorData;
+    }
+    
+    /**
+     * Tries to login with the given admin-userdata
+     * If the admin exists a check if the password needs to be rehashed will be done
+     * 
+     * @param type $dbWrite
+     * @param type $userData
+     * @return array
+     */
+    public function tryAdminLogin($dbWrite, $userData)
+    {
+        $errorData = array();
+        
+        if (!isset($userData['login']) || empty($userData['login']))
+        {
+            $errorData['missingLogin'] = 1;
+        }
+        
+        if (!isset($userData['password']) || empty($userData['password']))
+        {
+            $errorData['missingPassword'] = 1;
+        }
+        
+        if (empty($errorData))
+        {
+            $adminFetcher = new GamingBlog_Database_User_Admin_Fetcher($dbWrite, GamingBlog_Database_User_Visitor_Fetcher::DATA_COMPLETE);
+            $adminFetcher->setFetchMode(GamingBlog_DbFetcher::FETCHMODE_ROW);
+            $adminFetcher->setNameFilter($userData['login']);
+
+            $res = $adminFetcher->getResult(); 
+           
+            $saltedUserPw = GamingBlog_User::getSaltedPw($userData['password']);
+            
+            // Check if the complete user-data has been fetched from the database, the user is active and the password is correct
+            if (!isset($res['name']) || empty($res['name']) ||
+                !isset($res['id']) || ($res['id'] < 0) ||
+                !isset($res['password']) || empty($res['password']) ||
+                !isset($res['email']) || empty($res['email']) ||
+                /**
+                 * @todo TODO TODO TODO unbedingt das active-flag wieder auf 1 schalten,
+                 * damit korrekt geprüft wird, welcher account aktiv geschaltet wurde
+                 */
+                !isset($res['active']) || ($res['active'] != 1) ||
+                !password_verify($saltedUserPw, $res['password'])) {
+                
+                $errorData['invalidLogin'] = 1;
+            } else {
+                // Optional: Rehash the password, if necessary
+                if (password_needs_rehash($res['password'], PASSWORD_BCRYPT)) {
+                    
+                    // Rehash the password
+                    $newPwHash = password_hash($saltedUserPw, PASSWORD_BCRYPT);
+                    
+                    // Verify the new password-hash-value
+                    if (password_verify($saltedUserPw, $newPwHash))
+                    {
+                        // Add the rehashed password to the proper database-row
+                        $userDbWriter = new GamingBlog_Database_User_Admin_Writer($dbWrite);
+                        $userDbWriter->setAdminId($res['id'])
+                                     ->setPassword($newPwHash);
+                        
+                        $userDbWriter->updateData($res['id']);
+                    }
+                }
+                
+                // Write the user-data to the session (the user is now authenticated)
+                $this->_userSess->data = array(
+                    'name' => $res['name'],
+                    'id' => $res['id'],
+                    'adminLevel' => $res['adminLevel']
+                );
+            }
+            
+        }
+        
+        return $errorData;
+    }
+    
+    /*
+     * Adds the Gamingblog_Salt to the password 
+     * @param type $pw
+     * @return type
+     */
+    public static function getSaltedPw($pw)
+    {
+        return $pw . GamingBlog_User::$_pwSalt;
     }
     
     /**
@@ -146,23 +231,27 @@ class GamingBlog_User
         if (empty($errorData))
         {
             $userResult = GamingBlog_User::getRegisteredUser($gamingBlogDb->read(), $userData['name'], $userData['email']);
+            
             // Check if the given user is valid
             if (!empty($userResult))
             {
-                // Username exists
-                if ($userResult['name'] == $userData['name'])
+                foreach ($userResult as $userFromDb)
                 {
-                    $errorData['userNameExists'] = 1;
-                }
-                // UserMail exists
-                if ($userResult['email'] == $userData['email'])
-                {
-                    $errorData['userMailExists'] = 1;
+                    // Username exists
+                    if ($userFromDb['name'] == $userData['name'])
+                    {
+                        $errorData['userNameExists'] = 1;
+                    }
+                    // UserMail exists
+                    if ($userFromDb['email'] == $userData['email'])
+                    {
+                        $errorData['userMailExists'] = 1;
+                    }
                 }
             } else {
-                $pwHash = password_hash($userData['password'], PASSWORD_BCRYPT);
+                $pwHash = password_hash(GamingBlog_User::getSaltedPw($userData['password']), PASSWORD_BCRYPT);
 
-                $userDbWriter = new GamingBlog_Database_User_Writer($gamingBlogDb->write());
+                $userDbWriter = new GamingBlog_Database_User_Visitor_Writer($gamingBlogDb->write());
                 $userDbWriter->setUsername($userData['name'])
                              ->setPassword($pwHash)
                              ->setEmail($userData['email']);
@@ -188,20 +277,16 @@ class GamingBlog_User
     }
     
     /**
-     * Helper-Method to check if the given username exists in the user-database
+     * Helper-Method to check if the given username / mail exists in the user- or admin-database
      * 
      * @param Zend_Db_Adapter_Abstract $dbRead
      * @param string $userName
-     * @param string $userPwHash
+     * @param string $userMail
      */
     private static function getRegisteredUser($dbRead, $userName, $userMail)
     {
-        $userFetcher = new GamingBlog_Database_User_Fetcher($dbRead);
-        $userFetcher->setFetchMode(GamingBlog_DbFetcher::FETCHMODE_ROW);
-        
-        $userFetcher->setNameFilter($userName);
-        $userFetcher->setMailFilter($userMail);
-        $userFetcher->enableNameOrMailFilter();
+        $userFetcher = new GamingBlog_Database_User_General_NameAndMail_Fetcher($dbRead, $userName, $userMail);
+        $userFetcher->setFetchMode(GamingBlog_DbFetcher::FETCHMODE_ALL);
         
         $res = $userFetcher->getResult();
         
@@ -308,7 +393,12 @@ class GamingBlog_User
      * @author PB 
      */
     public function  isAdmin(){
-        return true;
+        return isset($this->_userSess->data['adminLevel']);
     }
+
+    public static function createAdminPw($userPw) {
+        return password_hash(GamingBlog_User::getSaltedPw($userPw), PASSWORD_BCRYPT);
+    }
+
 }
 

@@ -1,10 +1,13 @@
 var chatLineData = [];
 
-var lastUpdateTime = 0;
+var lastId = -1;
 
 $(function()
 {
-    loadDbEntries(0);
+    if ((userName !== undefined) && (userName !== null))
+    {
+        loadDbEntries(0);
+    }
     
     $('#chatInputLine').keydown(function(e)
     {
@@ -34,7 +37,7 @@ function sendChatLine()
 
             if (id != -1)
             {
-                appendChatTextLine(id, text, true);   
+                appendChatTextLine(id, text, userName, isAdmin);   
             }
 
             $('#chatInputLine').val("");
@@ -52,17 +55,27 @@ function sendChatLine()
     }
 }
 
-function appendChatTextLine(id, textVal, addUserName)
+function appendChatTextLine(id, textVal, authorName, isAdminMsg)
 {
     console.log("check: " + id);
     if (chatLineData[id] === undefined)
     {
         chatLineData[id] = textVal;
         
-        if (addUserName)
-            $('#chatHistoryBlock').append("<div class='singleChatLine'>" + userName + ": " + textVal + "</div>");
-        else
-            $('#chatHistoryBlock').append("<div class='singleChatLine'>" + textVal + "</div>");
+        var textMsgHtml = "<div class='singleChatLine'>";
+        
+        textMsgHtml += "<span ";
+        
+        if (isAdminMsg == '1')
+        {
+            textMsgHtml += 'style="color:yellow"'
+        }
+        
+        textMsgHtml += ">[" + authorName + "]: </span>" + textVal;
+        
+        textMsgHtml += "</div>";
+        
+        $('#chatHistoryBlock').append(textMsgHtml);
 
         // Auto-Scroll to Bottom
         $('#chatHistoryBlock').animate({
@@ -74,33 +87,30 @@ function appendChatTextLine(id, textVal, addUserName)
     console.log("checkdone");
 }
 
-function loadDbEntries(lastUpdateTimestamp)
+function loadDbEntries()
 {
-    var date = new Date();
-    var curTime = date.getTime();
-        
     $.ajax({
         url: "/chat/fetchlastentries",
         context: document.body,
         data:
         {
-            'lastUpdate' : lastUpdateTimestamp
+            'lastNum' : lastId
         }
         
     }).done(function(res) {
         var arr = $.parseJSON(res);
         
-        if (arr.length > 0)
-            lastUpdateTime = curTime/1000;
-        
         // Add chat-lines to the visible content
         $.each(arr, function(index, val)
         {
-            appendChatTextLine(val.id, val.text, false);
+            appendChatTextLine(val.id, val.text, val.author, val.adminEntry);
+            
+            lastId = val.id;
         });
+        
         setTimeout(function()
             {
-                loadDbEntries(lastUpdateTime);
+                loadDbEntries();
             }, '1000');
     });
 }

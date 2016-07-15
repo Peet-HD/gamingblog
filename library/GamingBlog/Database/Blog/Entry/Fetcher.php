@@ -33,7 +33,7 @@ class GamingBlog_Database_Blog_Entry_Fetcher extends GamingBlog_DbFetcher
         $sql = $this->_db->select();
         
         $sql->from(array('gb_be' => 'blog_entry'), $this->_getDataFields())
-            ->joinInner(array('gb_a'=>'admin'),'gb_a.adminId=gb_be.adminId',array());
+            ->joinInner(array('gb_a'=>'user_admin'),'gb_a.adminId=gb_be.adminId',array());
         
         return $sql;
     }
