@@ -25,7 +25,7 @@
 
         {else}
             <header class="ueberschrift">{$entry.title}</header>
-            <section class="content">{$entry.text|truncate:3000:false}</section>
+            <section class="content">{$entry.text|truncate:3000:'...'}</section>
 
 	<footer class="lastline">
             <p>Kategorie: {$entry.categoryName}</p>
