@@ -22,7 +22,7 @@ CREATE TABLE `user_admin` (
  `active` tinyint(1) NOT NULL COMMENT 'The flag, which defines if the admin-account can be used to login',
  `lastLogin` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  PRIMARY KEY (`adminId`)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
 -- ----------------------------------------------------------------------------
 -- Benutzer-BESUCHER-Tabelle
@@ -38,7 +38,7 @@ CREATE TABLE `user_visitor` (
  `activatedOnce` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'The flag, which defines, if the user-account has been activated once',
  `lastLogin` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'The last login-time of the user',
  PRIMARY KEY (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
 
 -- ----------------------------------------------------------------------------
