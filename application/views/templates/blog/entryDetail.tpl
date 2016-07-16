@@ -7,9 +7,6 @@
     <body>
         {include file='static/topMenu.tpl'}
         <div id='main-block'>
-              {if $user->authenticate() && $user->isAdmin()}
-                {include file='blog/adminAddEntry.tpl'}
-            {/if}
         {foreach from=$news item=entry}
             {if $entry.blogId eq $smarty.get.blogid}
                 <header class="ueberschrift">{$entry.title}</header>
@@ -17,14 +14,24 @@
 	<footer class="lastline">
             <p>Kategorie: {$entry.categoryName}</p>
             <ul>
-                <li></li>
+                <li>{include file='blog/commentary.tpl'}</li>
 		<li><a href="">Likes</a></li>
-                <li><a href="">Kommentare</a></li>
             </ul>
 	</footer>
         {/if}
         {/foreach}
+                        <ul id="comment">
+            {foreach from=$comment item=hi}
+                {if $hi.blogId eq $smarty.get.blogid}
+                <li>
+                    {$hi.text}
+                </li>
+                {/if}
+            {/foreach}
+        </ul>
         </div>
+
+
                 {include file='static/sidebar.tpl'}
     </body>
 </html>

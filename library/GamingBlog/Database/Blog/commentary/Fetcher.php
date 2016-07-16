@@ -20,8 +20,7 @@ class GamingBlog_Database_Blog_Commentary_Fetcher extends GamingBlog_DbFetcher
             return array(
                 'commentId' => 'gb_co.commentId',
                 'text' => 'gb_co.text',
-                'blogId' => 'gb_be.blogId',
-                'userId' => 'gb_uv.userId',
+                'blogId' => 'gb_co.blogId',
                 'timestamp' => 'gb_co.timestamp'
             );
     }
@@ -31,9 +30,9 @@ class GamingBlog_Database_Blog_Commentary_Fetcher extends GamingBlog_DbFetcher
         $sql = $this->_db->select();
         
         $sql->from(array('gb_co' => 'blog_commentary'), $this->_getDataFields())
-            ->order('timestamp DESC')
-            ->joinInner(array('gb_uv'=>'userId'),'gb_uv.userId=gb_co.userId',array())
-            ->joinInner(array('gb_be'=>'blogId'),'gb_be.blogId=gb_co.blogId',array());
+                ->order('timestamp DESC')
+   //         ->joinInner(array('gb_uv'=>'userId'),'gb_uv.userId=gb_co.userId',array())
+            ->joinInner(array('gb_be'=>'blog_entry'),'gb_be.blogId=gb_co.blogId',array());
         
         return $sql;
     }

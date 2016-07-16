@@ -1,6 +1,7 @@
 {foreach from=$news_entries item=entry}
     <div class="blogeintraege">
 	<header class="ueberschrift">{$entry.title}</header>
+        <h5></h5>
         <section class="content">{$entry.text|truncate:1200:false}</section>
 	<footer class="lastline">
             <p>Kategorie: {$entry.categoryName}</p>

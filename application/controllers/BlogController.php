@@ -26,17 +26,25 @@ class BlogController extends GamingBlog_Controller_Action
     /* Shows the Detail-Page for a specific entry */
     public function entrydetailAction()
     {
-        $entryId = $this->getParam('blogId');
 
         $blog_entry_fetcher= new GamingBlog_Database_Blog_Entry_Fetcher($this->_db->read());
                 
         $res = $blog_entry_fetcher->getResult();
         $this->_view->news=$res;
 
+        $comment_fetcher = new GamingBlog_Database_Blog_Commentary_Fetcher($this->_db->read());
+        $comm = $comment_fetcher->getResult();
+        $this->_view->comment=$comm;
+        
         $this->_view->render('blog/entryDetail.tpl');
     }
+    
+    public function commentAction()
+    {
 
-    public function fourzerofourAction()
+    }
+
+        public function fourzerofourAction()
     {
         $this->_view->render('error/404.tpl');   
     }
@@ -60,18 +68,24 @@ class BlogController extends GamingBlog_Controller_Action
         $this->redirect('blog/overview');
     }
     
+    
+    
     public function writecommentAction(){
         
-        $text = $this->getParam('text');
+        $text = $this->getParam('comment');
         $blogId = $this->getParam('blogId');
-        
+
         $commentDbWriter = new GamingBlog_Database_Blog_Commentary_Writer($this->_db->write());
+
         $commentDbWriter->setText($text);
+
         $commentDbWriter->setUserId($this->_user->getId());
+
         $commentDbWriter->setBlogId($blogId);
-        
+                                     //   Debug::p($commentDbWriter->writeData());
         $commentDbWriter->writeData();
-                
+
+       $this->redirect('blog/entrydetail?blogid='.$blogId);
     }
 }
 

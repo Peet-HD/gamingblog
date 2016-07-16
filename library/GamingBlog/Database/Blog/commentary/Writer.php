@@ -14,16 +14,16 @@ class GamingBlog_Database_Blog_Commentary_Writer extends GamingBlog_Database_Wri
      * @param Zend_Db_Adapter_Abstract $pDb
      */
     
-    private $_commentId = 0; 
+    private $_commentId = -1; 
     
-    private $_blogId = 0;
+    private $_blogId = -1;
 
     private $_text = '';
     
-    private $_userId = 0;
+    private $_userId = -1;
     
     public function __construct($db) {
-        parent::__construct($db, 'blog_entry');
+        parent::__construct($db, 'blog_commentary');
     }
     
     public function setCommentId($commentId){
@@ -55,7 +55,7 @@ class GamingBlog_Database_Blog_Commentary_Writer extends GamingBlog_Database_Wri
     }
 
     protected function _getPkField() {
-        return 'blogId';
+        return 'commentId';
     }
 
     protected function _getRowData() {
@@ -74,6 +74,7 @@ class GamingBlog_Database_Blog_Commentary_Writer extends GamingBlog_Database_Wri
         
         if(!empty($this->_text))
         {
+                    //Debug::p($this->_text);
             $rowData['text'] = $this->_text;
         }
         
@@ -81,12 +82,8 @@ class GamingBlog_Database_Blog_Commentary_Writer extends GamingBlog_Database_Wri
         {
             $rowData['userId'] = $this->_userId;
         }
-        
+      //  Debug::p($rowData);
         return $rowData;
-        
-    }
-    
-    private function _setText() {
         
     }
 }
