@@ -123,7 +123,7 @@ nav ul li a, nav ul li span {
     position:fixed;
     right:10%;
     top:0px;
-    padding-top:194px;
+    padding-top:130px;
     z-index:0;
 }
 
@@ -161,12 +161,15 @@ nav ul li a, nav ul li span {
     max-width:1500px;
     min-height:250px;
     float:left;
-    text-align:center;
+    text-align:left;
     position:relative;
+    overflow-wrap: break-word;
 }
 .ueberschrift{
-    font-size:50px;
+    font-size:30px;
     font-weight:bold;
+    text-align: center;
+    border-bottom: black solid 2px;
 }
 .content{
     padding:14px 16px;
@@ -180,7 +183,11 @@ nav ul li a, nav ul li span {
     text-align:right;
 
 }
-.lastline ul{}
+.lastline p{
+    float:left;
+    padding-left:5px;
+    color:white;
+}
 .lastline ul li{
     list-style-type:none;
     overflow:hidden;
