@@ -39,16 +39,6 @@ class BlogController extends GamingBlog_Controller_Action
         $this->_view->render('blog/entryDetail.tpl');
     }
     
-    public function commentAction()
-    {
-
-    }
-
-        public function fourzerofourAction()
-    {
-        $this->_view->render('error/404.tpl');   
-    }
-    
     public function writenewentryAction(){
         
         $text = $this->_getParam('text');

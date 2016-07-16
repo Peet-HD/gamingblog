@@ -127,10 +127,17 @@ class AdminController extends GamingBlog_Controller_Action
         if ($this->hasParam('saved'))
         {
             $this->_view->saved = $this->getParam('saved');
-        } else if ($this->hasParam('err'))
+        } else {
+            $this->_view->saved = '';
+        }
+        
+        if ($this->hasParam('err'))
         {
             $this->_view->err = $this->getParam('err');
+        } else {
+            $this->_view->err = '';
         }
+        
         
         $contentFetcher = new GamingBlog_Database_PageContent_Fetcher($this->_db->read());
         
@@ -140,10 +147,15 @@ class AdminController extends GamingBlog_Controller_Action
         
         $this->_view->contentIdData = $contentIdReferences;
         
-        $this->_view->gameHtmlContent = isset($pageContent[$contentIdReferences['game']]) ? $pageContent[$contentIdReferences['game']]['htmlContent'] : '';
-        $this->_view->companyHtmlContent = isset($pageContent[$contentIdReferences['company']]) ? $pageContent[$contentIdReferences['company']]['htmlContent'] : '';
-        $this->_view->aboutHtmlContent = isset($pageContent[$contentIdReferences['about']]) ? $pageContent[$contentIdReferences['about']]['htmlContent'] : '';
-        $this->_view->privacyHtmlContent = isset($pageContent[$contentIdReferences['privacy']]) ? $pageContent[$contentIdReferences['privacy']]['htmlContent'] : '';
+        if ($this->hasParam('editId'))
+        {
+            $this->_view->editId = $this->getParam('editId');
+        }
+        
+        $this->_view->gameHtmlContent = isset($pageContent[$contentIdReferences['game']]) ? $pageContent[$contentIdReferences['game']] : '';
+        $this->_view->companyHtmlContent = isset($pageContent[$contentIdReferences['company']]) ? $pageContent[$contentIdReferences['company']] : '';
+        $this->_view->aboutHtmlContent = isset($pageContent[$contentIdReferences['about']]) ? $pageContent[$contentIdReferences['about']] : '';
+        $this->_view->privacyHtmlContent = isset($pageContent[$contentIdReferences['privacy']]) ? $pageContent[$contentIdReferences['privacy']] : '';
         
         $this->_view->render('admin/generalcontent.tpl');
     }
@@ -180,12 +192,12 @@ class AdminController extends GamingBlog_Controller_Action
 
                 if ($contentWriter->updateData($pageId) > 0)
                 {
-                    $this->redirect('/admin/generalcontent?saved=' . $contentByKeys[$pageId]);
+                    $this->redirect('/admin/generalcontent?saved=' . $contentByKeys[$pageId] . '#' . $contentByKeys[$pageId]);
                 } else {
-                    $this->redirect('/admin/generalcontent?err=' . $contentByKeys[$pageId]);
+                    $this->redirect('/admin/generalcontent?err=' . $contentByKeys[$pageId] . '#' . $contentByKeys[$pageId]);
                 }
             } else {
-                $this->redirect('/admin/generalcontent?err=invalidId');
+                $this->redirect('/admin/generalcontent?err=invalidId' . '&editId=' . '#' . $contentByKeys[$pageId]);
             }
         }
         
