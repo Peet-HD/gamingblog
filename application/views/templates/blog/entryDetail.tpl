@@ -6,8 +6,25 @@
     </head>
     <body>
         {include file='static/topMenu.tpl'}
-        <div id="main-block">
-            {* TODO entry-detail-content*}
+        <div id='main-block'>
+              {if $user->authenticate() && $user->isAdmin()}
+                {include file='blog/adminAddEntry.tpl'}
+            {/if}
+        {foreach from=$news item=entry}
+            {if $entry.blogId eq $smarty.get.blogid}
+                <header class="ueberschrift">{$entry.title}</header>
+        <section class="content">{$entry.text}</section>
+	<footer class="lastline">
+            <p>Kategorie: {$entry.categoryName}</p>
+            <ul>
+                <li></li>
+		<li><a href="">Likes</a></li>
+                <li><a href="">Kommentare</a></li>
+            </ul>
+	</footer>
+        {/if}
+        {/foreach}
         </div>
+                {include file='static/sidebar.tpl'}
     </body>
 </html>

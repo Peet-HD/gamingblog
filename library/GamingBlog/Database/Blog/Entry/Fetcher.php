@@ -18,7 +18,7 @@ class GamingBlog_Database_Blog_Entry_Fetcher extends GamingBlog_DbFetcher
     private function _getDataFields()
     {
             return array(
-                'id' => 'gb_be.blogId',
+                'blogId' => 'gb_be.blogId',
                 'title' => 'gb_be.title',
                 'text' => 'gb_be.text',
                 'adminId' => 'gb_be.adminId',

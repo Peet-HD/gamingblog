@@ -1,34 +1,34 @@
 <?php
 
 /**
- * A class to write blog-entry-data to the database
+ * A class to write blog-commentary-data to the database
  * 
  * @author PB<>
  * 
  */
 
-class GamingBlog_Database_Blog_Entry_Writer extends GamingBlog_Database_Writer
+class GamingBlog_Database_Blog_Commentary_Writer extends GamingBlog_Database_Writer
 {
     /**
      * 
      * @param Zend_Db_Adapter_Abstract $pDb
      */
     
-    private $_title = '';    
+    private $_commentId = 0; 
     
+    private $_blogId = 0;
+
     private $_text = '';
     
-    private $_adminId = 0;
-    
-    private $_categoryId = 0;
+    private $_userId = 0;
     
     public function __construct($db) {
         parent::__construct($db, 'blog_entry');
     }
     
-    public function setTitle($title){
+    public function setCommentId($commentId){
         
-        $this->_title = $title;
+        $this->_commentId = $commentId;
         
         return $this;
     }
@@ -40,16 +40,16 @@ class GamingBlog_Database_Blog_Entry_Writer extends GamingBlog_Database_Writer
         return $this;
     }
     
-    public function setAdminId($adminId){
+    public function setBlogId($blogId){
         
-        $this->_adminId = intval($adminId);
+        $this->_blogId = intval($blogId);
         
         return $this;
     }
     
-    public function setCategory($categoryId){
+    public function setUserId($userId){
         
-        $this->_categoryId = intval($categoryId);
+        $this->_userId = intval($userId);
         
         return $this;
     }
@@ -62,14 +62,14 @@ class GamingBlog_Database_Blog_Entry_Writer extends GamingBlog_Database_Writer
         
         $rowData = array();
         
-        if ($this->_adminId >= 0)
+        if ($this->_commentId >= 0)
         {
-            $rowData['adminId'] = $this->_adminId;
+            $rowData['commentId'] = $this->_commentId;
         }
         
-        if(!empty($this->_title))
+        if($this->_blogId >= 0)
         {
-            $rowData['title'] = $this->_title;
+            $rowData['blogId'] = $this->_blogId;
         }
         
         if(!empty($this->_text))
@@ -77,9 +77,9 @@ class GamingBlog_Database_Blog_Entry_Writer extends GamingBlog_Database_Writer
             $rowData['text'] = $this->_text;
         }
         
-        if($this->_categoryId >= 0)
+        if($this->_userId >= 0)
         {
-            $rowData['categoryId'] = $this->_categoryId;
+            $rowData['userId'] = $this->_userId;
         }
         
         return $rowData;
