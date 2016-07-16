@@ -22,8 +22,6 @@
 
 {if isset($cssSource)}
     <link rel="stylesheet" type="text/css" href="/assets/layout/{$cssSource}/default.css" />
-{else}
-    <link rel="stylesheet" type="text/css" href="/assets/layout/{$module}/default.css" />
 {/if}
 
 <script type="text/javascript">
