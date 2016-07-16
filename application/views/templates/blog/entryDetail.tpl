@@ -10,9 +10,11 @@
             <section class="content">{$entryDetails.text}</section>
             <footer class="lastline">
                 <p>Kategorie: {$entryDetails.categoryName}</p>
-                <ul>
-                    <li>{include file='blog/commentary.tpl' blogId=$entryDetails.blogId user=$user}</li>
-                </ul>
+                {if $user->authenticate() && !$user->isAdmin()}
+                    <ul>
+                        <li>{include file='blog/commentary.tpl' blogId=$entryDetails.blogId user=$user}</li>
+                    </ul>
+                {/if}
             </footer>
             <ul id="comment">
                 {foreach from=$comment item=hi}
