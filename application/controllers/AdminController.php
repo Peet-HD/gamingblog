@@ -10,7 +10,11 @@ class AdminController extends GamingBlog_Controller_Action
     protected $_defaultController = 'Blog';
     protected $_defaultAction = 'overview';
     
-    /* Main-Action offering the register of a new user */
+    /**
+     * Main-Action offering the register of a new user
+     * 
+     * @author TH<>
+     */
     public function createpwAction()
     {
         $userPw = $this->_getParam("pw", 0);
@@ -22,6 +26,8 @@ class AdminController extends GamingBlog_Controller_Action
     
     /**
      * The login-action for admins (can only be accessed by directly call the controller/action
+     * 
+     * @author TH<>
      */
     public function loginAction()
     {
@@ -55,6 +61,8 @@ class AdminController extends GamingBlog_Controller_Action
     
     /**
      * The visitor-settings-page, offering the possibility to activate / deactivate /deleting visitor-accounts
+     * 
+     * @author TH<>
      */
     public function visitorsettingsAction()
     {
@@ -114,6 +122,8 @@ class AdminController extends GamingBlog_Controller_Action
     
     /**
      * The general-content-action offers the admin the possibility to change the content of the general-content-pages
+     * 
+     * @author TH<>
      */
     public function generalcontentAction()
     {
@@ -162,6 +172,8 @@ class AdminController extends GamingBlog_Controller_Action
     
     /**
      * The save-content-action saves the general content depeding on the given pageId-param
+     * 
+     * @author TH<>
      */
     public function savecontentAction()
     {

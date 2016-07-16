@@ -9,7 +9,11 @@ class BlogController extends GamingBlog_Controller_Action
 {
     protected $_defaultAction = 'overview';
     
-    /* Main-Action with the overview of the news-entries */
+    /* 
+     * Main-Action with the overview of the news-entries
+     * 
+     * @author TH<>
+     */
     public function overviewAction()
     {
         $page = $this->_getParam("page",0);

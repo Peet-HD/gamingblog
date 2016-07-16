@@ -27,6 +27,11 @@ class GamingBlog_Database_Chat_Line_Fetcher extends GamingBlog_DbFetcher
         );
     }
     
+    /**
+     * Prepares the select-select-sql and returns it
+     * 
+     * @return Zend_Db_Select
+     */
     protected function _getSelectSql()
     {
         $subSelect = $this->_db->select();
@@ -59,6 +64,11 @@ class GamingBlog_Database_Chat_Line_Fetcher extends GamingBlog_DbFetcher
         return $sql;
     }
     
+    /**
+     * Prepares the count-select-sql and returns it
+     * 
+     * @return Zend_Db_Select
+     */
     protected function _getCountSql()
     {
         $sql = $this->_db->select();
