@@ -12,8 +12,8 @@
 {/if}
 
 <!-- Materialize -->
-<link rel="stylesheet" href="/assets/layout/thirdparty/materialize/css/materialize.css">
-<script src="/assets/layout/thirdparty/materialize/js/materialize.js"></script>
+<link rel="stylesheet" href="/assets/layout/thirdparty/materialize/css/materialize.min.css">
+<script src="/assets/layout/thirdparty/materialize/js/materialize.min.js"></script>
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   

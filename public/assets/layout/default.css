@@ -27,7 +27,7 @@ body {
     display:flex;
     flex-direction:column;
     z-index:0;
-    
+    color: black;
 }
 
 
