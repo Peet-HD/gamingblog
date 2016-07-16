@@ -6,9 +6,17 @@
         {if $user->authenticate() && $user->isAdmin()}
             <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
             <script>
+                $(document).ready(function() {
+                    $('select').material_select();
+                });
                 tinymce.init({ 
+                    plugins: "image",
                     selector:'textarea',
-                    toolbar: 'undo redo | styleselect | bold italic | link image'
+                    forced_root_block : "", 
+                    force_br_newlines : true,
+                    force_p_newlines : false,
+                    toolbar: 'undo redo | styleselect | bold italic | image',
+                    image_prepend_url: "http://www.tinymce.com/images/"
                 });
            </script>
         {/if}

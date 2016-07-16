@@ -157,14 +157,10 @@ nav ul li a, nav ul li span {
 #sidebar ul li a:hover{
     background-color:#4caf50;
 }
-
-
 .blogeintraege{
-    background-color:yellow;
-    margin-left:10%;
-    margin-top:10px;
-    width:80%;
+    margin-top:20px;
     min-width:600px;
+    width:100%;
     max-width:1500px;
     min-height:250px;
     float:left;
@@ -180,6 +176,7 @@ nav ul li a, nav ul li span {
 }
 .content{
     padding:14px 16px;
+    padding-bottom: 50px;
 }
 .lastline{
     position:absolute;
