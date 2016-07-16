@@ -103,6 +103,20 @@ class AdminController extends GamingBlog_Controller_Action
     
     public function generalcontentAction()
     {
+        // Redirect users without proper access
+        if (!$this->_user->authenticate() || !$this->_user->isAdmin())
+        {
+            $this->redirect('/blog/overview');
+        }
+        
+        if ($this->hasParam('saved'))
+        {
+            $this->_view->saved = $this->getParam('saved');
+        } else if ($this->hasParam('err'))
+        {
+            $this->_view->err = $this->getParam('err');
+        }
+        
         $contentFetcher = new GamingBlog_Database_PageContent_Fetcher($this->_db->read());
         
         $pageContent = $contentFetcher->getResult();
@@ -110,8 +124,6 @@ class AdminController extends GamingBlog_Controller_Action
         $contentIdReferences = $this->_config->get('content')->toArray();
         
         $this->_view->contentIdData = $contentIdReferences;
-        
-        //Debug::p($pageContent);
         
         $this->_view->gameHtmlContent = isset($pageContent[$contentIdReferences['game']]) ? $pageContent[$contentIdReferences['game']]['htmlContent'] : '';
         $this->_view->companyHtmlContent = isset($pageContent[$contentIdReferences['company']]) ? $pageContent[$contentIdReferences['company']]['htmlContent'] : '';
@@ -123,11 +135,17 @@ class AdminController extends GamingBlog_Controller_Action
     
     public function savecontentAction()
     {
-        $htmlContent = $this->getParam('htmlText');
+        // Redirect users without proper access
+        if (!$this->_user->authenticate() || !$this->_user->isAdmin())
+        {
+            $this->redirect('/blog/overview');
+        }
         
-        if ($this->hasParam($pageId))
+        if ($this->hasParam('pageId'))
         {
             $pageId = $this->getParam('pageId');
+            
+            $htmlContent = $this->getParam('htmlText' . $pageId);
         
             $contentIdReferences = $this->_config->get('content')->toArray();
             $validPageIds = array_values($contentIdReferences);
@@ -137,15 +155,17 @@ class AdminController extends GamingBlog_Controller_Action
                 $contentWriter = new GamingBlog_Database_PageContent_Writer($this->_db->write());
 
                 $contentWriter->setHtmlContent($htmlContent);
+                
+                $contentByKeys = array_flip($contentIdReferences);
 
                 if ($contentWriter->updateData($pageId) > 0)
                 {
-                    $this->redirect('/admin/generalcontent?saved=' . $pageId);
+                    $this->redirect('/admin/generalcontent?saved=' . $contentByKeys[$pageId]);
                 } else {
-                    $this->redirect('/admin/generalcontent?err=' . $contentIdReferences[$pageId]);
+                    $this->redirect('/admin/generalcontent?err=' . $contentByKeys[$pageId]);
                 }
             } else {
-                    $this->redirect('/admin/generalcontent?err=invalidId');
+                $this->redirect('/admin/generalcontent?err=invalidId');
             }
         }
         
