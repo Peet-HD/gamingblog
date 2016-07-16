@@ -57,7 +57,7 @@ class GamingBlog_Database_Blog_Entry_Writer extends GamingBlog_Database_Writer
     protected function _getPkField() {
         return 'blogId';
     }
-
+    
     protected function _getRowData() {
         
         $rowData = array();
@@ -85,6 +85,8 @@ class GamingBlog_Database_Blog_Entry_Writer extends GamingBlog_Database_Writer
         return $rowData;
         
     }
+    
+
     
     private function _setText() {
         

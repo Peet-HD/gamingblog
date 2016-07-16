@@ -70,7 +70,4 @@ class ErrorController extends GamingBlog_Controller_Action
         $log = $bootstrap->getResource('Log');
         return $log;
     }
-
-
 }
-
