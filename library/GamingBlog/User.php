@@ -7,14 +7,24 @@
  */
 class GamingBlog_User
 {
+    /**
+     * @var Zend_Session_Namespace
+     */
     protected $_userSess;
     
     private static $_pwSalt = 'gblog_salt';
     
     /**
-     * @todo TODO TODO Check expiration timer, looks like it's not working currently
+     * The expiration-time of the user-session
      */
     const expirationTime = 1500;  
+    
+    /**
+     * The current ip-addr
+     * 
+     * @var string
+     */
+    private $_currentIpAddr;
     
     /**
      * @param Zend_Db_Adapter_Abstract $db
@@ -114,7 +124,8 @@ class GamingBlog_User
                     'name' => $res['name'],
                     'id' => $res['id'],
                     'lastActiveCheck' => time(),
-                    'lastLogin' => $currentDateTime
+                    'lastLogin' => $currentDateTime,
+                    'ip_addr' => $this->_currentIpAddr
                 );
             }
             
@@ -192,7 +203,8 @@ class GamingBlog_User
                     'name' => $res['name'],
                     'id' => $res['id'],
                     'isAdmin' => 1,
-                    'lastLogin' => $currentDateTime
+                    'lastLogin' => $currentDateTime,
+                    'ip_addr' => $this->_currentIpAddr
                 );
             }
         }
@@ -363,7 +375,8 @@ class GamingBlog_User
     public function authenticate()
     {
         if (isset($this->_userSess->data) && !empty($this->_userSess->data) &&
-            isset($this->_userSess->data['id']) && isset($this->_userSess->data['name']))
+            isset($this->_userSess->data['id']) && isset($this->_userSess->data['name']) &&
+            $this->currentIpMatches())
         {
             $id = $this->_userSess->data['id'];
             $name = $this->_userSess->data['name'];
@@ -376,6 +389,34 @@ class GamingBlog_User
         }
         
         return false;
+    }
+    
+    /**
+     * Sets the current ip-addr of the user-obj
+     * 
+     * @param type $ipAddr
+     */
+    public function setCurrentIpAddr($ipAddr)
+    {
+        $this->_currentIpAddr = $ipAddr;
+    }
+    
+    /**
+     * Checks if the current ip matches the ip stored in the user-session
+     * 
+     * @return boolean
+     */
+    public function currentIpMatches()
+    {        
+        if (isset($this->_userSess->data) &&
+            isset($this->_userSess->data['ip_addr']) &&
+            ($this->_userSess->data['ip_addr'] == $this->_currentIpAddr))
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
     }
     
     /**
@@ -405,7 +446,7 @@ class GamingBlog_User
      */
     public function authenticateAdmin()
     {
-        return authenticate() && isset($this->_userSess->data['admin']) && ($this->_userSess->data['admin'] == 1);
+        return $this->authenticate() && isset($this->_userSess->data['admin']) && ($this->_userSess->data['admin'] == 1);
     }
     
     /**

@@ -61,6 +61,11 @@ abstract class GamingBlog_Controller_Action extends Zend_Controller_Action
         $this->_view->user = $this->_user;
         
         $this->_view->urlHelper = $this->_helper->getHelper('Url');
+        
+        $request = $this->getRequest();
+        $remoteAddr = $request->getServer('REMOTE_ADDR');
+        
+        $this->_user->setCurrentIpAddr($remoteAddr);
     }
     
     /**
