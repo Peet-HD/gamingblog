@@ -53,7 +53,6 @@ class BlogController extends GamingBlog_Controller_Action
         $title = $this->_getParam('title');
         $categoryId = $this->_getParam('categoryId');
         
-
         
         $entryDbWriter = new GamingBlog_Database_Blog_Entry_Writer($this->_db->write());
         $entryDbWriter->setAdminId($this->_user->getId());
@@ -61,21 +60,18 @@ class BlogController extends GamingBlog_Controller_Action
         $entryDbWriter->setText($text);
         $entryDbWriter->setTitle($title);
         $blogId = $this->getParam('blogId');
+        $delete = $this->getParam('delete');
         if($blogId > 0){
             $entryDbWriter->updateData($blogId);
         }
         else{
         $entryDbWriter->writeData();
         }
-         
+        if($delete==1){
+            $entryDbWriter->deleteData($blogId);
+        }
         $this->redirect('blog/overview');
     }
-        
-    public function updateentryAction(){
-        $entryDbUpdater = GamingBlog_Database_Blog_Commentary_Writer($this->_db->write());
-        
-    }
-    
     
     public function writecommentAction(){
         

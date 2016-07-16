@@ -68,8 +68,10 @@ nav ul li span
 nav ul li a, nav ul li span {
     padding: 0px 30px;
 }
-
-
+#hauptnav{
+    position: flex;
+    top:0px;
+}
 /*
 #hauptnav ul{
     list-style-type:none;
@@ -130,7 +132,7 @@ nav ul li a, nav ul li span {
     position:fixed;
     right:10%;
     top:0px;
-    padding-top:130px;
+    padding-top:200px;
     z-index:0;
 }
 
@@ -166,6 +168,7 @@ nav ul li a, nav ul li span {
     float:left;
     text-align:left;
     position:relative;
+    padding-bottom: 30px;
     overflow-wrap: break-word;
 }
 .ueberschrift{
