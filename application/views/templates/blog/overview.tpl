@@ -27,7 +27,7 @@
             {if $user->authenticate() && $user->isAdmin()}
                 {include file='blog/adminAddEntry.tpl'}
             {/if}
-            {include file='static/blog_entries.tpl'}
+            {include file='blog/blog_entries.tpl'}
         </div>
         {include file='static/sidebar.tpl'}
     </body>
