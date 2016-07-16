@@ -84,9 +84,30 @@ class AdminController extends GamingBlog_Controller_Action
             switch($mode)
             {
                 case 'activate':
+                    $userFetcher = new GamingBlog_Database_User_Visitor_Fetcher($this->_db->read(), GamingBlog_Database_User_Visitor_Fetcher::DATA_COMPLETE);
+                    $userFetcher->setFetchMode(GamingBlog_DbFetcher::FETCHMODE_ROW);
+                    $userFetcher->setIdFilter($userId);
+                    
+                    $res = $userFetcher->getResult();
+                    
                     $visitorWriter->setActiveState(1)
                                   ->setActiveOnceState(1);
-                    $visitorWriter->updateData($userId);
+                    $updated = $visitorWriter->updateData($userId);
+                    
+                    $config = Zend_Registry::get('config');
+                    
+                    if (($config->get('sendActivationMail') == 1) && ($updated > 0) && !empty($res) && isset($res['activatedOnce']) && ($res['activatedOnce'] == 0) &&
+                        isset($res['email']) && !empty($res['email']))
+                    {
+                        $systemMailAddr = $config->get('systemmail');
+                        
+                        $mail = new Zend_Mail();
+                        $mail->setFrom($systemMailAddr, 'Gamingblog-Info');
+                        $mail->addTo($res['email']);
+                        $mail->setSubject('Account-Aktivierung');
+                        $mail->setBodyText('Dein Account "' . $res['name']. '" wurde aktiviert.<br/><br/>Liebe Grüße dein Gamingblog-Team.');
+                        $mail->send();
+                    }
                     break;
                 case 'deactivate':
                     $visitorWriter->setActiveState(0);

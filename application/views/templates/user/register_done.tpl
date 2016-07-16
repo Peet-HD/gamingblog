@@ -14,7 +14,7 @@
                     </br>
                     <span>Du erhälst eine Email, sobald der Account aktiviert wird.</span>
                     <br/></br>
-                    <a href="{$urlHelper->url(['controller' => 'blog', 'action' => 'overview'])}">Back to the overview</>
+                    <a href="{$urlHelper->url(['controller' => 'blog', 'action' => 'overview'])}">Zurück zur Übersicht</>
                 </div>
             </div>
         </div>

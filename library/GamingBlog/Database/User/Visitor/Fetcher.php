@@ -78,7 +78,8 @@ class GamingBlog_Database_User_Visitor_Fetcher extends GamingBlog_DbFetcher
                 'name' => 'gb_u.userName',
                 'password' => 'gb_u.password',
                 'email' => 'gb_u.email',
-                'active' => 'gb_u.active'
+                'active' => 'gb_u.active',
+                'activatedOnce' => 'gb_u.activatedOnce'
             );
         } else {
             return array(
