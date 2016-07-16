@@ -69,14 +69,14 @@
                         <textarea name="htmlText{$contentIdData.game}">{$gameHtmlContent}</textarea>
                     </div>
                     <input type="hidden" name="pageId" value="{$contentIdData.game}"/>
-                    <input type="hidden" name="htmlInitial" value="{$gameHtmlContent}"></input>
+                    <input type="hidden" name="htmlInitial" value='{$gameHtmlContent}'></input>
                 </form>
                 
                 <div class="col s9 offset-s1" style="margin-top:40px;">  
                     <hr />
                 </div>
                 
-                 <form action="/admin/savecontent" method="post">
+                <form action="/admin/savecontent" method="post">
                     <div class="col s7 offset-s1" style="margin-top:40px;">  
                         <h5>Content [Company]</h5>
                     </div>
@@ -89,7 +89,7 @@
                         <textarea name="htmlText{$contentIdData.company}">{$companyHtmlContent}</textarea>
                     </div>
                     <input type="hidden" name="pageId" value="{$contentIdData.company}"/>
-                    <input type="hidden" name="htmlInitial" value="{$companyHtmlContent}"></input>
+                    <input type="hidden" name="htmlInitial" value='{$companyHtmlContent}'></input>
                 </form>
                 
                 <div class="col s9 offset-s1" style="margin-top:40px;">  
@@ -109,7 +109,7 @@
                         <textarea name="htmlText{$contentIdData.about}">{$aboutHtmlContent}</textarea>
                     </div>
                     <input type="hidden" name="pageId" value="{$contentIdData.about}"/>
-                    <input type="hidden" name="htmlInitial" value="{$aboutHtmlContent}"></input>
+                    <input type="hidden" name="htmlInitial" value='{$aboutHtmlContent}'></input>
                 </form>
                 
                 <div class="col s9 offset-s1" style="margin-top:40px;">  
@@ -129,7 +129,7 @@
                         <textarea name="htmlText{$contentIdData.privacy}">{$privacyHtmlContent}</textarea>
                     </div>
                     <input type="hidden" name="pageId" value="{$contentIdData.privacy}"/>
-                    <input type="hidden" name="htmlInitial" value="{$privacyHtmlContent}"></input>
+                    <input type="hidden" name="htmlInitial" value='{$privacyHtmlContent}'></input>
                 </form>
             </div>
         </div>

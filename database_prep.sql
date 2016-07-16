@@ -19,7 +19,6 @@ CREATE TABLE `user_admin` (
  `userName` varchar(40) NOT NULL,
  `password` varchar(100) NOT NULL,
  `email` varchar(100) NOT NULL,
- `adminLevel` tinyint(3) unsigned NOT NULL,
  `active` tinyint(1) NOT NULL,
  PRIMARY KEY (`adminId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;

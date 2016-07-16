@@ -61,7 +61,6 @@ class GamingBlog_Database_User_Admin_Fetcher extends GamingBlog_DbFetcher
                 'name' => 'gb_a.userName',
                 'password' => 'gb_a.password',
                 'email' => 'gb_a.email',
-                'adminLevel' => 'gb_a.adminLevel',
                 'active' => 'gb_a.active'
             );
         } else {

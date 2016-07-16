@@ -6,12 +6,16 @@
     </head>
     <body>
         {include file='static/topMenu.tpl'}
-        <div id="main-block">
-            {if isset($adminLogin)}
-                {include file='user/login_form.tpl' adminLogin=1}
-            {else}
-                {include file='user/login_form.tpl'}
-            {/if}
+        <div id="main-block" class="container cyan lighten-3">
+             <div class="row">
+                <div class="col s6 offset-s3">
+                    {if isset($adminLogin)}
+                        {include file='user/login_form.tpl' adminLogin=1}
+                    {else}
+                        {include file='user/login_form.tpl'}
+                    {/if}
+                </div>
+            </div>
         </div>
         {include file='static/sidebar.tpl' hideLogin=1}
     </body>

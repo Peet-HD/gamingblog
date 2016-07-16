@@ -185,7 +185,7 @@ class GamingBlog_User
                 $this->_userSess->data = array(
                     'name' => $res['name'],
                     'id' => $res['id'],
-                    'adminLevel' => $res['adminLevel']
+                    'isAdmin' => 1
                 );
             }
         }
@@ -429,7 +429,7 @@ class GamingBlog_User
      * @author PB 
      */
     public function  isAdmin(){
-        return isset($this->_userSess->data['adminLevel']);
+        return isset($this->_userSess->data['isAdmin']);
     }
 
     public static function createAdminPw($userPw) {

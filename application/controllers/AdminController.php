@@ -96,8 +96,6 @@ class AdminController extends GamingBlog_Controller_Action
         $this->_view->elementsPerPage = $elementsPerPage;
         $this->_view->maxPage = $maxPage;
         
-        $this->_view->navActive = 'accountrequests';
-        
         $this->_view->render('admin/visitorsettings.tpl');
     }
     

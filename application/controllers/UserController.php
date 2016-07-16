@@ -46,20 +46,23 @@ class UserController extends GamingBlog_Controller_Action
             $this->redirect('/blog/overview');
         } else {
 
-            $userData = array(
-                'login' => $this->_getParam("userName"),
-                'password' => $this->_getParam("password")
-            );
+            if ($this->hasParam('submit'))
+            {
+                $userData = array(
+                    'login' => $this->_getParam("userName"),
+                    'password' => $this->_getParam("password")
+                );
 
-            $loginErrorData = $this->_user->tryVisitorLogin($this->_db->write(), $userData);
-            
-            if (!empty($loginErrorData))
-            {
-                $this->_view->loginErrorData = $loginErrorData;
-                $this->_view->loginUserData = $userData;
-            } else 
-            {
-                $this->redirect("/blog/overview");
+                $loginErrorData = $this->_user->tryVisitorLogin($this->_db->write(), $userData);
+
+                if (!empty($loginErrorData))
+                {
+                    $this->_view->loginErrorData = $loginErrorData;
+                    $this->_view->loginUserData = $userData;
+                } else 
+                {
+                    $this->redirect("/blog/overview");
+                }
             }
         }
         
