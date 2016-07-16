@@ -30,16 +30,19 @@ class ChatController extends GamingBlog_Controller_Action
         {
             $lastNum = intval($this->_getParam('lastNum', 0));
 
-            $this->_dbChatFetcher = new GamingBlog_Database_Chat_Line_Fetcher($this->_db->read());
-
+            $dbChatFetcher = new GamingBlog_Database_Chat_Line_Fetcher($this->_db->read());
+            
+            $loginTime = $this->_user->getLoginTime();
+            
             if ($lastNum >= 0)
             {
-                $this->_dbChatFetcher->setLastNum($lastNum);
-            } else {
-                $this->_dbChatFetcher->setLastNum($lastNum);
+                $dbChatFetcher->setLastNum($lastNum);
+            } else if (!empty($loginTime))
+            {
+                $dbChatFetcher->setMinEntryTime($loginTime);
             }
 
-            $result = $this->_dbChatFetcher->getResult();
+            $result = $dbChatFetcher->getResult();
         
              echo json_encode($result);
         } else {
@@ -58,14 +61,14 @@ class ChatController extends GamingBlog_Controller_Action
         if ($this->_user->authenticate())
         {
             // Trim whitespace from the text-param, if available, to check if the string is usable
-            $text = trim($this->_getParam('text', ''));
+            $strippedTextMsg = strip_tags(trim($this->_getParam('text', '')));
 
-            if (strlen($text) > 0)
+            if (strlen($strippedTextMsg) > 0)
             {
                 
                 $chatDbWriter = new GamingBlog_Database_Chat_Line_Writer($this->_db->write());
                 $chatDbWriter->setUserId($this->_user->getId());
-                $chatDbWriter->setText($text);
+                $chatDbWriter->setText($strippedTextMsg);
                 
                 if ($this->_user->isAdmin())
                 {

@@ -87,6 +87,12 @@ class GamingBlog_User
                 
                 $errorData['invalidLogin'] = 1;
             } else {
+                $userDbWriter = new GamingBlog_Database_User_Visitor_Writer($dbWrite);
+                
+                $currentDateTime = date('Y-m-d H:i:s');
+                
+                $userDbWriter->setLastLogin($currentDateTime);
+                        
                 // Optional: Rehash the password, if necessary
                 if (password_needs_rehash($res['password'], PASSWORD_BCRYPT)) {
                     // Rehash the password
@@ -96,19 +102,19 @@ class GamingBlog_User
                     if (password_verify($saltedUserPw, $newPwHash))
                     {
                         // Add the rehashed password to the proper database-row
-                        $userDbWriter = new GamingBlog_Database_User_Visitor_Writer($dbWrite);
-                        $userDbWriter->setUserId($res['id'])
-                                     ->setPassword($newPwHash);
-                        
-                        $userDbWriter->updateData($res['id']);
+                        $userDbWriter->setPassword($newPwHash);
                     }
                 }
+                
+                $rows = $userDbWriter->updateData($res['id']);
+                
                 
                 // Write the user-data to the session (the user is now authenticated)
                 $this->_userSess->data = array(
                     'name' => $res['name'],
                     'id' => $res['id'],
-                    'lastActiveCheck' => time()
+                    'lastActiveCheck' => time(),
+                    'lastLogin' => $currentDateTime
                 );
             }
             
@@ -159,6 +165,12 @@ class GamingBlog_User
                 
                 $errorData['invalidLogin'] = 1;
             } else {
+                $adminDbWriter = new GamingBlog_Database_User_Admin_Writer($dbWrite);
+                
+                $currentDateTime = date('Y-m-d H:i:s');
+                
+                $adminDbWriter->setLastLogin($currentDateTime);
+                
                 // Optional: Rehash the password, if necessary
                 if (password_needs_rehash($res['password'], PASSWORD_BCRYPT)) {
                     
@@ -169,19 +181,18 @@ class GamingBlog_User
                     if (password_verify($saltedUserPw, $newPwHash))
                     {
                         // Add the rehashed password to the proper database-row
-                        $userDbWriter = new GamingBlog_Database_User_Admin_Writer($dbWrite);
-                        $userDbWriter->setAdminId($res['id'])
-                                     ->setPassword($newPwHash);
-                        
-                        $userDbWriter->updateData($res['id']);
+                        $adminDbWriter->setPassword($newPwHash);
                     }
                 }
+                        
+                $adminDbWriter->updateData($res['id']);
                 
                 // Write the user-data to the session (the user is now authenticated)
                 $this->_userSess->data = array(
                     'name' => $res['name'],
                     'id' => $res['id'],
-                    'isAdmin' => 1
+                    'isAdmin' => 1,
+                    'lastLogin' => $currentDateTime
                 );
             }
         }
@@ -444,6 +455,16 @@ class GamingBlog_User
      */
     public function  isAdmin(){
         return isset($this->_userSess->data['isAdmin']);
+    }
+    
+    public function getLoginTime()
+    {
+        if (isset($this->_userSess->data['lastLogin']))
+        {
+            return $this->_userSess->data['lastLogin'];
+        }
+        
+        return "";
     }
 
     /**

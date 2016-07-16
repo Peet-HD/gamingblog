@@ -9,11 +9,18 @@
  */
 class GamingBlog_Database_Chat_Line_Fetcher extends GamingBlog_DbFetcher
 {
-    private $_lastNum = 0;
+    private $_lastNum = -1;
+    
+    private $_minEntryTime = "";
     
     public function setLastNum($val)
     {
         $this->_lastNum = intval($val);
+    }
+    
+    public function setMinEntryTime($minEntryTime)
+    {
+        $this->_minEntryTime = $minEntryTime;
     }
             
     private function _getDataFields()
@@ -44,16 +51,21 @@ class GamingBlog_Database_Chat_Line_Fetcher extends GamingBlog_DbFetcher
                   ->joinLeft(array('gb_u' => 'user_visitor'), 'gb_u.userId = gb_c.userId', array())
                   ->joinLeft(array('gb_a' => 'user_admin'), 'gb_a.adminId = gb_c.userId', array());
         
-        /**
-         *  Restrict the minimum timestamp of fetched messages to (now - 5 seconds),
-         *  to deny fetching more chat-data than necessary
-        */
-        $subSelect->where('gb_c.timestamp > FROM_UNIXTIME(' . ($currentTimeStamp-5) . ')');
-        
         // If the last fetched index is provided, it will be used for filtering
-        if ($this->_lastNum >= 0)
+        if ($this->_lastNum > -1)
         {
             $subSelect->where('gb_c.entryId > ?', $this->_lastNum);
+            $subSelect->where('gb_c.timestamp > FROM_UNIXTIME(' . ($currentTimeStamp-5) . ')');
+        } else if (!empty($this->_minEntryTime))
+        {
+            $subSelect->where('gb_c.timestamp > ?', $this->_minEntryTime);
+            $subSelect->limit(30);
+        } else {
+            /**
+             * Restrict the minimum timestamp of fetched messages to (now - 5 seconds),
+             * if no filters have been set
+            */
+            $subSelect->where('gb_c.timestamp > FROM_UNIXTIME(' . ($currentTimeStamp-5) . ')');
         }
         
         $sql = $this->_db->select();

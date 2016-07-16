@@ -42,6 +42,13 @@ class GamingBlog_Database_User_Admin_Writer extends GamingBlog_Database_Writer
      */
     private $_active;
     
+    /**
+     * The variable holds the time of the last-login
+     * 
+     * @var string 
+     */
+    private $_lastLogin = -1;
+    
     public function __construct($db) {
         parent::__construct($db, 'user_admin');
     }
@@ -56,6 +63,13 @@ class GamingBlog_Database_User_Admin_Writer extends GamingBlog_Database_Writer
     public function setUsername($userName)
     {
         $this->_userName = $userName;
+        
+        return $this;
+    }
+    
+    public function setLastLogin($time)
+    {
+        $this->_lastLogin = $time;
         
         return $this;
     }
@@ -108,6 +122,11 @@ class GamingBlog_Database_User_Admin_Writer extends GamingBlog_Database_Writer
         if (!empty($this->_active))
         {
             $rowData['active'] = $this->_active;
+        }
+        
+        if ($this->_lastLogin != -1)
+        {
+            $rowData['lastLogin'] = $this->_lastLogin;
         }
         
         return $rowData;

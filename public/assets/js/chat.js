@@ -6,7 +6,7 @@ $(function()
 {
     if ((userName !== undefined) && (userName !== null))
     {
-        loadDbEntries(0);
+        loadDbEntries();
     }
     
     $('#chatInputLine').keydown(function(e)
@@ -82,7 +82,7 @@ function appendChatTextLine(id, textVal, authorName, isAdminMsg)
         // Auto-Scroll to Bottom
         $('#chatHistoryBlock').animate({
             scrollTop: $('#chatHistoryBlock').prop('scrollHeight')
-        }, 200);
+        }, 0);
         
         console.log('add: ' + id);
     }

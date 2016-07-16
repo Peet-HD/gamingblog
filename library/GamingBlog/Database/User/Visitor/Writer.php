@@ -50,6 +50,13 @@ class GamingBlog_Database_User_Visitor_Writer extends GamingBlog_Database_Writer
      */
     private $_activatedOnce = -1;
     
+    /**
+     * The variable holds the time of the last-login
+     * 
+     * @var string 
+     */
+    private $_lastLogin = -1;
+    
     public function __construct($db) {
         parent::__construct($db, 'user_visitor');
     }
@@ -64,6 +71,13 @@ class GamingBlog_Database_User_Visitor_Writer extends GamingBlog_Database_Writer
     public function setUsername($userName)
     {
         $this->_userName = $userName;
+        
+        return $this;
+    }
+    
+    public function setLastLogin($time)
+    {
+        $this->_lastLogin = $time;
         
         return $this;
     }
@@ -128,6 +142,11 @@ class GamingBlog_Database_User_Visitor_Writer extends GamingBlog_Database_Writer
         if ($this->_activatedOnce != -1)
         {
             $rowData['activatedOnce'] = $this->_activatedOnce;
+        }
+        
+        if ($this->_lastLogin != -1)
+        {
+            $rowData['lastLogin'] = $this->_lastLogin;
         }
         
         return $rowData;
