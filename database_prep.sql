@@ -20,8 +20,9 @@ CREATE TABLE `user_admin` (
  `password` varchar(100) NOT NULL COMMENT 'The password for the admin-user',
  `email` varchar(100) NOT NULL COMMENT 'The email for the admin-user',
  `active` tinyint(1) NOT NULL COMMENT 'The flag, which defines if the admin-account can be used to login',
+ `lastLogin` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  PRIMARY KEY (`adminId`)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
 
 -- ----------------------------------------------------------------------------
 -- Benutzer-BESUCHER-Tabelle
@@ -35,8 +36,10 @@ CREATE TABLE `user_visitor` (
  `email` varchar(100) NOT NULL COMMENT 'The email for the visitor-user',
  `active` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'The flag, which defines if the user-account can be used to login',
  `activatedOnce` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'The flag, which defines, if the user-account has been activated once',
+ `lastLogin` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'The last login-time of the user',
  PRIMARY KEY (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
+
 
 -- ----------------------------------------------------------------------------
 
@@ -147,8 +150,8 @@ INSERT INTO `general_page_content` (`contentId`, `pageHtml`, `lastChange`) VALUE
 
 -- User-Visitor-Accounts
 -- Notice, the password for both test-admin-users is "safepw1$"
-INSERT INTO `user_admin` (`adminId`, `userName`, `password`, `email`, `active`) VALUES (NULL, 'lucky_admin', '$2y$10$NoZOr/uQ1pfzPVQlEdnhE.5IOQIPSbZstsakb7iKMcgrdm1zuS6eO', 'irgendeinemail@keinevorhandenedomain.de', '0');
-INSERT INTO `user_admin` (`adminId`, `userName`, `password`, `email`, `active`) VALUES (NULL, 'peethd_admin', '$2y$10$NoZOr/uQ1pfzPVQlEdnhE.5IOQIPSbZstsakb7iKMcgrdm1zuS6eO', 'irgendeinemail2@keinevorhandenedomain.de', '0');
+INSERT INTO `user_admin` (`adminId`, `userName`, `password`, `email`, `active`) VALUES (NULL, 'lucky_admin', '$2y$10$NoZOr/uQ1pfzPVQlEdnhE.5IOQIPSbZstsakb7iKMcgrdm1zuS6eO', 'irgendeinemail@keinevorhandenedomain.de', '1');
+INSERT INTO `user_admin` (`adminId`, `userName`, `password`, `email`, `active`) VALUES (NULL, 'peethd_admin', '$2y$10$NoZOr/uQ1pfzPVQlEdnhE.5IOQIPSbZstsakb7iKMcgrdm1zuS6eO', 'irgendeinemail2@keinevorhandenedomain.de', '1');
 
 -- Notice, the password for both test-visitor-users is "safeuser1$"
 INSERT INTO `user_visitor` (`userId`, `userName`, `password`, `email`, `active`, `activatedOnce`) VALUES (NULL, 'test_user_active', '$2y$10$B/UaKZEi8FLMjMnJwq5.f.039C0fZGb64pmtw3RFIngrvTzAhKk4W', 'irgendeinemail3@keinevorhandenedomain.de', '1', '1');
