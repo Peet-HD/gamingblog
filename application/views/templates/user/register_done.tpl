@@ -6,10 +6,17 @@
     </head>
     <body>
         {include file='static/topMenu.tpl'}
-        <div id="main-block">
-            <span>Your account-registration has been registered. You will receive an email, when it has been activated.</span>
-            <br/></br>
-            <a href="{$urlHelper->url(['controller' => 'blog', 'action' => 'overview'])}">Back to the overview</>
+        <div id="main-block" class="container cyan lighten-3">
+             <div class="row">
+                <div class="col s4 offset-s4">
+                    <br/>
+                    <h5>Acccount-Anfrage registriert.</h5>
+                    </br>
+                    <span>Du erhälst eine Email, sobald der Account aktiviert wird.</span>
+                    <br/></br>
+                    <a href="{$urlHelper->url(['controller' => 'blog', 'action' => 'overview'])}">Back to the overview</>
+                </div>
+            </div>
         </div>
             {include file='static/sidebar.tpl'}
     </body>
