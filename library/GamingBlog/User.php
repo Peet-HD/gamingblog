@@ -14,11 +14,41 @@ class GamingBlog_User
     /**
      * @todo TODO TODO Check expiration timer, looks like it's not working currently
      */
-    const expirationTime = 90;    
+    const expirationTime = 1500;  
     
-    public function __construct() {
+    /**
+     * @param Zend_Db_Adapter_Abstract $db
+     */
+    public function __construct($dbRead) {
         $this->_userSess = new Zend_Session_Namespace('gamingblog_user');
         $this->_userSess->setExpirationSeconds($this::expirationTime);
+        
+        if ($this->authenticate() && $this->isActiveCheckRequired()) {
+            
+            if ($this->isAdmin())
+            {
+                $adminFetcher = new GamingBlog_Database_User_Admin_Fetcher($dbRead);
+                $adminFetcher->setIdFilter($this->_userSess->data['id']);
+                $adminFetcher->setFilterActive(1);
+                $adminFetcher->setFetchMode(GamingBlog_DbFetcher::FETCHMODE_ROW);
+
+                $res = $adminFetcher->getResult();
+            } else {
+                $userFetcher = new GamingBlog_Database_User_Visitor_Fetcher($dbRead);
+                $userFetcher->setIdFilter($this->_userSess->data['id']);
+                $userFetcher->setFilterActive(1);
+                $userFetcher->setFetchMode(GamingBlog_DbFetcher::FETCHMODE_ROW);
+
+                $res = $userFetcher->getResult();
+            }
+            
+            if (empty($res) || ($res['id'] != $this->_userSess->data['id']))
+            {
+                $this->logout();
+            } else {
+                $this->_userSess->data['lastActiveCheck'] = time();
+            }
+        }
     }
     
     /**
@@ -62,7 +92,7 @@ class GamingBlog_User
                  * @todo TODO TODO TODO unbedingt das active-flag wieder auf 1 schalten,
                  * damit korrekt geprüft wird, welcher account aktiv geschaltet wurde
                  */
-                !isset($res['active']) || ($res['active'] != 0) ||
+                !isset($res['active']) || ($res['active'] != 1) ||
                 !password_verify($saltedUserPw, $res['password'])) {
                 
                 $errorData['invalidLogin'] = 1;
@@ -87,7 +117,8 @@ class GamingBlog_User
                 // Write the user-data to the session (the user is now authenticated)
                 $this->_userSess->data = array(
                     'name' => $res['name'],
-                    'id' => $res['id']
+                    'id' => $res['id'],
+                    'lastActiveCheck' => time()
                 );
             }
             
@@ -167,7 +198,6 @@ class GamingBlog_User
                     'adminLevel' => $res['adminLevel']
                 );
             }
-            
         }
         
         return $errorData;
@@ -331,6 +361,22 @@ class GamingBlog_User
             {
                 return true;
             }
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Returns the information, if the user-active-state has to be checked again
+     * 
+     * @return boolean
+     */
+    public function isActiveCheckRequired()
+    {
+        if (!isset($this->_userSess->data['lastActiveCheck']) ||
+            ((time() - $this->_userSess->data['lastActiveCheck']) > 60))
+        {
+            return true;
         }
         
         return false;

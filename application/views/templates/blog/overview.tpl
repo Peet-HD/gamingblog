@@ -14,8 +14,8 @@
         {/if}
     </head>
     <body>
-        {include file='static/topMenu.tpl'}
-        <div id="main-block">
+        {include file='static/topMenu.tpl' navActive='main'}
+        <div id="main-block" class="cyan lighten-3">
             {if $user->authenticate() && $user->isAdmin()}
                 {include file='blog/adminAddEntry.tpl'}
             {/if}

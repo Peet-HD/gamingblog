@@ -6,7 +6,7 @@
     </head>
     <body>
         {include file='static/topMenu.tpl'}
-        <div id="main-block">
+        <div id="main-block" class="cyan lighten-3">
             <div class="loginform">
                 {if isset($errorData) && !empty($errorData)}
                     <table style="padding: 10px; background-color: red; color: white; width: 100%;">

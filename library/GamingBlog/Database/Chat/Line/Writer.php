@@ -10,7 +10,7 @@ class GamingBlog_Database_Chat_Line_Writer extends GamingBlog_Database_Writer
      * 
      * @var int
      */
-    private $_userId = 0;
+    private $_userId = -1;
     
     /**
      * The written chat-message
@@ -62,7 +62,7 @@ class GamingBlog_Database_Chat_Line_Writer extends GamingBlog_Database_Writer
             $rowData['userId'] = $this->_userId;
         }
         
-        if (!empty($this->_text))
+        if (strlen($this->_text) > 0)
         {
             $rowData['text'] = $this->_text;
         }

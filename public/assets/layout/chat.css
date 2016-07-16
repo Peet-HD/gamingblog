@@ -8,11 +8,12 @@
     border-left: 1px solid black;
     border-right: 1px solid black;
     color:white;
+    margin-top: 20px;
 }
 
 #chatInputLine
 {
-    width: calc(100% - 4px);
+    width: calc(100% - 4px - 10px);
 }
 
 .singleChatLine

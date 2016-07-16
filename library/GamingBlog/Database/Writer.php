@@ -37,6 +37,13 @@ abstract class GamingBlog_Database_Writer
         );
     }
     
+    public function deleteData($primaryKeyVal)
+    {
+        return $this->_dbTable->delete(
+                $this->_dbTable->getAdapter()->quoteInto($this->_getPkField() . " = ?", $primaryKeyVal)
+        );
+    }
+    
     protected abstract function _getRowData();
     protected abstract function _getPkField();
     

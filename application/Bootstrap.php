@@ -51,7 +51,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     
     public function _initUser()
     {
-        $user = new GamingBlog_User();
+        $user = new GamingBlog_User(Zend_Registry::get('db')->read());
         
         Zend_Registry::set('user', $user);
     }

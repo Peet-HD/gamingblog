@@ -37,6 +37,8 @@ class ChatController extends GamingBlog_Controller_Action
             $result = $this->_dbChatFetcher->getResult();
         
              echo json_encode($result);
+        } else {
+            echo -1;
         }
     }
     
@@ -73,6 +75,9 @@ class ChatController extends GamingBlog_Controller_Action
             }
 
             // On error return -1
+            echo -1;
+            exit;
+        } else {
             echo -1;
             exit;
         }

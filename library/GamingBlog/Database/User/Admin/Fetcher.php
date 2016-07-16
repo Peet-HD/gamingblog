@@ -20,6 +20,8 @@ class GamingBlog_Database_User_Admin_Fetcher extends GamingBlog_DbFetcher
     
     private $_filterName = '';
     private $_filterMail = '';
+    private $_filterId = -1;
+    private $_filterActive = -1;
     
     public function __construct($pDb, $fetchData = GamingBlog_Database_User_Visitor_Fetcher::DATA_BASIC) {
         parent::__construct($pDb);
@@ -38,6 +40,16 @@ class GamingBlog_Database_User_Admin_Fetcher extends GamingBlog_DbFetcher
     public function setMailFilter($val)
     {
         $this->_filterMail = $val;
+    }
+    
+    public function setIdFilter($idVal)
+    {
+        $this->_filterId = intval($idVal);
+    }
+    
+    public function setFilterActive($filterVal)
+    {
+        $this->_filterActive = intval($filterVal);
     }
             
     private function _getDataFields()
@@ -74,6 +86,16 @@ class GamingBlog_Database_User_Admin_Fetcher extends GamingBlog_DbFetcher
 
         if (!empty($this->_filterMail)) {
             $sql->where('gb_a.email = ?', $this->_filterMail);
+        }
+        
+        if ($this->_filterId != -1)
+        {
+            $sql->where('gb_a.adminId = ?', $this->_filterId);
+        }
+        
+        if ($this->_filterActive != -1)
+        {
+            $sql->where('gb_a.active = ?', $this->_filterActive);
         }
         
         return $sql;

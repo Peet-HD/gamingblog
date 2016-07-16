@@ -45,7 +45,7 @@ class AdminController extends GamingBlog_Controller_Action
         $this->_view->render("user/login.tpl");
     }
     
-    public function accountrequestsAction()
+    public function visitorsettingsAction()
     {
         // Redirect users without proper access
         if (!$this->_user->authenticate() || !$this->_user->isAdmin())
@@ -53,12 +53,39 @@ class AdminController extends GamingBlog_Controller_Action
             $this->redirect('/blog/overview');
         }
         
-        $userFetcher = new GamingBlog_Database_User_Visitor_Fetcher($this->_db->read());
-        $userFetcher->setActiveFilter(0);
+        $userId = $this->getParam('userId', -1);
+        $mode = $this->getParam('mode', -1);
         
-        $res = $userFetcher->getResult();
+        $page = $this->getParam('page', 0);
         
-        Debug::p($res);
+        if (($userId != 0) && ($mode != -1))
+        {
+            $visitorWriter = new GamingBlog_Database_User_Visitor_Writer($this->_db->write());
+            switch($mode)
+            {
+                case 'activate':
+                    $visitorWriter->setActiveState(1)
+                                  ->setActiveOnceState(1);
+                    $visitorWriter->updateData($userId);
+                    break;
+                case 'deactivate':
+                    $visitorWriter->setActiveState(0);
+                    $visitorWriter->updateData($userId);
+                    break;
+                case 'delete':
+                    $visitorWriter->deleteData($userId);
+                    break;
+            }
+        }
+        
+        $userFetcher = new GamingBlog_Database_User_Visitor_AccountSettings_Fetcher($this->_db->read());
+        
+        $this->_view->visitorList = $userFetcher->getResult();
+        
+        //Debug::p($userFetcher->getCount());
+        $this->_view->navActive = 'accountrequests';
+        
+        $this->_view->render('admin/visitorsettings.tpl');
     }
 }
 

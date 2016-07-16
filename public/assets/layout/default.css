@@ -20,7 +20,7 @@ body {
     min-height:530px;
     display:flex;
     flex-direction:column;
-    margin-top:42px;
+    margin-top:64px;
     z-index:0;
     
 }
@@ -36,6 +36,7 @@ body{
     margin:0 10% 0 10%;
     height:150px;
     z-index:5;
+    border-bottom: 2px solid black;
 }
 .banner img{
     width:100%;
@@ -45,13 +46,16 @@ nav{
     position:absolute;
 }
 #hauptnav{
-    margin-left:10%;
+    margin:0 10% 0 10%;
     width:80%;
-    list-style-type:none;
-    background-color:#111;
     z-index:5;
     position:absolute;
 }
+
+#hauptnav ul li a {
+    padding: 0px 30px;
+}
+/*
 #hauptnav ul{
     list-style-type:none;
     display:inline;
@@ -69,7 +73,7 @@ nav{
     display:block;
     color:white;
     text-align:center;
-    padding:14px 16px;
+    padding:0px 30px;
     text-decoration:none;
     background-color:#111;
 }
@@ -85,6 +89,11 @@ nav{
 }
 #hauptnav ul li a:hover{
     background-color:#333;
+}*/
+
+.adminFirstEntry a
+{
+    border-left: 2px solid white;
 }
 	
 #container{
@@ -137,18 +146,15 @@ nav{
     max-width:1500px;
     min-height:250px;
     float:left;
+    text-align:center;
     position:relative;
 }
 .ueberschrift{
-    font-size:40px;
+    font-size:50px;
     font-weight:bold;
-    padding-left:10px;
-    overflow-wrap:break-word;
-    border-bottom: solid black 1px;
 }
 .content{
     padding:14px 16px;
-    margin-bottom: 30px;
 }
 .lastline{
     position:absolute;
@@ -157,11 +163,7 @@ nav{
     background-color:#111;
     width:100%;
     text-align:right;
-    color:white;
-}
-.lastline p{
-    float:left;
-    padding-left: 10px;
+
 }
 .lastline ul{}
 .lastline ul li{
@@ -186,6 +188,24 @@ nav{
     margin-right:150px;
     margin-left:20px;
 }
+
+.submitBtn
+{
+    width: 100%;
+}
+
+input[type=text],
+input[type=password]
+{
+    color: white;
+    width: calc(100% - 10px);
+    margin-left: 5px;
+}
+
+.loginform a{
+    color:white;
+}
+/*
 
 .loginform{
     background-color:#111;
@@ -232,7 +252,7 @@ nav{
 .loginform a:hover{
     text-decoration:underline;
     color:#4caf50;
-}
+}*/
 @media (max-width:1241px){
     body{
         /*overflow:;*/

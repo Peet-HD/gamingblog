@@ -21,7 +21,8 @@ class GamingBlog_Database_User_Visitor_Fetcher extends GamingBlog_DbFetcher
     private $_filterName = '';
     private $_filterPassword = '';
     private $_filterMail = '';
-    private $_filterActive = 0;
+    private $_filterActive = -1;
+    private $_filterId = -1;
     
     private $_filterNameOrMail = false;
     
@@ -36,6 +37,11 @@ class GamingBlog_Database_User_Visitor_Fetcher extends GamingBlog_DbFetcher
         {
             $this->_fetchFullData = true;
         }
+    }
+    
+    public function setIdFilter($idVal)
+    {
+        $this->_filterId = intval($idVal);
     }
     
     public function setNameFilter($val)
@@ -58,9 +64,9 @@ class GamingBlog_Database_User_Visitor_Fetcher extends GamingBlog_DbFetcher
         $this->_filterPassword = $val;
     }
     
-    public function setActiveFilter($val)
+    public function setFilterActive($filterVal)
     {
-        $this->_filterActive = intval($val) % 2;
+        $this->_filterActive = intval($filterVal)%2;
     }
             
     private function _getDataFields()
@@ -105,6 +111,16 @@ class GamingBlog_Database_User_Visitor_Fetcher extends GamingBlog_DbFetcher
         
         if (!empty($this->_filterPassword)) {
             $sql->where('gb_u.password = ?', $this->_filterPassword);
+        }
+        
+        if ($this->_filterActive != -1)
+        {
+            $sql->where('gb_u.active = ?', $this->_filterActive);
+        }
+        
+        if ($this->_filterId != -1)
+        {
+            $sql->where('gb_u.userId = ?', $this->_filterId);
         }
         
         return $sql;

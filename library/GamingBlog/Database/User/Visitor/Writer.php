@@ -36,9 +36,17 @@ class GamingBlog_Database_User_Visitor_Writer extends GamingBlog_Database_Writer
     /**
      * The state-variable, which defines if the user-account is active (can be used)
      * 
-     * @var int
+     * @var int 0 or 1
      */
-    private $_active;
+    private $_active = -1;
+    
+    
+    /**
+     * The state-variable, which defines if the user-account has been activated at least once
+     * 
+     * @var int 0 or 1 
+     */
+    private $_activatedOnce = -1;
     
     public function __construct($db) {
         parent::__construct($db, 'user_visitor');
@@ -78,6 +86,13 @@ class GamingBlog_Database_User_Visitor_Writer extends GamingBlog_Database_Writer
         
         return $this;
     }
+    
+    public function setActiveOnceState($activatedOnceState)
+    {
+        $this->_activatedOnce = intval($activatedOnceState) % 2;
+        
+        return $this;
+    }
 
     protected function _getRowData() {
         
@@ -103,9 +118,14 @@ class GamingBlog_Database_User_Visitor_Writer extends GamingBlog_Database_Writer
             $rowData['email'] = $this->_email;
         }
         
-        if (!empty($this->_active))
+        if ($this->_active != -1)
         {
             $rowData['active'] = $this->_active;
+        }
+        
+        if ($this->_activatedOnce != -1)
+        {
+            $rowData['activatedOnce'] = $this->_activatedOnce;
         }
         
         return $rowData;

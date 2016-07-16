@@ -1,0 +1,18 @@
+.btnSmall
+{
+    width: 75px;
+}
+
+.activatedOnce
+{
+    border-radius: 4px;
+    background-color: lawngreen;
+    padding: 2px;
+}
+
+.requestActivatedOnce
+{
+    border-radius: 4px;
+    background-color: red;
+    padding: 2px;
+}

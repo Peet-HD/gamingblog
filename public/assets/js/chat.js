@@ -33,18 +33,20 @@ function sendChatLine()
             data: {
                 'text': text
             }
-        }).done(function(id) {
+        }).done(function(res) {
 
-            if (id != -1)
+            if (res == -1)
             {
-                appendChatTextLine(id, text, userName, isAdmin);   
+                redirectToBaseSite();
+            } else {
+                appendChatTextLine(res, text, userName, isAdmin);   
+
+                $('#chatInputLine').val("");
+
+                $('#chatInputLine').prop('disabled', false);
+
+                $('#chatInputLine').focus();
             }
-
-            $('#chatInputLine').val("");
-
-            $('#chatInputLine').prop('disabled', false);
-
-            $('#chatInputLine').focus();
         });
     } else {
         $('#chatInputLine').val("");
@@ -98,19 +100,31 @@ function loadDbEntries()
         }
         
     }).done(function(res) {
-        var arr = $.parseJSON(res);
-        
-        // Add chat-lines to the visible content
-        $.each(arr, function(index, val)
+        console.log("LoadDbEntries-Res");
+        console.log(res);
+        if (res == -1)
         {
-            appendChatTextLine(val.id, val.text, val.author, val.adminEntry);
-            
-            lastId = val.id;
-        });
-        
-        setTimeout(function()
+            redirectToBaseSite();
+        } else {
+            var arr = $.parseJSON(res);
+
+            // Add chat-lines to the visible content
+            $.each(arr, function(index, val)
             {
-                loadDbEntries();
-            }, '1000');
+                appendChatTextLine(val.id, val.text, val.author, val.adminEntry);
+
+                lastId = val.id;
+            });
+
+            setTimeout(function()
+                {
+                    loadDbEntries();
+                }, '1500');
+        }
     });
+}
+
+function redirectToBaseSite()
+{
+    window.location = "http://www.gamingblog.com";
 }

@@ -19,7 +19,7 @@ function registerInputColorUpdate($element)
             if ($element.val().length == 0) {
                 $element.css('background-color', 'red');
             } else {
-                $element.css('background-color', 'white');
+                $element.css('background-color', 'transparent');
             }
         });
     }

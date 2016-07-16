@@ -62,6 +62,13 @@ abstract class GamingBlog_DbFetcher
         return $res;
     }
     
+    public function getCount()
+    {
+        $res = $this->_db->fetchRow($this->_getCountSql());
+        
+        return $res;
+    }
+    
     
     public function limit($min, $max)
     {
