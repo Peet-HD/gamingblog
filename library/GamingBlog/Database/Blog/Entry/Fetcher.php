@@ -8,11 +8,23 @@
 class GamingBlog_Database_Blog_Entry_Fetcher extends GamingBlog_DbFetcher
 {
     /**
+     * Stores the filter-value for the entry-id
+     * 
+     * @var int 
+     */
+    private $_entryId;
+    
+    /**
      * 
      * @param Zend_Db_Adapter_Abstract $pDb
      */
     public function __construct($pDb) {
         parent::__construct($pDb);
+    }
+    
+    public function setEntryId($entryId)
+    {
+        $this->_entryId = intval($entryId);
     }
     
     private function _getDataFields()
@@ -37,6 +49,11 @@ class GamingBlog_Database_Blog_Entry_Fetcher extends GamingBlog_DbFetcher
             ->order('blogId DESC')
             ->joinInner(array('gb_a'=>'user_admin'),'gb_a.adminId=gb_be.adminId',array())
             ->joinInner(array('gb_bc'=>'blog_category'),'gb_bc.categoryId=gb_be.categoryId',array());
+        
+        if ($this->_entryId > -1)
+        {
+            $sql->where('gb_be.blogId = ?', $this->_entryId);
+        }
         
         return $sql;
     }
