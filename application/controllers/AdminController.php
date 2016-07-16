@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * The Admin-Controller offering management-actions for the admin
+ * 
+ * @author TH<>
+ */
 class AdminController extends GamingBlog_Controller_Action
 {
     protected $_defaultController = 'Blog';
@@ -15,6 +20,9 @@ class AdminController extends GamingBlog_Controller_Action
         Debug::p($pwHash);
     }
     
+    /**
+     * The login-action for admins (can only be accessed by directly call the controller/action
+     */
     public function loginAction()
     {
         if ($this->_user->authenticate())
@@ -45,6 +53,9 @@ class AdminController extends GamingBlog_Controller_Action
         $this->_view->render("user/login.tpl");
     }
     
+    /**
+     * The visitor-settings-page, offering the possibility to activate / deactivate /deleting visitor-accounts
+     */
     public function visitorsettingsAction()
     {
         // Redirect users without proper access
@@ -58,6 +69,7 @@ class AdminController extends GamingBlog_Controller_Action
         
         $page = max(array(0, $this->getParam('page', 0)));
         
+        // if a user-id and a proper mode are given, change the appropriate data, depending on the mode
         if (($userId != 0) && ($mode != -1))
         {
             $visitorWriter = new GamingBlog_Database_User_Visitor_Writer($this->_db->write());
@@ -86,6 +98,7 @@ class AdminController extends GamingBlog_Controller_Action
         
         $maxPage = ceil(floatval($userCount) / $elementsPerPage) - 1;
         
+        // limit the page-value to a proper range
         $page = min(array($page, $maxPage));
         
         $userFetcher->setLimit($page, $elementsPerPage);
@@ -99,6 +112,9 @@ class AdminController extends GamingBlog_Controller_Action
         $this->_view->render('admin/visitorsettings.tpl');
     }
     
+    /**
+     * The general-content-action offers the admin the possibility to change the content of the general-content-pages
+     */
     public function generalcontentAction()
     {
         // Redirect users without proper access
@@ -107,6 +123,7 @@ class AdminController extends GamingBlog_Controller_Action
             $this->redirect('/blog/overview');
         }
         
+        // Fetch and add if available, success- or error-data
         if ($this->hasParam('saved'))
         {
             $this->_view->saved = $this->getParam('saved');
@@ -131,6 +148,9 @@ class AdminController extends GamingBlog_Controller_Action
         $this->_view->render('admin/generalcontent.tpl');
     }
     
+    /**
+     * The save-content-action saves the general content depeding on the given pageId-param
+     */
     public function savecontentAction()
     {
         // Redirect users without proper access
@@ -145,9 +165,11 @@ class AdminController extends GamingBlog_Controller_Action
             
             $htmlContent = $this->getParam('htmlText' . $pageId);
         
+            // Prepare a valid id-key-array
             $contentIdReferences = $this->_config->get('content')->toArray();
             $validPageIds = array_values($contentIdReferences);
 
+            // Check if the page-id is valid
             if (in_array($pageId, $validPageIds))
             {
                 $contentWriter = new GamingBlog_Database_PageContent_Writer($this->_db->write());

@@ -12,7 +12,7 @@ abstract class GamingBlog_DbFetcher
     const FETCHMODE_ASSOC = 2;
     const FETCHMODE_ALL = 3;
     
-    protected $_fetchMode = 2;
+    protected $_fetchMode = 3;
     
     /**
      * @var Zend_Db_Adapter_Pdo_Mssql
@@ -79,11 +79,6 @@ abstract class GamingBlog_DbFetcher
     {
         $selectSql = $this->_getSelectSql();
         
-        switch($this->_fetchMode)
-        {
-            
-        }
-        
         switch ($this->_fetchMode)
         {
             case GamingBlog_DbFetcher::FETCHMODE_ROW:
@@ -103,7 +98,7 @@ abstract class GamingBlog_DbFetcher
                     $selectSql->limit($this->_countPerPage, $this->_countPerPage * $this->_page);
                 }
                 
-                $res = $this->_db->fetchRow($selectSql);
+                $res = $this->_db->fetchAll($selectSql);
                 break;
         }
         
