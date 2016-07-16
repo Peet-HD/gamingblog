@@ -23,24 +23,14 @@ class GamingBlog_User
         $this->_userSess = new Zend_Session_Namespace('gamingblog_user');
         $this->_userSess->setExpirationSeconds($this::expirationTime);
         
-        if ($this->authenticate() && $this->isActiveCheckRequired()) {
+        if ($this->authenticate() && !$this->isAdmin() && $this->isActiveCheckRequired()) {
             
-            if ($this->isAdmin())
-            {
-                $adminFetcher = new GamingBlog_Database_User_Admin_Fetcher($dbRead);
-                $adminFetcher->setIdFilter($this->_userSess->data['id']);
-                $adminFetcher->setFilterActive(1);
-                $adminFetcher->setFetchMode(GamingBlog_DbFetcher::FETCHMODE_ROW);
+            $userFetcher = new GamingBlog_Database_User_Visitor_Fetcher($dbRead);
+            $userFetcher->setIdFilter($this->_userSess->data['id']);
+            $userFetcher->setFilterActive(1);
+            $userFetcher->setFetchMode(GamingBlog_DbFetcher::FETCHMODE_ROW);
 
-                $res = $adminFetcher->getResult();
-            } else {
-                $userFetcher = new GamingBlog_Database_User_Visitor_Fetcher($dbRead);
-                $userFetcher->setIdFilter($this->_userSess->data['id']);
-                $userFetcher->setFilterActive(1);
-                $userFetcher->setFetchMode(GamingBlog_DbFetcher::FETCHMODE_ROW);
-
-                $res = $userFetcher->getResult();
-            }
+            $res = $userFetcher->getResult();
             
             if (empty($res) || ($res['id'] != $this->_userSess->data['id']))
             {

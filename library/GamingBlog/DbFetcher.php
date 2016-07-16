@@ -37,6 +37,20 @@ abstract class GamingBlog_DbFetcher
      */
     private $_maxFetch = -1;
     
+    /**
+     * The current data-page
+     * 
+     * @var int 
+     */
+    private $_page = -1;
+    
+    /**
+     * The count per data-page
+     * 
+     * @var int 
+     */
+    private $_countPerPage = -1;
+    
     public function __construct($pDb) {
         $this->_db = $pDb;
     }
@@ -50,13 +64,28 @@ abstract class GamingBlog_DbFetcher
         }
     }
     
+    public function setLimit($page, $countPerPage)
+    {
+        if (($page >= 0) && ($countPerPage >= 0))
+        {
+            $this->_page = intval($page);
+            $this->_countPerPage = intval($countPerPage);
+        }
+    }
+    
     public function getResult()
     {
+        $selectSql = $this->_getSelectSql();
         if ($this->_fetchMode == GamingBlog_DbFetcher::FETCHMODE_ROW)
         {
-            $res = $this->_db->fetchRow($this->_getSelectSql());
+            $res = $this->_db->fetchRow($selectSql);
         } else {
-            $res = $this->_db->fetchAll($this->_getSelectSql());
+        
+            if ($this->_page >= 0)
+            {
+                $selectSql->limit($this->_countPerPage, $this->_countPerPage * $this->_page);
+            }
+            $res = $this->_db->fetchAll($selectSql);
         }
         
         return $res;
@@ -66,7 +95,7 @@ abstract class GamingBlog_DbFetcher
     {
         $res = $this->_db->fetchRow($this->_getCountSql());
         
-        return $res;
+        return $res['count'];
     }
     
     
@@ -82,6 +111,12 @@ abstract class GamingBlog_DbFetcher
     }
     
     
+    /**
+     * @return Zend_Db_Select
+     */
     protected abstract function _getSelectSql();
+    /**
+     * @return Zend_Db_Select
+     */
     protected abstract function _getCountSql();
 }

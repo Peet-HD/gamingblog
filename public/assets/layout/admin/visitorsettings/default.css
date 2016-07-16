@@ -1,18 +1,46 @@
+#main-block .row:first-child
+{
+    margin-top: 10px;
+}
+
 .btnSmall
 {
     width: 75px;
 }
 
-.activatedOnce
+.iconBlock
 {
     border-radius: 4px;
-    background-color: lawngreen;
     padding: 2px;
 }
 
 .requestActivatedOnce
 {
-    border-radius: 4px;
+    background-color: yellow;
+}
+
+.activated
+{
+    background-color: lawngreen;
+}
+
+.deactivated
+{
     background-color: red;
-    padding: 2px;
+}
+
+.pageBtn
+{
+    padding: 0 15px;
+    min-width:45px;
+}
+
+#pagination
+{
+    margin-top:15px;
+}
+
+.pageElement
+{
+    cursor: default;
 }

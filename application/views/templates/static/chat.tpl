@@ -4,5 +4,5 @@
     {/if}
 </div>
 {if isset($user) && $user->authenticate()}
-    <input id="chatInputLine" type="text" placeholder="Write here to chat.."/>
+    <input id="chatInputLine" type="text" placeholder="Hier schreiben zum chatten.."/>
 {/if}

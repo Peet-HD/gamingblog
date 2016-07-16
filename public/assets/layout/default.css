@@ -20,7 +20,6 @@ body {
     min-height:530px;
     display:flex;
     flex-direction:column;
-    margin-top:64px;
     z-index:0;
     
 }
@@ -43,18 +42,28 @@ body{
     margin: 0 0 0 0;
 }
 nav{
-    position:absolute;
-}
-#hauptnav{
+    position:relative;
+    
     margin:0 10% 0 10%;
     width:80%;
     z-index:5;
-    position:absolute;
 }
 
-#hauptnav ul li a {
+nav ul li span
+{
+    font-size: 1rem;
+    color: #fff;
+    display: inline-block;
+    padding: 0 15px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+nav ul li a, nav ul li span {
     padding: 0px 30px;
 }
+
+
 /*
 #hauptnav ul{
     list-style-type:none;

@@ -38,8 +38,9 @@ CREATE TABLE `user_visitor` (
  `password` varchar(100) NOT NULL,
  `email` varchar(100) NOT NULL,
  `active` tinyint(1) NOT NULL DEFAULT '0',
+ `activatedOnce` tinyint(1) NOT NULL DEFAULT '0',
  PRIMARY KEY (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8
 
 -- ----------------------------------------------------------------------------
 

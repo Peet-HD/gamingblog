@@ -126,5 +126,5 @@ function loadDbEntries()
 
 function redirectToBaseSite()
 {
-    window.location = "http://www.gamingblog.com";
+    window.location = "http://www.gamingblog.de";
 }

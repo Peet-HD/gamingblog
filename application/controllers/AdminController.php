@@ -56,7 +56,7 @@ class AdminController extends GamingBlog_Controller_Action
         $userId = $this->getParam('userId', -1);
         $mode = $this->getParam('mode', -1);
         
-        $page = $this->getParam('page', 0);
+        $page = max(array(0, $this->getParam('page', 0)));
         
         if (($userId != 0) && ($mode != -1))
         {
@@ -80,9 +80,22 @@ class AdminController extends GamingBlog_Controller_Action
         
         $userFetcher = new GamingBlog_Database_User_Visitor_AccountSettings_Fetcher($this->_db->read());
         
+        $userCount = $userFetcher->getCount();
+        
+        $elementsPerPage = 10;
+        
+        $maxPage = ceil(floatval($userCount) / $elementsPerPage) - 1;
+        
+        $page = min(array($page, $maxPage));
+        
+        $userFetcher->setLimit($page, $elementsPerPage);
+        
         $this->_view->visitorList = $userFetcher->getResult();
         
-        //Debug::p($userFetcher->getCount());
+        $this->_view->page = $page;
+        $this->_view->elementsPerPage = $elementsPerPage;
+        $this->_view->maxPage = $maxPage;
+        
         $this->_view->navActive = 'accountrequests';
         
         $this->_view->render('admin/visitorsettings.tpl');

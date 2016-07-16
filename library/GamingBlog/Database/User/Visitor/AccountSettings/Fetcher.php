@@ -69,6 +69,7 @@ class GamingBlog_Database_User_Visitor_AccountSettings_Fetcher extends GamingBlo
         }
         
         $sql->order('gb_u.activatedOnce ASC');
+        $sql->order('gb_u.userName ASC');
         
         return $sql;
     }
