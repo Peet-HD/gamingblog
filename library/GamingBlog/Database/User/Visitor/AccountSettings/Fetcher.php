@@ -44,6 +44,11 @@ class GamingBlog_Database_User_Visitor_AccountSettings_Fetcher extends GamingBlo
         );
     }
     
+    /**
+     * Prepares the select-select-sql and returns it
+     * 
+     * @return Zend_Db_Select
+     */
     protected function _getSelectSql()
     {
         $sql = $this->_db->select();
@@ -74,6 +79,11 @@ class GamingBlog_Database_User_Visitor_AccountSettings_Fetcher extends GamingBlo
         return $sql;
     }
     
+    /**
+     * Prepares the count-select-sql and returns it
+     * 
+     * @return Zend_Db_Select
+     */
     protected function _getCountSql()
     {
         $sql = $this->_db->select();

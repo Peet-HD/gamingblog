@@ -9,7 +9,11 @@ class BlogController extends GamingBlog_Controller_Action
 {
     protected $_defaultAction = 'overview';
     
-    /* Main-Action with the overview of the news-entries */
+    /* 
+     * Main-Action with the overview of the news-entries
+     * 
+     * @author TH<>
+     */
     public function overviewAction()
     {
         $page = $this->_getParam("page",0);
@@ -42,12 +46,7 @@ class BlogController extends GamingBlog_Controller_Action
         
         $this->_view->render('blog/entryDetail.tpl');
     }
-    
-        public function fourzerofourAction()
-    {
-        $this->_view->render('error/404.tpl');   
-    }
-    
+
     public function writenewentryAction(){
         
         $text = $this->_getParam('text');

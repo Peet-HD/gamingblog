@@ -58,9 +58,6 @@
                 <div class="col s6">
                     <a class="left" href="{$urlHelper->url(['controller' => 'user', 'action' => 'register'])}">Registrieren</a>
                 </div>
-                <div class="col s6">
-                    <a class="right" href="{$urlHelper->url(['controller' => 'user', 'action' => 'recoverpw'])}">Passwort vergessen?</a>
-                </div>
              </div>
             
         {/if}

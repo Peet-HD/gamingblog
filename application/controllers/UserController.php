@@ -5,7 +5,11 @@ class UserController extends GamingBlog_Controller_Action
     protected $_defaultController = 'Blog';
     protected $_defaultAction = 'overview';
     
-    /* Main-Action offering the register of a new user */
+    /* 
+     * Main-Action offering the registration of a new visitor-user 
+     * 
+     * @author TH<>
+     */
     public function registerAction()
     {
         $registerFinish = $this->_getParam("register", 0);
@@ -33,12 +37,21 @@ class UserController extends GamingBlog_Controller_Action
         $this->_view->render("user/register.tpl");
     }
     
-    /* Registration-end-action */
+    /* 
+     * Registration-end-action shows a proper message, if registered correctly
+     * 
+     * @author TH<>
+     */
     public function registerdoneAction()
     {
         $this->_view->render("user/register_done.tpl");
     }
     
+    /**
+     * The login-action for the visitor-user
+     * 
+     * @author TH<>
+     */
     public function loginAction()
     {
         if ($this->_user->authenticate())
@@ -69,6 +82,11 @@ class UserController extends GamingBlog_Controller_Action
         $this->_view->render("user/login.tpl");
     }
     
+    /**
+     * The logout-action for the visitor-user
+     * 
+     * @author TH<>
+     */
     public function logoutAction()
     {
         $this->_user->logout();

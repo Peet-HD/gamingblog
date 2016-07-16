@@ -56,6 +56,14 @@ abstract class GamingBlog_DbFetcher
         $this->_db = $pDb;
     }
     
+    /**
+     * Sets the fetchmode for the fetcher-object.
+     * Possible values are (1 => ROW, 2 => ALL, 3 => ASSOC)
+     * 
+     * @param type $fetchMode
+     * 
+     * @author TH<>
+     */
     public function setFetchMode($fetchMode)
     {
         if (($fetchMode == GamingBlog_DbFetcher::FETCHMODE_ROW) ||
@@ -66,6 +74,14 @@ abstract class GamingBlog_DbFetcher
         }
     }
     
+    /**
+     * Offers a limiting to the sql-select
+     * 
+     * @param type $page
+     * @param type $countPerPage
+     * 
+     * @author TH<>
+     */
     public function setLimit($page, $countPerPage)
     {
         if (($page >= 0) && ($countPerPage >= 0))
@@ -75,6 +91,13 @@ abstract class GamingBlog_DbFetcher
         }
     }
     
+    /**
+     * Returns the sql-result by applying the sql-select to the database
+     * 
+     * @return mixed
+     * 
+     * @author TH<>
+     */
     public function getResult()
     {
         $selectSql = $this->_getSelectSql();
@@ -105,6 +128,13 @@ abstract class GamingBlog_DbFetcher
         return $res;
     }
     
+    /**
+     * Returns the count-result by applying the sql-select to the database
+     * 
+     * @return mixed
+     * 
+     * @author TH<>
+     */
     public function getCount()
     {
         $res = $this->_db->fetchRow($this->_getCountSql());
@@ -113,23 +143,16 @@ abstract class GamingBlog_DbFetcher
     }
     
     
-    public function limit($min, $max)
-    {
-        if (($min >= 0) && ($max > $min))
-        {
-            $this->_minFetch = $min;
-            $this->_maxFetch = $max;
-        } else {
-            throw new GamingBlog_Database_Fetcher_Exception('Invalid Limit-Values used');
-        }
-    }
-    
-    
     /**
+     * Function should prepare a Zend_Db_Select and return it
+     * 
      * @return Zend_Db_Select
      */
     protected abstract function _getSelectSql();
+    
     /**
+     * Function should prepare a Zend_Db_Select and return it
+     * 
      * @return Zend_Db_Select
      */
     protected abstract function _getCountSql();

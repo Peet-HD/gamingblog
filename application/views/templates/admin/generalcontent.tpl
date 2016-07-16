@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         {include file='static/header.tpl' jQuery='1' jsSource='generalcontent'}
+        
         <!-- eventuell zusatz-javascript script-->
         {if $user->authenticate() && $user->isAdmin()}
             <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
@@ -17,47 +18,12 @@
         {include file='static/topMenu.tpl' navActive='generalcontent'}
         <div id="main-block" class="container cyan lighten-3">
              <div class="row">
-                <div class="col s9 offset-s1">
-                {if isset($saved) && !empty($saved)}
-                    <table style="padding: 10px; background-color: green; color: white; width: 100%;">
-                        <tr id="successSaved">
-                            <td>Der Inhalt der "{$saved}"-page wurde gespeichert.</td>
-                        </tr>
-                    </table>
-                {else}
-                    {if isset($err) && !empty($err)}
-                        <table style="padding: 10px; background-color: red; color: white; width: 100%;">
-                            {if $err == 'invalidId'}
-                            <tr id="errorInvalidId">
-                                <td>Der Inhalt konnte nicht gespeichert werden (Ungültige Id).</td>
-                            </tr>
-                            {/if}
-                            {if $err == 'game'}
-                            <tr id="errorGameContent">
-                                <td>Der Inhalt der "game"-page konnte nicht gespeichert werden.</td>
-                            </tr>
-                            {/if}
-                            {if $err == 'company'}
-                            <tr id="errorCompanyContent">
-                                <td>Der Inhalt der "company"-page konnte nicht gespeichert werden.</td>
-                            </tr>
-                            {/if}
-                            {if $err == 'about'}
-                            <tr id="errorAboutContent">
-                                <td>Der Inhalt der "about"-page konnte nicht gespeichert werden.</td>
-                            </tr>
-                            {/if}
-                            {if $err == 'privacy'}
-                            <tr id="errorPrivacyContent">
-                                <td>Der Inhalt der "privacy"-page konnte nicht gespeichert werden.</td>
-                            </tr>
-                            {/if}
-                        </table>
-                    {/if}
+                <a name="game"></a>
+                {if ($saved == 'game') || ($err == 'game')}
+                    {include file='admin/info.tpl' saved=$saved err=$err}
                 {/if}
-                </div>
                  <form action="/admin/savecontent" method="post">
-                    <div class="col s7 offset-s1" style="margin-top:40px;">  
+                    <div class="col s7 offset-s1" style="margin-top:40px;">
                         <h5>Content [Game]</h5>
                     </div>
                     <div class="col s2" style="margin-top:40px;">  
@@ -66,16 +32,23 @@
                         </button>
                     </div>
                     <div id="textParent" class="col s9 offset-s1" style="margin-top:10px;">  
-                        <textarea name="htmlText{$contentIdData.game}">{$gameHtmlContent}</textarea>
+                        <textarea name="htmlText{$contentIdData.game}">{$gameHtmlContent.htmlContent}</textarea>
                     </div>
                     <input type="hidden" name="pageId" value="{$contentIdData.game}"/>
-                    <input type="hidden" name="htmlInitial" value='{$gameHtmlContent}'></input>
+                    <input type="hidden" name="htmlInitial" value='{$gameHtmlContent.htmlContent}'></input>
                 </form>
+                <div class="col s9 offset-s1" style="margin-top:10px;">  
+                    <span class="right">Letzte Änderung: {$gameHtmlContent.lastChange}</span>
+                </div>
                 
                 <div class="col s9 offset-s1" style="margin-top:40px;">  
                     <hr />
                 </div>
                 
+                <a name="company"></a>
+                {if ($saved == 'company') || ($err == 'company')}
+                    {include file='admin/info.tpl' saved=$saved err=$err}
+                {/if}
                 <form action="/admin/savecontent" method="post">
                     <div class="col s7 offset-s1" style="margin-top:40px;">  
                         <h5>Content [Company]</h5>
@@ -86,16 +59,23 @@
                         </button>
                     </div>
                     <div class="col s9 offset-s1" style="margin-top:10px;">  
-                        <textarea name="htmlText{$contentIdData.company}">{$companyHtmlContent}</textarea>
+                        <textarea name="htmlText{$contentIdData.company}">{$companyHtmlContent.htmlContent}</textarea>
                     </div>
                     <input type="hidden" name="pageId" value="{$contentIdData.company}"/>
-                    <input type="hidden" name="htmlInitial" value='{$companyHtmlContent}'></input>
+                    <input type="hidden" name="htmlInitial" value='{$companyHtmlContent.htmlContent}'></input>
                 </form>
+                <div class="col s9 offset-s1" style="margin-top:10px;">  
+                    <span class="right">Letzte Änderung: {$companyHtmlContent.lastChange}</span>
+                </div>
                 
                 <div class="col s9 offset-s1" style="margin-top:40px;">  
                     <hr />
                 </div>
                 
+                <a name="about"></a>
+                {if ($saved == 'about') || ($err == 'about')}
+                    {include file='admin/info.tpl' saved=$saved err=$err}
+                {/if}
                  <form action="/admin/savecontent" method="post">
                     <div class="col s7 offset-s1" style="margin-top:40px;">  
                         <h5>Content [About]</h5>
@@ -106,16 +86,23 @@
                         </button>
                     </div>
                     <div class="col s9 offset-s1" style="margin-top:10px;">  
-                        <textarea name="htmlText{$contentIdData.about}">{$aboutHtmlContent}</textarea>
+                        <textarea name="htmlText{$contentIdData.about}">{$aboutHtmlContent.htmlContent}</textarea>
                     </div>
                     <input type="hidden" name="pageId" value="{$contentIdData.about}"/>
-                    <input type="hidden" name="htmlInitial" value='{$aboutHtmlContent}'></input>
+                    <input type="hidden" name="htmlInitial" value='{$aboutHtmlContent.htmlContent}'></input>
                 </form>
+                <div class="col s9 offset-s1" style="margin-top:10px;">  
+                    <span class="right">Letzte Änderung: {$aboutHtmlContent.lastChange}</span>
+                </div>
                 
                 <div class="col s9 offset-s1" style="margin-top:40px;">  
                     <hr />
                 </div>
                 
+                <a name="privacy"></a>
+                {if ($saved == 'privacy') || ($err == 'privacy')}
+                    {include file='admin/info.tpl' saved=$saved err=$err}
+                {/if}
                  <form action="/admin/savecontent" method="post">
                     <div class="col s7 offset-s1" style="margin-top:40px;">  
                         <h5>Content [Privacy]</h5>
@@ -126,11 +113,14 @@
                         </button>
                     </div>
                     <div class="col s9 offset-s1" style="margin-top:10px;">  
-                        <textarea name="htmlText{$contentIdData.privacy}">{$privacyHtmlContent}</textarea>
+                        <textarea name="htmlText{$contentIdData.privacy}">{$privacyHtmlContent.htmlContent}</textarea>
                     </div>
                     <input type="hidden" name="pageId" value="{$contentIdData.privacy}"/>
-                    <input type="hidden" name="htmlInitial" value='{$privacyHtmlContent}'></input>
+                    <input type="hidden" name="htmlInitial" value='{$privacyHtmlContent.htmlContent}'></input>
                 </form>
+                <div class="col s9 offset-s1" style="margin-top:10px;">  
+                    <span class="right">Letzte Änderung: {$privacyHtmlContent.lastChange}</span>
+                </div>
             </div>
         </div>
         {include file='static/sidebar.tpl'}

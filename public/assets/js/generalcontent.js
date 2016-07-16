@@ -1,5 +1,5 @@
-$(function()
-{
+$(document).ready(function()
+{    
     $('.submitBtn').click(function()
     {
         var idVal = $(this).val();

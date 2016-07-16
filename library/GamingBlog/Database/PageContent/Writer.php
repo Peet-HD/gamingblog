@@ -2,6 +2,8 @@
 
 /* 
  * The Page-Content-Writer to offer a direct access to the table for inserting / updating lines
+ * 
+ * @author TH<>
  */
 class GamingBlog_Database_PageContent_Writer extends GamingBlog_Database_Writer
 {

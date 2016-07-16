@@ -221,11 +221,13 @@ nav ul li a, nav ul li span {
 }
 
 input[type=text],
-input[type=password]
+input[type=password],
+input[type=email]
 {
     color: white;
-    width: calc(100% - 10px);
+    width: calc(100% - 20px);
     margin-left: 5px;
+    padding: 0 5px;
 }
 
 .loginform a{

@@ -18,6 +18,11 @@ class ChatController extends GamingBlog_Controller_Action
         $this->redirect('/' . $frontCont->getDefaultControllerName() . '/' . $frontCont->getDefaultAction());
     }
     
+    /**
+     * helper-action to fetch the last chat-entries with ajax
+     * 
+     * @author TH<>
+     */
     public function fetchlastentriesAction()
     {
         // Only authenticated user's can fetch chat-messages
@@ -42,6 +47,11 @@ class ChatController extends GamingBlog_Controller_Action
         }
     }
     
+    /**
+     * helper-action to send a new chat-line from a user
+     * 
+     * @author TH<>
+     */
     public function sendentryAction()
     {
         // Only authenticated user's can write chat-messages

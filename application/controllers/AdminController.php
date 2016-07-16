@@ -10,7 +10,11 @@ class AdminController extends GamingBlog_Controller_Action
     protected $_defaultController = 'Blog';
     protected $_defaultAction = 'overview';
     
-    /* Main-Action offering the register of a new user */
+    /**
+     * Main-Action offering the register of a new user
+     * 
+     * @author TH<>
+     */
     public function createpwAction()
     {
         $userPw = $this->_getParam("pw", 0);
@@ -22,6 +26,8 @@ class AdminController extends GamingBlog_Controller_Action
     
     /**
      * The login-action for admins (can only be accessed by directly call the controller/action
+     * 
+     * @author TH<>
      */
     public function loginAction()
     {
@@ -55,6 +61,8 @@ class AdminController extends GamingBlog_Controller_Action
     
     /**
      * The visitor-settings-page, offering the possibility to activate / deactivate /deleting visitor-accounts
+     * 
+     * @author TH<>
      */
     public function visitorsettingsAction()
     {
@@ -114,6 +122,8 @@ class AdminController extends GamingBlog_Controller_Action
     
     /**
      * The general-content-action offers the admin the possibility to change the content of the general-content-pages
+     * 
+     * @author TH<>
      */
     public function generalcontentAction()
     {
@@ -127,10 +137,17 @@ class AdminController extends GamingBlog_Controller_Action
         if ($this->hasParam('saved'))
         {
             $this->_view->saved = $this->getParam('saved');
-        } else if ($this->hasParam('err'))
+        } else {
+            $this->_view->saved = '';
+        }
+        
+        if ($this->hasParam('err'))
         {
             $this->_view->err = $this->getParam('err');
+        } else {
+            $this->_view->err = '';
         }
+        
         
         $contentFetcher = new GamingBlog_Database_PageContent_Fetcher($this->_db->read());
         
@@ -140,16 +157,23 @@ class AdminController extends GamingBlog_Controller_Action
         
         $this->_view->contentIdData = $contentIdReferences;
         
-        $this->_view->gameHtmlContent = isset($pageContent[$contentIdReferences['game']]) ? $pageContent[$contentIdReferences['game']]['htmlContent'] : '';
-        $this->_view->companyHtmlContent = isset($pageContent[$contentIdReferences['company']]) ? $pageContent[$contentIdReferences['company']]['htmlContent'] : '';
-        $this->_view->aboutHtmlContent = isset($pageContent[$contentIdReferences['about']]) ? $pageContent[$contentIdReferences['about']]['htmlContent'] : '';
-        $this->_view->privacyHtmlContent = isset($pageContent[$contentIdReferences['privacy']]) ? $pageContent[$contentIdReferences['privacy']]['htmlContent'] : '';
+        if ($this->hasParam('editId'))
+        {
+            $this->_view->editId = $this->getParam('editId');
+        }
+        
+        $this->_view->gameHtmlContent = isset($pageContent[$contentIdReferences['game']]) ? $pageContent[$contentIdReferences['game']] : '';
+        $this->_view->companyHtmlContent = isset($pageContent[$contentIdReferences['company']]) ? $pageContent[$contentIdReferences['company']] : '';
+        $this->_view->aboutHtmlContent = isset($pageContent[$contentIdReferences['about']]) ? $pageContent[$contentIdReferences['about']] : '';
+        $this->_view->privacyHtmlContent = isset($pageContent[$contentIdReferences['privacy']]) ? $pageContent[$contentIdReferences['privacy']] : '';
         
         $this->_view->render('admin/generalcontent.tpl');
     }
     
     /**
      * The save-content-action saves the general content depeding on the given pageId-param
+     * 
+     * @author TH<>
      */
     public function savecontentAction()
     {
@@ -180,12 +204,12 @@ class AdminController extends GamingBlog_Controller_Action
 
                 if ($contentWriter->updateData($pageId) > 0)
                 {
-                    $this->redirect('/admin/generalcontent?saved=' . $contentByKeys[$pageId]);
+                    $this->redirect('/admin/generalcontent?saved=' . $contentByKeys[$pageId] . '#' . $contentByKeys[$pageId]);
                 } else {
-                    $this->redirect('/admin/generalcontent?err=' . $contentByKeys[$pageId]);
+                    $this->redirect('/admin/generalcontent?err=' . $contentByKeys[$pageId] . '#' . $contentByKeys[$pageId]);
                 }
             } else {
-                $this->redirect('/admin/generalcontent?err=invalidId');
+                $this->redirect('/admin/generalcontent?err=invalidId' . '&editId=' . '#' . $contentByKeys[$pageId]);
             }
         }
         

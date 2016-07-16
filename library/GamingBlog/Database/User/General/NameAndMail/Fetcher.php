@@ -44,6 +44,11 @@ class GamingBlog_Database_User_General_NameAndMail_Fetcher extends GamingBlog_Db
         );
     }
     
+    /**
+     * Prepares the select-select-sql and returns it
+     * 
+     * @return Zend_Db_Select
+     */
     protected function _getSelectSql()
     {
         $sqlVisitor = $this->_db->select();

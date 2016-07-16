@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Abstract Database-Writer-Class, offers general methods and forces the implementation of specific writer-methods
+ * 
+ * @author TH<>
+ */
 abstract class GamingBlog_Database_Writer
 {
     /**
@@ -19,6 +24,8 @@ abstract class GamingBlog_Database_Writer
      * Writes the prepared data to the database
      * 
      * @return mixed An array with each primary-key-value, or a single primary-key.
+     * 
+     * @author TH<>
      */
     public function writeData()
     {
@@ -29,6 +36,15 @@ abstract class GamingBlog_Database_Writer
         return $row->save();
     }
     
+    /**
+     * Updates the row with the given key and the prepared data in the database, 
+     * 
+     * @param type $primaryKeyVal
+     * 
+     * @return int
+     * 
+     * @author TH<>
+     */
     public function updateData($primaryKeyVal)
     {
         return $this->_dbTable->update(
@@ -37,6 +53,15 @@ abstract class GamingBlog_Database_Writer
         );
     }
     
+    /**
+     * Deletes the row with the given key-value
+     * 
+     * @param type $primaryKeyVal
+     * 
+     * @return int
+     * 
+     * @author TH<>
+     */
     public function deleteData($primaryKeyVal)
     {
         return $this->_dbTable->delete(
@@ -44,7 +69,18 @@ abstract class GamingBlog_Database_Writer
         );
     }
     
+    /**
+     * Should prepare an associative-data-array and return it
+     * 
+     * @return array
+     */
     protected abstract function _getRowData();
+    
+    /**
+     * Should prepare the primary-key as string and return it
+     * 
+     * @return string
+     */
     protected abstract function _getPkField();
     
 }

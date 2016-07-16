@@ -154,10 +154,6 @@ class GamingBlog_User
                 !isset($res['id']) || ($res['id'] < 0) ||
                 !isset($res['password']) || empty($res['password']) ||
                 !isset($res['email']) || empty($res['email']) ||
-                /**
-                 * @todo TODO TODO TODO unbedingt das active-flag wieder auf 1 schalten,
-                 * damit korrekt geprüft wird, welcher account aktiv geschaltet wurde
-                 */
                 !isset($res['active']) || ($res['active'] != 1) ||
                 !password_verify($saltedUserPw, $res['password'])) {
                 
@@ -193,10 +189,13 @@ class GamingBlog_User
         return $errorData;
     }
     
-    /*
+    /**
      * Adds the Gamingblog_Salt to the password 
+     * 
      * @param type $pw
      * @return type
+     * 
+     * @author TH<>
      */
     public static function getSaltedPw($pw)
     {
@@ -213,6 +212,8 @@ class GamingBlog_User
      * @param type $userData
      * 
      * @return array - The error-data if available
+     * 
+     * @author TH<>
      */
     public static function tryRegister($gamingBlogDb, $userData)
     {
@@ -288,6 +289,8 @@ class GamingBlog_User
      * 
      * @param string $password
      * @return true, if safe, false, otherwise
+     * 
+     * @author TH<>
      */
     private static function is_safe_pw($password)
     {
@@ -302,6 +305,8 @@ class GamingBlog_User
      * @param Zend_Db_Adapter_Abstract $dbRead
      * @param string $userName
      * @param string $userMail
+     * 
+     * @author TH<>
      */
     private static function getRegisteredUser($dbRead, $userName, $userMail)
     {
@@ -318,6 +323,12 @@ class GamingBlog_User
         }
     }
     
+    /**
+     * The user-login-action - Checks if the necessary data is available and prepares the sessiondata
+     * 
+     * @param type $userData
+     * @return boolean
+     */
     public function login($userData)
     {
         if (isset($userData['id']) && !empty($userData['id']) &&
@@ -360,6 +371,8 @@ class GamingBlog_User
      * Returns the information, if the user-active-state has to be checked again
      * 
      * @return boolean
+     * 
+     * @author TH<>
      */
     public function isActiveCheckRequired()
     {
@@ -425,13 +438,19 @@ class GamingBlog_User
     }
     
     /**
-     *  @todo dringend ändern
+     * Checks, if the user is an admin
+     * 
      * @author PB 
      */
     public function  isAdmin(){
         return isset($this->_userSess->data['isAdmin']);
     }
 
+    /**
+     * A helper-method to create an admin-password
+     * @param type $userPw
+     * @return type
+     */
     public static function createAdminPw($userPw) {
         return password_hash(GamingBlog_User::getSaltedPw($userPw), PASSWORD_BCRYPT);
     }

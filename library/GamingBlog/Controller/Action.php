@@ -39,7 +39,11 @@ abstract class GamingBlog_Controller_Action extends Zend_Controller_Action
      */
     protected $_config;
     
-    
+    /**
+     * Initialize-Method - Prepares the general necessary variables to be accessible in every controller
+     * 
+     * @author TH<>
+     */
     public function init() {
         parent::init();
         
