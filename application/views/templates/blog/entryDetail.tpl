@@ -15,7 +15,6 @@
             <p>Kategorie: {$entry.categoryName}</p>
             <ul>
                 <li>{include file='blog/commentary.tpl'}</li>
-		<li><a href="">Likes</a></li>
             </ul>
 	</footer>
         {/if}

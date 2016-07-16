@@ -25,14 +25,13 @@
 
         {else}
             <header class="ueberschrift">{$entry.title}</header>
-            <section class="content">{$entry.text|truncate:3000:false}</section>
+            <section class="content">{$entry.text|truncate:3000:'...'}</section>
 
 	<footer class="lastline">
             <p>Kategorie: {$entry.categoryName}</p>
             <ul>  
                 <li>{$entry.blogId}</li>
                 <li><a href='{$urlHelper->url(["controller" => "blog", "action" => "entrydetail"])}?blogid={$entry.blogId}'>mehr</a></li>
-		<li><a href="">Likes</a></li>
                 <li><a href="">Kommentare</a></li>
             </ul>
 	</footer>
