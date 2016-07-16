@@ -1,4 +1,4 @@
-<h1>n error occurred</h1>
+<h1>An error occurred</h1>
 
 
 <h2>{$this->message}</h2>

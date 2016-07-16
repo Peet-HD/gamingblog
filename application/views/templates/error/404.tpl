@@ -7,11 +7,23 @@
     </head>
     <body>
         {include file='static/topMenu.tpl'}
-        <div id="main-block">
-            <h1>Error 404:</h1>
-            <h2 id="much">Much Construction</h2>
-            <h2 id="sorry">Such Sorry</h2>
-            <img id="construction_doge" src="https://lh6.ggpht.com/bnk6-_FcqNgaJeONsfcIO1zforvjq8tYLoSLmxwDxgVLZUhEiOvwu4HSlLejFAiGwQU%3Dw300">
+        <div id="main-block" class="container cyan lighten-3">
+             <div class="row">
+                <div class="col s8 offset-s2">
+                    <h1>.404</h1>
+                </div>
+                <div class="col s3 offset-s2">
+                    <br/>
+                    <img src="/assets/img/birdo.png" />
+                </div>
+                <div class="col s6">
+                    <br/>
+                    <h3>Die angeforderte Seite konnte leider nicht gefunden werden..</h3>
+                    <br/>
+                    <h5>Versuchs doch mal in der <a href="/blog/overview">Übersicht</a>.</h5>
+                </div>
+            </div>
+            {include file='static/sidebar.tpl'}
         </div>
     </body>
 </html>
