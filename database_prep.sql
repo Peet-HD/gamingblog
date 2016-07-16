@@ -5,15 +5,12 @@
 
 -- ----------------------------------------------------------------------------
 -- Benutzer-ADMIN-Tabelle
+
+DROP DATABASE IF EXISTS `gamingblog`;
+
 CREATE DATABASE IF NOT EXISTS gamingblog;
+
 USE gamingblog;
-DROP TABLE IF EXISTS `blog_commentary`;
-DROP TABLE IF EXISTS `blog_entry`;
-DROP TABLE IF EXISTS `blog_category`;
-DROP TABLE IF EXISTS `chat_data`;
-DROP TABLE IF EXISTS `user_admin`;
-DROP TABLE IF EXISTS `user_visitor`;
-DROP TABLE IF EXISTS `general_page_content`;
 
 CREATE TABLE `user_admin` (
  `adminId` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'The admin-primary-key',

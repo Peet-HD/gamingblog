@@ -32,7 +32,7 @@
             <ul>  
                 <li>{$entry.blogId}</li>
                 <li><a href='{$urlHelper->url(["controller" => "blog", "action" => "entrydetail"])}?blogid={$entry.blogId}'>mehr</a></li>
-                <li><a href="">Kommentare</a></li>
+                <li><a href="">Kommentare()</a></li>
             </ul>
 	</footer>
     </div>
