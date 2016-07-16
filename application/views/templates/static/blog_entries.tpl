@@ -17,7 +17,12 @@
                  </select>
                 </label>
                  <button class='btn waves-effect waves-teal' type="submit">Ändern</button>
+                 <form action="{$urlHelper->url(['controller' => 'blog', 'action' => 'writenewentry'])}" method="Post">
+                     <input hidden='true' name='blogId' value='{$entry.blogId}'></input>
+                     <button style='background-color:#e53935;' name="delete" value="1" class='btn waves-effect waves-teal' type='submit'>Löschen</button>
+                 </form>
             </form>
+
         {else}
             <header class="ueberschrift">{$entry.title}</header>
             <section class="content">{$entry.text|truncate:3000:false}</section>
