@@ -100,5 +100,56 @@ class AdminController extends GamingBlog_Controller_Action
         
         $this->_view->render('admin/visitorsettings.tpl');
     }
+    
+    public function generalcontentAction()
+    {
+        $contentFetcher = new GamingBlog_Database_PageContent_Fetcher($this->_db->read());
+        
+        $pageContent = $contentFetcher->getResult();
+        
+        $contentIdReferences = $this->_config->get('content')->toArray();
+        
+        $this->_view->contentIdData = $contentIdReferences;
+        
+        //Debug::p($pageContent);
+        
+        $this->_view->gameHtmlContent = isset($pageContent[$contentIdReferences['game']]) ? $pageContent[$contentIdReferences['game']]['htmlContent'] : '';
+        $this->_view->companyHtmlContent = isset($pageContent[$contentIdReferences['company']]) ? $pageContent[$contentIdReferences['company']]['htmlContent'] : '';
+        $this->_view->aboutHtmlContent = isset($pageContent[$contentIdReferences['about']]) ? $pageContent[$contentIdReferences['about']]['htmlContent'] : '';
+        $this->_view->privacyHtmlContent = isset($pageContent[$contentIdReferences['privacy']]) ? $pageContent[$contentIdReferences['privacy']]['htmlContent'] : '';
+        
+        $this->_view->render('admin/generalcontent.tpl');
+    }
+    
+    public function savecontentAction()
+    {
+        $htmlContent = $this->getParam('htmlText');
+        
+        if ($this->hasParam($pageId))
+        {
+            $pageId = $this->getParam('pageId');
+        
+            $contentIdReferences = $this->_config->get('content')->toArray();
+            $validPageIds = array_values($contentIdReferences);
+
+            if (in_array($pageId, $validPageIds))
+            {
+                $contentWriter = new GamingBlog_Database_PageContent_Writer($this->_db->write());
+
+                $contentWriter->setHtmlContent($htmlContent);
+
+                if ($contentWriter->updateData($pageId) > 0)
+                {
+                    $this->redirect('/admin/generalcontent?saved=' . $pageId);
+                } else {
+                    $this->redirect('/admin/generalcontent?err=' . $contentIdReferences[$pageId]);
+                }
+            } else {
+                    $this->redirect('/admin/generalcontent?err=invalidId');
+            }
+        }
+        
+        $this->redirect('/admin/generalcontent');
+    }
 }
 

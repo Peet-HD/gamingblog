@@ -2,16 +2,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         {include file='static/header.tpl' jQuery='1' cssSource='admin/visitorsettings'}
-        <!-- eventuell zusatz-javascript script-->
-        {if $user->authenticate() && $user->isAdmin()}
-            <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-            <script>
-                tinymce.init({ 
-                    selector:'textarea',
-                    toolbar: 'undo redo | styleselect | bold italic | link image'
-                });
-           </script>
-        {/if}
     </head>
     <body>
         {include file='static/topMenu.tpl' navActive='visitorsettings'}

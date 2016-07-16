@@ -26,14 +26,25 @@ abstract class GamingBlog_Controller_Action extends Zend_Controller_Action
     protected $_defaultAction = '';
     
     /**
-     *
+     * The user-object
+     * 
      * @var GamingBlog_User
      */
     protected $_user;
     
+    /**
+     * The page-configuration
+     * 
+     * @var Zend_Config
+     */
+    protected $_config;
+    
     
     public function init() {
         parent::init();
+        
+        // Prepare the config-object
+        $this->_config = Zend_Registry::get('config');
         
         // Prepare the view-object
         $this->_view = Zend_Registry::get('view');

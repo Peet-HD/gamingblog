@@ -1,10 +1,5 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
- * Author:  Lucky
+ * Author:  TH<>
  * Created: 11.07.2016
  */
 
@@ -17,6 +12,7 @@ DROP TABLE IF EXISTS `comment`;
 DROP TABLE IF EXISTS `chat_data`;
 DROP TABLE IF EXISTS `user_admin`;
 DROP TABLE IF EXISTS `user_visitor`;
+DROP TABLE IF EXISTS `general_page_content`;
 
 CREATE TABLE `user_admin` (
  `adminId` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -88,3 +84,15 @@ CREATE TABLE `chat_data` (
  `text` varchar(50) NOT NULL,
  PRIMARY KEY (`entryId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=709 DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------------------------------------------------------
+-- Allgemeine Seiteninhalte-Tabelle
+
+-- Tabellenstruktur für Tabelle `general_page_content`
+CREATE TABLE `general_page_content` (
+ `contendId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+ `pageHtml` text NOT NULL,
+ `lastChange` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ PRIMARY KEY (`contendId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

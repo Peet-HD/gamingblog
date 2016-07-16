@@ -9,7 +9,8 @@
 abstract class GamingBlog_DbFetcher
 {
     const FETCHMODE_ROW = 1;
-    const FETCHMODE_ALL = 2;
+    const FETCHMODE_ASSOC = 2;
+    const FETCHMODE_ALL = 3;
     
     protected $_fetchMode = 2;
     
@@ -58,7 +59,8 @@ abstract class GamingBlog_DbFetcher
     public function setFetchMode($fetchMode)
     {
         if (($fetchMode == GamingBlog_DbFetcher::FETCHMODE_ROW) ||
-            ($fetchMode == GamingBlog_DbFetcher::FETCHMODE_ALL))
+            ($fetchMode == GamingBlog_DbFetcher::FETCHMODE_ALL) ||
+            ($fetchMode == GamingBlog_DbFetcher::FETCHMODE_ASSOC))
         {
             $this->_fetchMode = $fetchMode;
         }
@@ -76,16 +78,33 @@ abstract class GamingBlog_DbFetcher
     public function getResult()
     {
         $selectSql = $this->_getSelectSql();
-        if ($this->_fetchMode == GamingBlog_DbFetcher::FETCHMODE_ROW)
-        {
-            $res = $this->_db->fetchRow($selectSql);
-        } else {
         
-            if ($this->_page >= 0)
-            {
-                $selectSql->limit($this->_countPerPage, $this->_countPerPage * $this->_page);
-            }
-            $res = $this->_db->fetchAll($selectSql);
+        switch($this->_fetchMode)
+        {
+            
+        }
+        
+        switch ($this->_fetchMode)
+        {
+            case GamingBlog_DbFetcher::FETCHMODE_ROW:
+                $res = $this->_db->fetchRow($selectSql);
+                break;
+            case GamingBlog_DbFetcher::FETCHMODE_ASSOC:
+                if ($this->_page >= 0)
+                {
+                    $selectSql->limit($this->_countPerPage, $this->_countPerPage * $this->_page);
+                }
+                
+                $res = $this->_db->fetchAssoc($selectSql);
+                break;
+            case GamingBlog_DbFetcher::FETCHMODE_ALL:
+                if ($this->_page >= 0)
+                {
+                    $selectSql->limit($this->_countPerPage, $this->_countPerPage * $this->_page);
+                }
+                
+                $res = $this->_db->fetchRow($selectSql);
+                break;
         }
         
         return $res;
