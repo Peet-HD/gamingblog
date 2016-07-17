@@ -6,5 +6,4 @@
         {if !isset($hideLogin)}
             {include file='user/login_form.tpl' sidebar=1}
         {/if}
-        {include file='static/category_roll.tpl'}
 </div>
