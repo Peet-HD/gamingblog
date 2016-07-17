@@ -77,12 +77,8 @@ class BlogController extends GamingBlog_Controller_Action
         $entryDbWriter = new GamingBlog_Database_Blog_Entry_Writer($this->_db->write());
         $entryDbWriter->setAdminId($this->_user->getId());
         $entryDbWriter->setCategory($categoryId);
-                $b= html_entity_decode($text);
-                $text=preg_replace('/(\<(\s)*s(\s)*c(\s)*r(\s)*i(\s)*p(\s)*t(\s)*\>)||(\<\/(\s)*s(\s)*c(\s)*r(\s)*i(\s)*p(\s)*t\>)/','', $b);
-        $entryDbWriter->setText($text);
-                        $b= html_entity_decode($title);
-                $title=preg_replace('/(\<(\s)*s(\s)*c(\s)*r(\s)*i(\s)*p(\s)*t(\s)*\>)||(\<\/(\s)*s(\s)*c(\s)*r(\s)*i(\s)*p(\s)*t\>)/','', $b);
-        $entryDbWriter->setTitle($title);
+        $entryDbWriter->setText(GamingBlog_Database::stripXss($text));
+        $entryDbWriter->setTitle(GamingBlog_Database::stripXss($title));
         $blogId = $this->getParam('blogId');
         $a=  htmlentities($text, ENT_QUOTES);
 
@@ -103,14 +99,17 @@ class BlogController extends GamingBlog_Controller_Action
     
     public function writecommentAction(){
         
-        $text = $this->getParam('comment');
-        $blogId = $this->getParam('blogId');
-
-        $commentDbWriter = new GamingBlog_Database_Blog_Commentary_Writer($this->_db->write());
-        $commentDbWriter->setText($text);
-        $commentDbWriter->setUserId($this->_user->getId());
-        $commentDbWriter->setBlogId($blogId);
-        $commentDbWriter->writeData();
+        $strippedText = GamingBlog_Database::stripXss($this->getParam('comment', ''), true);
+        $blogId = $this->getParam('blogId', -1);
+        
+        if (($blogId != -1) && (strlen($strippedText) > 0))
+        {
+            $commentDbWriter = new GamingBlog_Database_Blog_Commentary_Writer($this->_db->write());
+            $commentDbWriter->setText($strippedText);
+            $commentDbWriter->setUserId($this->_user->getId());
+            $commentDbWriter->setBlogId($blogId);
+            $commentDbWriter->writeData();
+        }
 
        $this->redirect('blog/entrydetail?blogid='.$blogId);
     }

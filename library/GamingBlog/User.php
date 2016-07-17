@@ -245,6 +245,14 @@ class GamingBlog_User
         if (!isset($userData['name']) || empty($userData['name']))
         {
             $errorData['missingName'] = 1;
+        } else if ((strlen($userData['name']) < 6) || (strlen($userData['name']) > 20))
+        {
+            $errorData['missingNameLength'] = 1;
+        }
+        
+        if (GamingBlog_Database::containsInvalidUserNameChars($userData['name']))
+        {
+            $errorData['invalidNameChars'] = 1;
         }
         
         if (!isset($userData['email']) || empty($userData['email']))
@@ -264,7 +272,7 @@ class GamingBlog_User
         if (!isset($userData['password']) || empty($userData['password']))
         {
             $errorData['missingPassword'] = 1;
-        } else if (isset($userData['password']) && strlen($userData['password']) < 8)
+        } else if (isset($userData['password']) && (strlen($userData['password']) < 8))
         {
             $errorData['missingPasswordLength'] = 1;
         } else if (!GamingBlog_User::is_safe_pw($userData['password']))
@@ -296,9 +304,9 @@ class GamingBlog_User
                 $pwHash = password_hash(GamingBlog_User::getSaltedPw($userData['password']), PASSWORD_BCRYPT);
 
                 $userDbWriter = new GamingBlog_Database_User_Visitor_Writer($gamingBlogDb->write());
-                $userDbWriter->setUsername($userData['name'])
+                $userDbWriter->setUsername(GamingBlog_Database::stripXss($userData['name'], true))
                              ->setPassword($pwHash)
-                             ->setEmail($userData['email']);
+                             ->setEmail(GamingBlog_Database::stripXss($userData['email']));
 
                 $userDbWriter->writeData();
             }

@@ -18,6 +18,15 @@
                                 <tr id="errorMissingName">
                                     <td><span>The user-name is missing</span></td>
                                 </tr>
+                                {elseif isset($errorData['missingNameLength'])}
+                                <tr id="errorMissingNameLength">
+                                    <td><span>The user-name-length is invalid (at least 6 characters, maximum 20 Characters)</span></td>
+                                </tr>
+                                {/if}
+                                {if isset($errorData['invalidNameChars'])}
+                                <tr id="errorInvalidNameChars">
+                                    <td><span>The user-name contains invalid Characters (Only use a-z, 0-9, _ and no spaces)</span></td>
+                                </tr>
                                 {/if}
                                 {if isset($errorData['missingMail'])}
                                 <tr id="errorMissingMail">
@@ -34,7 +43,7 @@
                                 </tr>
                                 {else if isset($errorData['missingPasswordLength'])}
                                 <tr id="errorPasswordLength">
-                                    <td><span>The user-password-length is to short (at least 8 characters)</span></td>
+                                    <td><span>The user-password-length is invalid (at least 8 characters)</span></td>
                                 </tr>
                                 {else if isset($errorData['unsafePassword'])}
                                 <tr id="errorUnsafePassword">

@@ -61,7 +61,7 @@ class ChatController extends GamingBlog_Controller_Action
         if ($this->_user->authenticate())
         {
             // Trim whitespace from the text-param, if available, to check if the string is usable
-            $strippedTextMsg = strip_tags(trim($this->_getParam('text', '')));
+            $strippedTextMsg = GamingBlog_Database::stripXss(trim($this->_getParam('text', '')), true);
 
             if (strlen($strippedTextMsg) > 0)
             {
