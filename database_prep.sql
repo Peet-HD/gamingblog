@@ -64,18 +64,22 @@ CREATE TABLE `blog_entry` (
  CONSTRAINT `category_id_fk` FOREIGN KEY (`categoryId`) REFERENCES `blog_category` (`categoryId`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
-CREATE TABLE blog_commentary (
- commentId int(11) NOT NULL AUTO_INCREMENT COMMENT 'The comment-primary-key',
- blogId int(10) unsigned NOT NULL COMMENT 'The associated blog-id to the comment',
- text text NOT NULL COMMENT 'The comment-text',
- userId int(10) unsigned DEFAULT NULL COMMENT 'The associated user-id to the comment',
- timestamp datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation-timestamp',
- PRIMARY KEY (commentId),
- KEY blogId (blogId),
- KEY commentId (commentId),
- KEY commentId_2 (commentId),
- CONSTRAINT blog_commentary_ibfk_1 FOREIGN KEY (blogId) REFERENCES blog_entry (blogId) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+-- BLOG-Kommentar-Tabelle
+-- Tabellenstruktur für Tabelle 'blog_commentary'
+CREATE TABLE `blog_commentary` (
+ `commentId` int(11) NOT NULL AUTO_INCREMENT COMMENT 'The comment-primary-key',
+ `blogId` int(10) unsigned NOT NULL COMMENT 'The associated blog-id to the comment',
+ `text` text NOT NULL COMMENT 'The comment-text',
+ `userId` int(11) unsigned DEFAULT NULL COMMENT 'The associated user-id to the comment',
+ `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation-timestamp',
+ PRIMARY KEY (`commentId`),
+ KEY `blogId` (`blogId`),
+ KEY `commentId` (`commentId`),
+ KEY `commentId_2` (`commentId`),
+ KEY `userId` (`userId`),
+ CONSTRAINT `blog_commentary_ibfk_1` FOREIGN KEY (`blogId`) REFERENCES `blog_entry` (`blogId`) ON DELETE CASCADE ON UPDATE CASCADE,
+ CONSTRAINT `blog_commentary_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `user_visitor` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 -- ----------------------------------------------------------------------------
 -- CHAT-Tabelle
 
@@ -102,7 +106,7 @@ CREATE TABLE `general_page_content` (
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
 
--- Test-Data ===================================================================
+-- Test-Data - DummyData for testUsage ===================================================================
 -- DATA-Inserts
 -- Blog-Category
 INSERT INTO `blog_category` (`categoryId`, `categoryName`) VALUES (NULL, 'UI / UX');
