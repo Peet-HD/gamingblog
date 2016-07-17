@@ -56,10 +56,10 @@
                             <footer class="lastline">
                                 <p>Kategorie: {$entry.categoryName}</p>
                                 
-                                <a style="margin-top: 3px;" class="waves-effect waves-light btn" href="{$urlHelper->url(["controller" => "blog", "action" => "entrydetail"])}?blogid={$entry.blogId}">
+                                <a class="waves-effect waves-light btn" href="{$urlHelper->url(["controller" => "blog", "action" => "entrydetail"])}?blogid={$entry.blogId}">
                                     Mehr
                                 </a>
-                                <a style="margin-top: 3px; margin-right:3px;" class="waves-effect waves-light btn" href="">
+                                <a class="waves-effect waves-light btn" href="">
                                     Kommentare
                                 </a>
                             </footer>
