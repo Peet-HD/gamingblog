@@ -18,9 +18,9 @@ class GamingBlog_Database_Blog_Entry_Writer extends GamingBlog_Database_Writer
     
     private $_text = '';
     
-    private $_adminId = 0;
+    private $_adminId = -1;
     
-    private $_categoryId = 0;
+    private $_categoryId = -1;
     
     public function __construct($db) {
         parent::__construct($db, 'blog_entry');

@@ -15,8 +15,7 @@
                     forced_root_block : "", 
                     force_br_newlines : true,
                     force_p_newlines : false,
-                    toolbar: 'undo redo | styleselect | bold italic | image',
-                    image_prepend_url: "http://www.tinymce.com/images/"
+                    toolbar: 'undo redo | styleselect | bold italic | image'
                 });
            </script>
         {/if}
@@ -33,6 +32,8 @@
                 </div>    
             </div>
         </div>
+         {include file='static/pagination.tpl' baseLink='blog/overview'}
         {include file='static/sidebar.tpl'}
+       
     </body>
 </html>
