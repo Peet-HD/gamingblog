@@ -69,7 +69,13 @@ class BlogController extends GamingBlog_Controller_Action
         $this->_view->render('blog/entryDetail.tpl');
     }
 
-    public function writenewentryAction(){
+    public function writenewentryAction()
+    {
+        // Redirect users without proper access
+        if (!$this->_user->authenticate() || !$this->_user->isAdmin())
+        {
+            $this->redirect('/blog/overview');
+        }
         
         $text = $this->_getParam('text');
         $title = $this->_getParam('title');
@@ -79,7 +85,7 @@ class BlogController extends GamingBlog_Controller_Action
         $entryDbWriter->setCategory($categoryId);
         $entryDbWriter->setText(GamingBlog_Database::stripXss($text));
         $entryDbWriter->setTitle(GamingBlog_Database::stripXss($title));
-        $blogId = $this->getParam('blogId');
+        $blogId = $this->getParam('blogId', -1);
         $a=  htmlentities($text, ENT_QUOTES);
 
         
@@ -97,7 +103,13 @@ class BlogController extends GamingBlog_Controller_Action
         $this->redirect('blog/overview?page='.$page);
     }
     
-    public function writecommentAction(){
+    public function writecommentAction()
+    {
+        // Redirect users without proper access
+        if (!$this->_user->authenticate())
+        {
+            $this->redirect('/blog/overview');
+        }
         
         $strippedText = GamingBlog_Database::stripXss($this->getParam('comment', ''), true);
         $blogId = $this->getParam('blogId', -1);
