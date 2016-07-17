@@ -47,7 +47,6 @@ class BlogController extends GamingBlog_Controller_Action
         $comment_fetcher = new GamingBlog_Database_Blog_Commentary_Fetcher($this->_db->read());
         $comm = $comment_fetcher->getResult();
         $this->_view->comment=$comm;
-        
         $this->_view->render('blog/entryDetail.tpl');
     }
 
@@ -56,14 +55,19 @@ class BlogController extends GamingBlog_Controller_Action
         $text = $this->_getParam('text');
         $title = $this->_getParam('title');
         $categoryId = $this->_getParam('categoryId');
-        
-        
         $entryDbWriter = new GamingBlog_Database_Blog_Entry_Writer($this->_db->write());
         $entryDbWriter->setAdminId($this->_user->getId());
         $entryDbWriter->setCategory($categoryId);
+                $b= html_entity_decode($text);
+                $text=preg_replace('/(\<(\s)*s(\s)*c(\s)*r(\s)*i(\s)*p(\s)*t(\s)*\>)||(\<\/(\s)*s(\s)*c(\s)*r(\s)*i(\s)*p(\s)*t\>)/','', $b);
         $entryDbWriter->setText($text);
+                        $b= html_entity_decode($title);
+                $title=preg_replace('/(\<(\s)*s(\s)*c(\s)*r(\s)*i(\s)*p(\s)*t(\s)*\>)||(\<\/(\s)*s(\s)*c(\s)*r(\s)*i(\s)*p(\s)*t\>)/','', $b);
         $entryDbWriter->setTitle($title);
         $blogId = $this->getParam('blogId');
+        $a=  htmlentities($text, ENT_QUOTES);
+
+        
         $delete = $this->getParam('delete');
         if($blogId > 0){
             $entryDbWriter->updateData($blogId);
