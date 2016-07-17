@@ -1,3 +1,4 @@
 *.xml
 /nbproject/private/
-/application/tmp/
+/application/tmp/smarty_cache/
+/application/tmp/smarty_compile/
