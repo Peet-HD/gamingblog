@@ -8,6 +8,7 @@
         <div id='main-block' class="row cyan darken-2">
             <div class="col s12">
                 <header class="ueberschrift left">{$entryDetails.title}</header>
+                <h6 class="right">&nbsp;Kategorie: {$entryDetails.categoryName}</h6>
             </div>
             <div class="col s12">
                 <section class="content">{$entryDetails.text}</section>
@@ -32,7 +33,6 @@
             </div>
             <div class="col s12">
                 <footer class="lastline">
-                    <p>&nbsp;Kategorie: {$entryDetails.categoryName}</p>
                     {if $user->authenticate() && !$user->isAdmin()}
                         {include file='blog/commentary.tpl' blogId=$entryDetails.blogId user=$user}</li>
                     {/if}
