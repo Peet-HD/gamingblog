@@ -77,9 +77,16 @@ class BlogController extends GamingBlog_Controller_Action
             $this->redirect('/blog/overview');
         }
         
-        $text = $this->_getParam('text');
-        $title = $this->_getParam('title');
-        $categoryId = $this->_getParam('categoryId');
+        $text = $this->_getParam('text', "");
+        $title = $this->_getParam('title', "");
+        $categoryId = $this->_getParam('categoryId', -1);
+        $page = $this->getParam('page');
+        
+        if ($categoryId == -1)
+        {
+            $this->redirect('/blog/overview');
+        }
+        
         $entryDbWriter = new GamingBlog_Database_Blog_Entry_Writer($this->_db->write());
         $entryDbWriter->setAdminId($this->_user->getId());
         $entryDbWriter->setCategory($categoryId);
@@ -99,7 +106,6 @@ class BlogController extends GamingBlog_Controller_Action
         if($delete==1){
             $entryDbWriter->deleteData($blogId);
         }
-        $page = $this->getParam('page');
         $this->redirect('blog/overview?page='.$page);
     }
     
