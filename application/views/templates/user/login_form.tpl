@@ -1,6 +1,6 @@
 {if $user->authenticate()}
     <div style="padding: 10px; background-color: black; margin-top: 10px; color: white; border-radius: 8px;">
-        <span>Logged in as "{$user->getUsername()}"</span>  
+        <span>Eingeloggt als: "{$user->getUsername()}"</span>  
         <a href="{$urlHelper->url(['controller' => 'user', 'action' => 'logout'])}" style="float: right; color: white;">Logout</a>
     </div>
 {else}

@@ -14,6 +14,11 @@ $(function()
         if (e.which == 13)
             sendChatLine();
     });
+    
+    $('.chatSendBtn').click(function()
+    {
+        sendChatLine();
+    });
 });
 
 function sendChatLine()

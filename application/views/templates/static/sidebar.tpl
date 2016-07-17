@@ -1,6 +1,6 @@
-<div id="sidebar" class="black">
-
-    <div id="chat">
+<div id="sidebar" class="grey darken-4">
+    <div id="chat" class="cyan darken-1">
+        <h5 class="center">Besucher-Chat</h5>
         {include file='static/chat.tpl'}
     </div>
         {if !isset($hideLogin)}
