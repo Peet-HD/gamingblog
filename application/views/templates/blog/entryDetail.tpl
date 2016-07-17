@@ -7,7 +7,7 @@
         {include file='static/topMenu.tpl'}
         <div id='main-block' class="row cyan darken-2">
             <div class="col s12">
-                <header class="ueberschrift">{$entryDetails.title}</header>
+                <header class="ueberschrift left">{$entryDetails.title}</header>
             </div>
             <div class="col s12">
                 <section class="content">{$entryDetails.text}</section>
@@ -17,22 +17,24 @@
                     <li>
                         <h5>Kommentare:</h5>
                     </li>
-                    {foreach from=$comment item=hi}
-                        {if $hi.blogId eq $smarty.get.blogid}
+                    {if !empty($comment)}
+                        {foreach from=$comment item=element}
                             <li>
-                                {$hi.text}
+                                [{$element.timestamp}] - {$element.userName}: {$element.text}
                             </li>
-                        {/if}
-                    {/foreach}
+                        {/foreach}
+                    {else}
+                        <li>
+                            >> Es gibt bisher keine Kommentare zum Beitrag <<
+                        </li>
+                    {/if}
                 </ul>
             </div>
             <div class="col s12">
                 <footer class="lastline">
-                    <p>Kategorie: {$entryDetails.categoryName}</p>
+                    <p>&nbsp;Kategorie: {$entryDetails.categoryName}</p>
                     {if $user->authenticate() && !$user->isAdmin()}
-                        <ul>
-                            <li>{include file='blog/commentary.tpl' blogId=$entryDetails.blogId user=$user}</li>
-                        </ul>
+                        {include file='blog/commentary.tpl' blogId=$entryDetails.blogId user=$user}</li>
                     {/if}
                 </footer>
             </div>

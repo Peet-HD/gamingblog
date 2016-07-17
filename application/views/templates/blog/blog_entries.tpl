@@ -54,7 +54,7 @@
 
                         <div class="col s12">
                             <footer class="lastline">
-                                <p>Kategorie: {$entry.categoryName}</p>
+                                <p>&nbsp;Kategorie: {$entry.categoryName}</p>
                                 
                                 <a class="waves-effect waves-light btn" href="{$urlHelper->url(["controller" => "blog", "action" => "entrydetail"])}?blogid={$entry.blogId}">
                                     Mehr

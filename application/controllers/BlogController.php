@@ -45,6 +45,7 @@ class BlogController extends GamingBlog_Controller_Action
         $this->_view->entryDetails=$res;
 
         $comment_fetcher = new GamingBlog_Database_Blog_Commentary_Fetcher($this->_db->read());
+        $comment_fetcher->setBlogEntryId($entryId);
         $comm = $comment_fetcher->getResult();
         $this->_view->comment=$comm;
         $this->_view->render('blog/entryDetail.tpl');
