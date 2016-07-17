@@ -215,8 +215,8 @@ class GamingBlog_User
     /**
      * Adds the Gamingblog_Salt to the password 
      * 
-     * @param type $pw
-     * @return type
+     * @param string $pw
+     * @return string
      * 
      * @author TH<>
      */

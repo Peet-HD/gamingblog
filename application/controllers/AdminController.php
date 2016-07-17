@@ -11,20 +11,6 @@ class AdminController extends GamingBlog_Controller_Action
     protected $_defaultAction = 'overview';
     
     /**
-     * Main-Action offering the register of a new user
-     * 
-     * @author TH<>
-     */
-    public function createpwAction()
-    {
-        $userPw = $this->_getParam("pw", 0);
-        
-        $pwHash = GamingBlog_User::createAdminPw($userPw);
-        
-        Debug::p($pwHash);
-    }
-    
-    /**
      * The login-action for admins (can only be accessed by directly call the controller/action
      * 
      * @author TH<>
@@ -219,7 +205,7 @@ class AdminController extends GamingBlog_Controller_Action
             {
                 $contentWriter = new GamingBlog_Database_PageContent_Writer($this->_db->write());
 
-                $contentWriter->setHtmlContent($htmlContent);
+                $contentWriter->setHtmlContent(GamingBlog_Database::stripXss($htmlContent));
                 
                 $contentByKeys = array_flip($contentIdReferences);
 

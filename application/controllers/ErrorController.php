@@ -35,12 +35,6 @@ class ErrorController extends GamingBlog_Controller_Action
                 break;
         }
 
-        // Log exception, if logger available
-        if ($log = $this->getLog()) {
-            $log->log($this->_view->message, $priority, $errors->exception);
-            $log->log('Request Parameters', $priority, $errors->request->getParams());
-        }
-
         // conditionally display exceptions
         if ($this->getInvokeArg('displayExceptions') == true) {
             $this->_view->exception = $errors->exception;
@@ -58,16 +52,5 @@ class ErrorController extends GamingBlog_Controller_Action
         
         // If the Route/Controller/Action were wrong, show the 404-page
         $this->_view->render('error/404.tpl');   
-    }
-    
-
-    public function getLog()
-    {
-        $bootstrap = $this->getInvokeArg('bootstrap');
-        if (!$bootstrap->hasResource('Log')) {
-            return false;
-        }
-        $log = $bootstrap->getResource('Log');
-        return $log;
     }
 }
