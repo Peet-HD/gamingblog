@@ -72,3 +72,4 @@
         </li>
     {/foreach}
 </ul>
+{include file='static/pagination.tpl' baseLink='/blog/overview'}

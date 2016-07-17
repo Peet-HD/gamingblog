@@ -32,7 +32,7 @@
                 </div>    
             </div>
         </div>
-         {include file='static/pagination.tpl' baseLink='blog/overview'}
+   
         {include file='static/sidebar.tpl'}
        
     </body>

@@ -16,8 +16,7 @@ class BlogController extends GamingBlog_Controller_Action
      */
     public function overviewAction()
     {
-        $page = $this->_getParam("page",0);
-        
+        $page = max(array(0, $this->getParam('page', 0)));
         $blog_entry_fetcher = new GamingBlog_Database_Blog_Entry_Fetcher($this->_db->read());
         
         $res = $blog_entry_fetcher->getResult();
@@ -28,7 +27,26 @@ class BlogController extends GamingBlog_Controller_Action
         $res = $blog_category_fetcher->getResult();
         $this->_view->category = $res;
         
-        $this->_view->render("blog/overview.tpl");
+        //$this->_view->render("blog/overview.tpl");
+        
+                $pageFetcher = new GamingBlog_Database_Blog_Entry_Fetcher($this->_db->read());
+        
+        $entryCount = $blog_entry_fetcher->getCount();
+        
+        $elementsPerPage = 10;
+        
+        $maxPage = ceil(floatval($entryCount) / $elementsPerPage) - 1;
+        
+        // limit the page-value to a proper range
+        $page = min(array($page, $maxPage));
+        
+        $pageFetcher->setLimit($page, $elementsPerPage);
+        $this->_view->news_entries = $pageFetcher->getResult();
+        
+        $this->_view->page = $page;
+        $this->_view->elementsPerPage = $elementsPerPage;
+        $this->_view->maxPage = $maxPage;
+        $this->_view->render('blog/overview.tpl');
     }
     
     /* Shows the Detail-Page for a specific entry */
