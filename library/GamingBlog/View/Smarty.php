@@ -20,6 +20,13 @@ class GamingBlog_View_Smarty
      */
     protected $_config = null;
     
+    /**
+     * The cache-id for the current rendering
+     * 
+     * @var string
+     */
+    protected $_cacheId = '';
+    
     public function __construct($pConfigArr) {
         $this->_config = $pConfigArr;
         
@@ -49,6 +56,42 @@ class GamingBlog_View_Smarty
         } else {
             throw new Zend_View_Exception("Not enough config-data for smarty");
         }
+    }
+    
+    public function prepareCacheId($controller, $action, $params)
+    {
+        $cacheId = '/' . $controller . '/' . $action;
+        
+        if (isset($params['controller']))
+        {
+            unset($params['controller']);
+        }
+        if (isset($params['action']))
+        {
+            unset($params['action']);
+        }
+        if (isset($params['module']))
+        {
+            unset($params['module']);
+        }
+        
+        if (!empty($params))
+        {
+            $cacheId .= '?';
+            $first = true;
+            foreach ($params as $key => $val)
+            {
+                if (!$first)
+                {
+                    $cacheId = '&';
+                } else {
+                    $first = false;
+                }
+                $cacheId .= $key . '=' . $val;
+            }
+        }
+        
+        $this->_cacheId = md5($cacheId);
     }
     
     /**
@@ -125,7 +168,12 @@ class GamingBlog_View_Smarty
      */
     public function render($path)
     {
-        print $this->_smarty->fetch($path);
+        if ($this->_smarty->caching && !empty($this->_cacheId))
+        {
+            print $this->_smarty->fetch($path, $this->_cacheId);
+        } else {
+            print $this->_smarty->fetch($path);
+        }
         exit();
     }
 }

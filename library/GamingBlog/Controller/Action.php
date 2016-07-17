@@ -60,6 +60,8 @@ abstract class GamingBlog_Controller_Action extends Zend_Controller_Action
         $this->_user = Zend_Registry::get('user');
         $this->_view->user = $this->_user;
         
+        $this->_view->prepareCacheId($this->getRequest()->getControllerName(), $this->getRequest()->getActionName(), $this->getRequest()->getParams());
+        
         $this->_view->urlHelper = $this->_helper->getHelper('Url');
         
         $request = $this->getRequest();
