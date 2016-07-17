@@ -1,0 +1,9 @@
+input[type="text"]
+{
+    color: black;
+}
+
+.loginform form input[type="text"]
+{
+    color: white;
+}

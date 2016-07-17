@@ -24,10 +24,14 @@
     <body>
         {include file='static/topMenu.tpl' navActive='main'}
         <div id="main-block" class="cyan lighten-3">
-            {if $user->authenticate() && $user->isAdmin()}
-                {include file='blog/adminAddEntry.tpl'}
-            {/if}
-            {include file='blog/blog_entries.tpl'}
+            <div class="row">
+                {if $user->authenticate() && $user->isAdmin()}
+                    {include file='blog/adminAddEntry.tpl'}
+                {/if}
+                <div class="col s12">
+                    {include file='blog/blog_entries.tpl'}
+                </div>    
+            </div>
         </div>
         {include file='static/sidebar.tpl'}
     </body>

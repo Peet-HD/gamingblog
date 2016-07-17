@@ -16,6 +16,11 @@ body {
     font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;
 }
 
+.row
+{
+    width: 100%;
+}
+
 #main-block {
     width: calc(80% - 300px);
     min-width: 600px;
@@ -164,7 +169,6 @@ nav ul li a, nav ul li span {
     float:left;
     text-align:left;
     position:relative;
-    padding-bottom: 30px;
     overflow-wrap: break-word;
 }
 .ueberschrift{
