@@ -20,6 +20,7 @@
         <textarea name="text"></textarea>
     </div>
     <div class="col s12" style="padding: 12px">
+
         <button class='btn waves-effect waves-teal right' type="submit">Speichern</button>
     </div>
     <hr/>

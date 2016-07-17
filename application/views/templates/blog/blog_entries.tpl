@@ -35,6 +35,7 @@
                                     <input hidden='true' name='blogId' value='{$entry.blogId}'></input>
                                     <button style='background-color:#e53935; margin-right: 10px;' name="delete" value="1" class='btn waves-effect waves-teal right' type='submit'>Löschen</button>
                                 </form>
+                                            <input type="hidden" name='page' value={$page}>
                                 <button class='btn waves-effect waves-teal  right' type="submit">Ändern</button>
                             </div>
                         </form>

@@ -97,7 +97,8 @@ class BlogController extends GamingBlog_Controller_Action
         if($delete==1){
             $entryDbWriter->deleteData($blogId);
         }
-        $this->redirect('blog/overview');
+        $page = $this->getParam('page');
+        $this->redirect('blog/overview?page='.$page);
     }
     
     public function writecommentAction(){
