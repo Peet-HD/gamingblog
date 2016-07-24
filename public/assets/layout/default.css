@@ -51,6 +51,9 @@ body{
 .banner img{
     width:100%;
     margin: 0 0 0 0;
+    width: 1225px;
+    height: auto;
+    margin-top: -10px;
 }
 nav{
     position:relative;

@@ -64,7 +64,6 @@ function sendChatLine()
 
 function appendChatTextLine(id, textVal, authorName, isAdminMsg)
 {
-    console.log("check: " + id);
     if (chatLineData[id] === undefined)
     {
         chatLineData[id] = textVal;
@@ -88,10 +87,7 @@ function appendChatTextLine(id, textVal, authorName, isAdminMsg)
         $('#chatHistoryBlock').animate({
             scrollTop: $('#chatHistoryBlock').prop('scrollHeight')
         }, 0);
-        
-        console.log('add: ' + id);
     }
-    console.log("checkdone");
 }
 
 function loadDbEntries()
@@ -105,8 +101,6 @@ function loadDbEntries()
         }
         
     }).done(function(res) {
-        console.log("LoadDbEntries-Res");
-        console.log(res);
         if (res == -1)
         {
             redirectToBaseSite();

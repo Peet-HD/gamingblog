@@ -118,7 +118,7 @@ INSERT INTO `blog_category` (`categoryId`, `categoryName`) VALUES (NULL, 'GFX');
 -- General-Page-Content
 SET sql_mode='NO_AUTO_VALUE_ON_ZERO';
 INSERT INTO `general_page_content` (`contentId`, `pageHtml`, `lastChange`) VALUES (0,
-'<h3>&Uuml;ber das Spiel "Tree-Hopper"</h3>
+'<h3>&Uuml;ber das Spiel "Lucky-Hopper"</h3>
 <p>Im Spiel steuert man einen kleinen Vogel welcher.. &nbsp;Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>', CURRENT_TIMESTAMP);
 INSERT INTO `general_page_content` (`contentId`, `pageHtml`, `lastChange`) VALUES (1,
